@@ -1,0 +1,31 @@
+{
+    "options": {
+      "fileName": "missed_call_details"
+    },
+    "tableData": [
+      {
+        "sheetName": "Sheet1",
+        "data": [
+          [ 
+            {
+              "text": "StartTime"
+            },
+            {
+              "text": "EndTime"
+            },
+            {
+              "text": "Caller"
+            },
+            {
+              "text": "CallStatus"
+            },
+            {
+              "text": "Date"
+            }
+           
+          ]
+          
+        ]
+      }
+    ]
+  }

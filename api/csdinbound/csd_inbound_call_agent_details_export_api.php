@@ -22,7 +22,7 @@ if( isset($_GET['extension']) && isset($_GET['username']) && isset($_GET['startd
 	$enddate = $_GET['enddate'];
 	$tagname = $_GET['tagname'];
 
-	$stmnt = $csdinbound->csdinboundCallDetailsExport($extension,$username,$startdate,$enddate,$tagname);
+	$stmnt = $csdinbound->csdInboundCallAgentDetailsExport($extension,$username,$startdate,$enddate,$tagname);
 
 
 }elseif(isset($_GET['modalextension']) && isset($_GET['modalusername']) && isset($_GET['startdate'])  && isset($_GET['enddate']) && isset($_GET['tagname'])){
@@ -33,7 +33,7 @@ if( isset($_GET['extension']) && isset($_GET['username']) && isset($_GET['startd
 	$enddate = $_GET['enddate'];
 	$tagname = $_GET['tagname'];
 
-	$stmnt = $csdinbound->csdinboundCallDetailsExport($extension,$username,$startdate,$enddate,$tagname);
+	$stmnt = $csdinbound->csdInboundCallAgentDetailsExport($extension,$username,$startdate,$enddate,$tagname);
 
 
 }else{

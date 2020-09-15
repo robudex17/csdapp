@@ -23,7 +23,7 @@ class CSDINBOUND {
 	private $tag = "tag";
 
 	  // end
-	private $json_addr = "/var/www/html/sbtph_csd/json/";
+	private $json_addr = "/var/www/html/sbtph_csd_dev/json/";
   
    //create database connection  when this class instantiated
     public function __construct($db){
@@ -331,6 +331,114 @@ class CSDINBOUND {
     		echo json_encode(array ("message" => "No Records Found"));
     	}
     }
+
+    public function csdInboundCallAgentDetailsExport($extension,$username,$startdate,$enddate,$tagname){
+         
+      if($tagname == 'all'){
+                //build query
+          $query = "SELECT * FROM  ".$this->inbound_callstatus_table." WHERE CallStatus='ANSWER' AND WhoAnsweredCall=? AND getDate BETWEEN ? AND ? ORDER BY StartTimeStamp DESC";
+
+          //prepare the query
+          $stmnt = $this->conn->prepare($query);
+
+          //bind values
+          $stmnt->bindParam(1,$extension);
+          $stmnt->bindParam(2,$startdate);
+          $stmnt->bindParam(3,$enddate);
+      }else{
+                 //build query
+          $query = "SELECT * FROM  ".$this->inbound_callstatus_table." WHERE CallStatus='ANSWER' AND WhoAnsweredCall=? AND getDate BETWEEN ? AND ? AND tag=? ORDER BY StartTimeStamp DESC";
+
+          //prepare the query
+          $stmnt = $this->conn->prepare($query);
+
+          //bind values
+          $stmnt->bindParam(1,$extension);
+          $stmnt->bindParam(2,$startdate);
+          $stmnt->bindParam(3,$enddate);
+          $stmnt->bindParam(4,$tagname);
+      }
+      
+
+         $stmnt->execute();
+
+         $num = $stmnt->rowCount();
+
+        if ($num != 0 ){
+
+            $inbound_call_details_template_json = file_get_contents($this->json_addr."inbound_call_details.json");
+            //make an object
+            $inbound_call_details_obj = json_decode($inbound_call_details_template_json, FALSE);
+
+            while($row = $stmnt->fetch(PDO::FETCH_ASSOC)){
+							$total=0;
+							//Duration Field is new added to the table and the old records has empty duration field so need to used start and end timestamp to compute the duration
+							 if($row['Duration'] != 0){
+								 $total = $total + $row['Duration'];
+								 $EndTime  = str_replace("-", " ", $row['EndTimeStamp']);
+								 $EndTime = strtotime($EndTime);
+								 $StartTime =  $EndTime - $duration;
+
+							 }
+							 // this is where the duration is available so no need to compute the duration but need to compute the start timestamp.
+							 else{
+								 $endtime = explode("-", $row['EndTimeStamp']);
+								 $startime = explode("-", $row['StartTimeStamp']);
+								 $total = $total + ((strtotime($endtime[0]) + strtotime($endtime[1])) - (strtotime($startime[0]) +strtotime($startime[1])) );
+
+								 $StartTime = str_replace("-", " ", $row['StartTimeStamp']);
+								 $EndTime  = str_replace("-", " ", $row['EndTimeStamp']);
+								 $StartTime = strtotime($StartTime);
+								 $EndTime = strtotime($EndTime);
+							 }
+								$duration = $this->secToHR($total);
+
+                //get recordings url
+                $base_url = "http://211.0.128.110/callrecording/incoming/";
+                $date_folder = str_replace('-',"", $row['getDate']);
+                $filename = $row['Caller'] .'-'. $row['CalledNumber'] .'-' .$row['StartTimeStamp']. ".mp3";
+                $full_url = $base_url . $date_folder .'/'.$filename;
+
+                 $agent = array();
+                //put each field to each array
+                $array_username = array("text" => $username);
+                $array_extension = array("text" => $extension);
+                $array_calledNumber = array("text" => $row['CalledNumber']);
+                $array_caller = array("text" => $row['Caller'] );
+                $array_callStatus = array("text" => $row['CallStatus']);
+                $array_startime = array("text" => date( "h:i:s a",$StartTime));
+                $array_endtime = array("text" => date("h:i:s a",$EndTime));
+                $array_callDuration = array("text" => $duration );
+                $array_callrecording = array("text" => $full_url);
+                $array_getDate = array("text" => $row['getDate']);
+                $array_comment = array("text" =>  $row['comment']);
+                $array_tag = array("text" => $row['tag']);
+
+                //push it
+                array_push($agent,$array_username);
+                array_push($agent, $array_extension);
+                array_push($agent,$array_calledNumber);
+                array_push($agent,$array_caller);
+                array_push($agent, $array_callStatus);
+                array_push($agent,$array_startime);
+                array_push($agent, $array_endtime);
+                array_push($agent, $array_callDuration);
+                array_push($agent,$array_callrecording);
+                array_push($agent, $array_getDate);
+                array_push($agent,$array_comment);
+                array_push($agent, $array_tag);
+
+
+                array_push($inbound_call_details_obj->tableData[0]->data, $agent);
+            }
+            //http_response_code(201);
+
+            echo json_encode($inbound_call_details_obj);
+        }else{
+            echo json_encode(array ("message" => "No Records Found"));
+        }
+     }
+
 
        public function searchCallerDetails($caller){
         

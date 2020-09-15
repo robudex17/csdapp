@@ -109,8 +109,18 @@
                                 </select>
                             </div>
                           </div>
-
+                  
                  </div>
+                      <div class="row">
+                              
+                              <div class="col-2">
+                                <label class="pr-0 mr-0 mt-2">Sort Order: </label>
+                                <select class="custom-select" id="sorted_order" name="sorted_order">
+                                  <option value="descending" selected>DESCENDING</option>
+                                   <option value="ascending" >ASCENDING</option>
+                                </select>
+                            </div>
+                     </div>                 
                  <br>
                  <div class="text-left mb-3">
                        <input type="submit" name="genbtn"  class="btn btn-primary ml-auto"value="Generate" id="genbtn">

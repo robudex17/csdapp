@@ -17,7 +17,7 @@ function searchCallerDetails() {
       }
     };
    
-      var apiquery = `api/search_inbound_number_api.php?${querystring}`;
+      var apiquery = `api/csdinbound/search_inbound_number_api.php?${querystring}`;
       xhttp.open("GET", apiquery  , true);
       xhttp.send();
      
@@ -85,13 +85,7 @@ function searchCallerDetailsTable(res,tbody) {
         textAreaBody.cols = "62";
         textAreaBody.placeholder = "Put Your Comment Here."
         textAreaBody.textContent = response[i].comment;
-        //textAreaBody.textContent = response[i].extension + " Channel is Currently Active";
-
-        // //tag 
-        // var inbound_tags =['DROPPED CALL','SALES ASSISTANCE','CAR INQUIRY (REGISTERED)','CAR INQUIRY (UNREGISTERED)',
-        //           'PAYMENT UPDATE','PAYMENT PROBLEM','INVOICE','CONSIGNEE','COURIER','SHIPMENT','DOCUMENTS',
-        //           'RELEASE','AMENDMENT','COMPLAINTS','NO TAG'
-        //           ] 
+        
        var select_tag = document.createElement('SELECT')
        select_tag.setAttribute("id", i+" inbound_select_tag")
        select_tag.style.width = "450px"

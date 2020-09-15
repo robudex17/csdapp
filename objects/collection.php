@@ -591,7 +591,7 @@ class Collection {
 
          if($tagname == 'all'){
           //build query
-            $query  = "SELECT * FROM ".$this->collectionteam_callsummary_table." WHERE getDate BETWEEN ? AND ? AND CallStatus='ANSWER'  AND Caller =? ";
+            $query  = "SELECT * FROM ".$this->collectionteam_callsummary_table." WHERE getDate BETWEEN ? AND ? AND CallStatus='ANSWER'  AND Caller =? ORDER BY StartTimeStamp DESC";
 
             //prepare the query
             $stmnt = $this->conn->prepare($query);
@@ -604,7 +604,7 @@ class Collection {
             //execute
        }else{
                   //  build query
-        $query  = "SELECT * FROM ".$this->collectionteam_callsummary_table." WHERE getDate BETWEEN ? AND ? AND CallStatus='ANSWER'  AND Caller =? AND tag=? ";
+        $query  = "SELECT * FROM ".$this->collectionteam_callsummary_table." WHERE getDate BETWEEN ? AND ? AND CallStatus='ANSWER'  AND Caller =? AND tag=? ORDER BY StartTimeStamp DESC";
 
               //prepare the query
               $stmnt = $this->conn->prepare($query);

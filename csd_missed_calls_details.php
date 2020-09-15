@@ -45,7 +45,7 @@
 </div>
 
     <main role="main" id="main" >
-      <h2 class="text-center font-weight-bold text-primary"><span class='text-danger'> MISSED-CALLS DETAILS</span> <button class="btn btn-secondary btn-sm" id="export" hidden=""> EXPORT <i class="fa fa-file-excel-o" aria-hidden="true"></i></button></span></span></h2></h2>
+      <h2 class="text-center font-weight-bold text-primary"><span class='text-danger'> MISSED-CALLS DETAILS</span> <button class="btn btn-secondary btn-sm" id="missedcalls_export" > EXPORT <i class="fa fa-file-excel-o" aria-hidden="true"></i></button></span></span></h2></h2>
           <div>
               <table class="table">
                 <thead class="thead-dark">
@@ -56,12 +56,12 @@
                       <th scope="col">Caller</th>
                       <th scope="col">CallStatus</th>
                       <th scope="col">
-                          <form>
-                            <input type="date" name="getdate" id="datePicker" style="width: 120px;"> 
-                            <input class="btn btn-sm" type="submit"  id="clickdate" value="Select_Date"></form>
+                          <input type="hidden" name="extension" id="extension">
+                            <input type="hidden" name="username" id="username">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myDateRange" dataset-backdrop="static" dataset-keyboard="false" id="selectdate">SELECT DATE</button>
 
                       </th>
-                      <th scope="col">Comment</th>
+                     
                   </tr>
                 </thead>
                 <tbody id="missed_calls_details-body">
@@ -69,6 +69,42 @@
                 </tbody>
             </table>
           </div>
+           <div class="modal fade" id="myDateRange" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+
+                    <h4 class="modal-title">Select Date Range</h4>
+                  </div>
+                  <div class="modal-body">
+                        <form method="GET" id="daterange" action="csd_missed_calls_details.php"> 
+                            
+                            <div class="form-group">
+                              <label for="startdate">From:</label>
+                              <input type="date" class="form-control" id="startdate" name="startdate" aria-describedby="dateHelp" placeholder="Add Tag" required="true" onchange="validateDate()">
+                            </div>
+                             <div class="form-group">
+                              <label for="enddate">To:</label>
+                              <input type="date" class="form-control" id="enddate" name="enddate" aria-describedby="dateHelp" placeholder="Add Tag" required="true" onchange="validateDate()">
+                            </div>
+                           
+                            
+                            <hr>
+                            <div class="text-right mb-3">
+                                <input type="submit" class="btn btn-primary ml-auto">
+                              <button type="button" class="btn btn-danger ml-auto"  data-dismiss="modal" >Close</button>
+                            </div>
+
+                    </form>
+                  </div>
+
+
+                </div>
+
+              </div>
+         </div>
           <script type="text/javascript">
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-36251023-1']);
@@ -80,7 +116,35 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();
+          //THIS FUNCTION IS TO MAKE SURE THAT USER CANNOT SELECT DATE LATER THAT THE CURRENT DATE
+            //AND STARTDATE CANNOT BE GREATER THAT THE ENDDATE
+            function validateDate(){ 
 
+            var startdate = document.getElementById('startdate').value.toString()
+            
+            var startdateSplit = startdate.split("-");
+            var newStartDate = new Date(startdateSplit[0],startdateSplit[1]-1,startdateSplit[2]);
+            var startdateTimeStamp = newStartDate.getTime();
+            
+            var enddate = document.getElementById('enddate').value.toString()
+            //get the timestamp of the  start date
+            var enddateSplit = enddate.split("-");
+            var newEndDate = new Date(enddateSplit[0],enddateSplit[1]-1,enddateSplit[2]);
+            var enddateTimeStamp = newEndDate.getTime();
+
+             var d = new Date();
+            
+             if(startdateTimeStamp > d.getTime() || enddateTimeStamp > d.getTime()){
+              alert('Selected Date Must Not be Greater on the Current Date')
+              document.getElementById('startdate').value = "";
+              document.getElementById('enddate').value = "";
+             }
+             if(startdateTimeStamp > enddateTimeStamp){
+              alert('StartDate Must not Greater on EndDate')
+              document.getElementById('startdate').value = "";
+              document.getElementById('enddate').value = "";
+             }
+          }
       </script>  
         <script src="js/csd_missed_call_details.js"></script>  
     </main>

@@ -37,9 +37,9 @@ class Csd {
     }
 
   
-  public function csdMissedCalls($getdate,$option) {
+  public function csdMissedCalls($startdate,$enddate,$option) {
         //build query
-        $query = "SELECT * FROM ".$this->inbound_callstatus_table." WHERE `CallStatus`!=? AND `getDate`=? ";
+        $query = "SELECT * FROM ".$this->inbound_callstatus_table." WHERE `CallStatus`!=? AND `getDate` BETWEEN ? AND ? ORDER BY getDate DESC";
 
         //prepare the query
 
@@ -48,20 +48,27 @@ class Csd {
        // $caller = '';
         //bind values from question mark (?) place holder
          $stmnt->bindParam(1, $calls_status);
-         $stmnt->bindParam(2, $getdate);
-         //$stmnt->bindParam(3,$caller);
+         $stmnt->bindParam(2, $startdate);
+          $stmnt->bindParam(3, $enddate);
+         
+         
 
-        $stmnt->execute();
+         $stmnt->execute();
 
          $num = $stmnt->rowCount();
          $missedcalls_array = array();
          if($num != 0){
             if($option =='summary') {
-                        $missedcall = array(
+              $getdate = '('.$startdate.')'. "-".'('.$enddate.')';
+              if(strtotime($startdate) == strtotime($enddate)){
+                 $getdate = $startdate;
+              } 
+              $missedcall = array(
                             "total_missed_calls" => $num,
                             "getdate" => $getdate,
-                            "misscalls_details" => "csd_missed_calls_details.php?getdate=" .$getdate
+                            "misscalls_details" => "csd_missed_calls_details.php?startdate=" .$startdate . "&enddate=".$enddate
                         );
+                        
               array_push($missedcalls_array,$missedcall);
               }elseif ($option == 'details'){
 
@@ -86,7 +93,7 @@ class Csd {
                              "endtime" =>  $EndTime,
                              "caller" => $row['Caller'],
                              "callStatus" => $row['CallStatus'],
-                             "getdate" => $getdate
+                             "getdate" => $row['getDate']
                        );
 
                   array_push($missedcalls_array,$missedcall);
@@ -98,6 +105,73 @@ class Csd {
          }
 
     }
+
+     public function csdMissedCallsExport($startdate,$enddate) {
+        //build query
+        $query = "SELECT * FROM ".$this->inbound_callstatus_table." WHERE `CallStatus`!=? AND `getDate` BETWEEN ? AND ? ORDER BY getDate DESC";
+
+        //prepare the query
+
+        $stmnt = $this->conn->prepare($query);
+        $calls_status = 'ANSWER';
+       // $caller = '';
+        //bind values from question mark (?) place holder
+         $stmnt->bindParam(1, $calls_status);
+         $stmnt->bindParam(2, $startdate);
+          $stmnt->bindParam(3, $enddate);
+         
+         $stmnt->execute();
+
+         $num = $stmnt->rowCount();
+         
+         if($num != 0){
+                $missed_calls_details_template_json = file_get_contents($this->json_addr."missedcalls_details.json");
+            //make an object
+              $missed_calls_details_obj = json_decode($missed_calls_details_template_json, FALSE);
+                while($row = $stmnt->fetch(PDO::FETCH_ASSOC)){
+                   if ($row['StartTimeStamp'] == 'NONE'){
+                    $StartTime = '';
+                   }else{
+                    $StartTime = str_replace("-", " ", $row['StartTimeStamp']);
+                    $StartTime = strtotime($StartTime);
+                    $StartTime = date( "h:i:s a",$StartTime);
+                   }if($row['EndTimeStamp'] == 'NONE'){
+                    $EndTime = '';
+                   }else{
+                     $EndTime  = str_replace("-", " ", $row['EndTimeStamp']);
+                     $EndTime = strtotime($EndTime);
+                     $EndTime = date("h:i:s a",$EndTime);
+                   }
+
+                    $missedcall = array();
+                   
+
+                    $array_startime = array("text" => $StartTime);
+                    $array_endtime = array("text" => $EndTime);
+                    $array_caller = array("text" => $row['Caller']);
+                    $array_callStatus = array("text" => $row['CallStatus']);
+                    $array_getdate = array("text" => $row['getDate']);
+
+                     //push it
+                    array_push($missedcall,$array_startime);
+                    array_push($missedcall,$array_endtime);
+                    array_push($missedcall, $array_caller);
+                    array_push($missedcall,$array_callStatus);
+                    array_push($missedcall,$array_getdate);
+
+
+                  array_push($missed_calls_details_obj->tableData[0]->data,$missedcall);
+                }
+                echo json_encode($missed_calls_details_obj);
+               
+            }else{
+            echo json_encode(array("message" => "No Records Found"));
+         }
+
+    }
+
+
+
 
     public function getVoicemails() {
           $query = "SELECT * FROM ".$this->voicemail." ORDER BY date DESC ";
@@ -347,6 +421,9 @@ class Csd {
                 }else{
                   $tag = $row['tag'];
                 }
+                if($row['CallStatus'] !== 'ANSWER'){
+                     $tag = 'MISSEDCALLS';
+                }
                 if(array_key_exists($tag, $data)){
                   $data[$tag][$month_year] = $data[$tag][$month_year] + 1;
                 }else{
@@ -458,15 +535,15 @@ class Csd {
    
       public function getInboundRecordsBaseOnDateRange($option,$startDateAndTime, $endDateAndTime){
 
-      $query = "SELECT * FROM `inbound_callstatus` WHERE `CallStatus`=?  AND `StartTimeStamp` BETWEEN ? AND ? ORDER BY `StartTimeStamp` ASC";
+      $query = "SELECT * FROM `inbound_callstatus` WHERE  `StartTimeStamp` BETWEEN ? AND ? ORDER BY `StartTimeStamp` ASC";
 
       $stmnt = $this->conn->prepare($query);
-      $callstatus = 'ANSWER';
+     
 
       //bind values
-      $stmnt->bindParam(1,$callstatus);
-      $stmnt->bindParam(2,$startDateAndTime);
-      $stmnt->bindParam(3,$endDateAndTime);
+    
+      $stmnt->bindParam(1,$startDateAndTime);
+      $stmnt->bindParam(2,$endDateAndTime);
 
       //execute
       $stmnt->execute();
@@ -555,6 +632,7 @@ class Csd {
                       Duration field is newly added  on the table.
                       On the  old records that Duration field is empty, Duraiton is calculated using the End and start timestamp
                     */
+                     $total_sec = 0;
                      while($row_calls = $getAgentTotalRecords->fetch(PDO::FETCH_ASSOC)) {
                        if($row_calls['Duration'] !=0){
                          $total_sec = $total_sec +  $row_calls['Duration'];
@@ -573,7 +651,7 @@ class Csd {
                     "extension" => $row['extension'],
                     "name" => $row['username'],
                     "total_answered" => $totalMadeCalls,
-                    "total_duration" => $total_duration,
+                    "total_duration" =>  $total_duration,
                     "total_sec" => $total_sec
                      );
 

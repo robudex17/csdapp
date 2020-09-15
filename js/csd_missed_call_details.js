@@ -1,5 +1,6 @@
+var report = document.getElementById('missedcalls_export')
+   report.addEventListener('click', csdMissedCallsDetailsExport)
 
-document.getElementById('clickdate').addEventListener("submit", getMissedDetails);
 
 function getMissedDetails(){
   getLoginUser()
@@ -16,11 +17,11 @@ function getMissedDetails(){
     }
   };
   if(querystring !== ''){
-    var apiquery = `api/csd_missed_calls_details.php?${querystring}`;
+    var apiquery = `api/csdinbound/csd_inbound_missed_calls_details_api.php?${querystring}`;
     xhttp.open("GET", apiquery  , true);
     xhttp.send();
   }else {
-    xhttp.open("GET", "api/csd_missed_calls_details.php", true);
+    xhttp.open("GET", "api/csdinbound/csd_inbound_missed_calls_details_api.php", true);
     xhttp.send();
   }
  
@@ -78,3 +79,27 @@ function missedCallDetailsTable(res,tbody) {
     }
   }
 }
+
+function csdMissedCallsDetailsExport (){
+  var querystring = window.location.search.substring(1);
+   let split = querystring.split('&');
+   let startdate = split[0].split('=')[1];
+    let enddate = split[1].split('=')[1];
+
+
+    getdate = `(${startdate}) - (${enddate})`
+   if(startdate === enddate){
+          getdate = startdate
+    }
+
+  let url = `${HTTPADDR}api/csdinbound/csd_inbound_missed_calls_details_export_api.php?${querystring}`
+    fetch(url).then(response => {
+        return response.json();
+    }).then(data => {
+        data.options.fileName = `${getdate}--csd-missed-calldetails`
+        Jhxlsx.export(data.tableData, data.options);
+    })
+  
+  }
+ 
+

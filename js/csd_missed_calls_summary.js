@@ -1,11 +1,11 @@
 
-document.getElementById('date_form').addEventListener("submit", getMissedCallSummary);
+
 
 function getMissedCallSummary(){
   getLoginUser()
   var option = '&option=summary';
   var querystring = window.location.search.substring(1) + option;
-    var querydate = document.getElementById('date_form').getdate.value;
+   
    var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -16,11 +16,11 @@ function getMissedCallSummary(){
     }
   };
   if(querystring !== ''){
-    var apiquery = `api/csd_missed_calls_summary.php?${querystring}`;
+    var apiquery = `api/csdinbound/csd_inbound_missed_calls_summary_api.php?${querystring}`;
     xhttp.open("GET", apiquery  , true);
     xhttp.send();
   }else {
-    xhttp.open("GET", "api/csd_missed_calls_summary.php", true);
+    xhttp.open("GET", "api/csdinbound/csd_inbound_missed_calls_summary_api.php", true);
     xhttp.send();
   }
  

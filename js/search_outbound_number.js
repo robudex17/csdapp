@@ -24,8 +24,10 @@ function searchCalledNumberDetails() {
 
 
 function searchCalledNumberDetailsTable(res,tbody) {
-   var response = JSON.parse(res);
-  console.log(response)
+   var called_data = JSON.parse(res);  // the parent array caller detials and inbound tags array
+   var response = called_data[0];   //array of caller detials
+   var outbound_tags = called_data[1]; // array of inbound tags of caller
+
   var active_tbody = document.getElementById(tbody);
   var i;
   for(i=0; i< response.length ; i++){
@@ -81,10 +83,7 @@ function searchCalledNumberDetailsTable(res,tbody) {
         textAreaBody.cols = "62";
         textAreaBody.placeholder = "Put Your Comment Here."
         textAreaBody.textContent = response[i].comment;
-        //textAreaBody.textContent = response[i].extension + " Channel is Currently Active";
-         var outbound_tags = ['MISSED CALL RETURN CALL','DROPPED CALL RETURN CALL','CONSIGNEE CALL',
-                                   'COURIER CALL','FOLLOW UP CALL INQUIRY','FOLLOW UP CALL PAYMENT','FOLLOW UP CALL SHIPMENT',
-                            'FOLLOW UP CALL COMPLAINT', 'NO TAG']
+        
 
         var select_tag = document.createElement('SELECT')
        select_tag.setAttribute("id", i+" outbound_select_tag")

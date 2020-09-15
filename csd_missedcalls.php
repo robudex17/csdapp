@@ -45,17 +45,13 @@
 
     <main role="main" class="container">
           <div>
-             
+              <!-- <button class="btn btn-primary btn-lg btn-block" id="missedcalls_summary_export" > EXPORT <i class="fa fa-file-excel-o" aria-hidden="true"></i></button> -->
               <table class="table">
                 <thead class="thead-dark">
                    <tr>
                       <th scope="col" >Total Missed Calls</th>
                       <th scope="col">
-                        <form id="date_form" >
-                            <input type="date" name="getdate" id="getdate" >  
-                              <input class="btn" type="submit"  id="clickdate" value="Select_Date">
-                               <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mySearch" dataset-backdrop="static" dataset-keyboard="false">SEARCH</button> -->
-                          </form>
+                        <button type="button" class="btn btn-primary btn-small" data-toggle="modal" data-target="#myDateRange" dataset-backdrop="static" dataset-keyboard="false" id="selectdate">SELECT DATE</button>
                       </th>
                   </tr>
                 </thead>
@@ -64,6 +60,41 @@
                 </tbody>
             </table>
           </div>
+          <div class="modal fade" id="myDateRange" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+
+                    <h4 class="modal-title">Select Date Range</h4>
+                  </div>
+                  <div class="modal-body">
+                        <form method="GET" id="daterange" action="csd_missedcalls.php">
+                            <div class="form-group">
+                              <label for="startdate">From:</label>
+                              <input type="date" class="form-control" id="startdate" name="startdate" aria-describedby="dateHelp" placeholder="Add Tag" required="true" onchange="validateDate()">
+                            </div>
+                             <div class="form-group">
+                              <label for="enddate">To:</label>
+                              <input type="date" class="form-control" id="enddate" name="enddate" aria-describedby="dateHelp" placeholder="Add Tag" required="true" onchange="validateDate()">
+                            </div>
+                             
+                            
+                            <hr>
+                            <div class="text-right mb-3">
+                                <input type="submit" class="btn btn-primary ml-auto">
+                              <button type="button" class="btn btn-danger ml-auto"  data-dismiss="modal" >Close</button>
+                            </div>
+
+                    </form>
+                  </div>
+
+
+                </div>
+
+              </div>
+         </div>
            <script type="text/javascript">
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-36251023-1']);
@@ -75,6 +106,36 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();
+
+           //THIS FUNCTION IS TO MAKE SURE THAT USER CANNOT SELECT DATE LATER THAT THE CURRENT DATE
+            //AND STARTDATE CANNOT BE GREATER THAT THE ENDDATE
+            function validateDate(){ 
+
+            var startdate = document.getElementById('startdate').value.toString()
+            
+            var startdateSplit = startdate.split("-");
+            var newStartDate = new Date(startdateSplit[0],startdateSplit[1]-1,startdateSplit[2]);
+            var startdateTimeStamp = newStartDate.getTime();
+            
+            var enddate = document.getElementById('enddate').value.toString()
+            //get the timestamp of the  start date
+            var enddateSplit = enddate.split("-");
+            var newEndDate = new Date(enddateSplit[0],enddateSplit[1]-1,enddateSplit[2]);
+            var enddateTimeStamp = newEndDate.getTime();
+
+             var d = new Date();
+            
+             if(startdateTimeStamp > d.getTime() || enddateTimeStamp > d.getTime()){
+              alert('Selected Date Must Not be Greater on the Current Date')
+              document.getElementById('startdate').value = "";
+              document.getElementById('enddate').value = "";
+             }
+             if(startdateTimeStamp > enddateTimeStamp){
+              alert('StartDate Must not Greater on EndDate')
+              document.getElementById('startdate').value = "";
+              document.getElementById('enddate').value = "";
+             }
+          }
 
       </script>
          <script src="js/csd_missed_calls_summary.js"></script>  

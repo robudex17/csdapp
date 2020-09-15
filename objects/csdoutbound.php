@@ -265,7 +265,7 @@
                                  $total = $total + $row['Duration'];
                                  $EndTime  = str_replace("-", " ", $row['EndTimeStamp']);
                                  $EndTime = strtotime($EndTime);
-                                 $StartTime =  $EndTime - $duration;
+                                 $StartTime =  $EndTime - $row['Duration'];
 
                              }
                              // this is where the duration is available so no need to compute the duration but need to compute the start timestamp.
@@ -316,7 +316,7 @@
      public function csdOutboundCallAgentDetailsExport($extension,$username,$startdate,$enddate,$tagname){
 
           if($tagname == 'all'){
-         $query = "SELECT * FROM " . $this->csdoutbound . " WHERE Caller=? AND CallStatus='ANSWER' AND getDate BETWEEN ? AND ? ";
+         $query = "SELECT * FROM " . $this->csdoutbound . " WHERE Caller=? AND CallStatus='ANSWER' AND getDate BETWEEN ? AND ? ORDER BY StartTimeStamp DESC ";
          $stmnt = $this->conn->prepare($query);
 
          //bind values from question mark (?) place holder
@@ -325,7 +325,7 @@
           $stmnt->bindParam(3,$enddate);
 
       }else{
-         $query = "SELECT * FROM " . $this->csdoutbound . " WHERE Caller=? AND CallStatus='ANSWER' AND getDate BETWEEN ? AND ? AND tag=? ";
+         $query = "SELECT * FROM " . $this->csdoutbound . " WHERE Caller=? AND CallStatus='ANSWER' AND getDate BETWEEN ? AND ? AND tag=? ORDER BY StartTimeStamp DESC";
           $stmnt = $this->conn->prepare($query);
 
          //bind values from question mark (?) place holder

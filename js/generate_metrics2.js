@@ -10,6 +10,7 @@ var start_date_and_time = split_the_querystring[1];
 options.option_metrics = split_the_querystring[3].split("=")[1];
 options.duration_weight = split_the_querystring[4].split("=")[1];
 options.callcount_weight = split_the_querystring[5].split("=")[1];
+options.sorted_order = split_the_querystring[6].split("=")[1];
 
 function getMetricsExport(){
 var url = `${HTTPADDR}api/get_metrics.php?${querystring}`;
@@ -31,11 +32,7 @@ if(options.option_metrics =='tag'){
       var tags_options = []
 
       for (const [key, value] of Object.entries(dataobj)) {
-        // for (var t=0; t<tags_options.length ; t++){
-        //   if(key === tags_options[t]){
-        //     tags_options.splice(t,1)
-        //   }
-        //  }
+      
         if (typeof value === 'object'){
            
             for(const [key1,value1] of Object.entries(value)){
@@ -78,14 +75,49 @@ if(options.option_metrics =='tag'){
 
        }
 
+		 var sortedTags;
+		    if(options.sorted_order === "descending"){
+		    	sortedTags = array_tags.sort(function(a,b){
+		    	return b.filter(el =>{
+		    		if(typeof el === 'number'){
+		    			return el
+		    		}
+		    	}).reduce((subtotal,nextVal) => {
+		    		return subtotal + nextVal
+		    	},0) - a.filter(el => {
+		    		if(typeof el === 'number'){
+		    			return el
+		    		}
+		    	}).reduce((subtotal, nextVal) => {
+		    		return subtotal + nextVal
+		    	},0)
+		    })
+		    }else{
+		    	 sortedTags = array_tags.sort(function(a,b){
+		    	return a.filter(el =>{
+		    		if(typeof el === 'number'){
+		    			return el
+		    		}
+		    	}).reduce((subtotal,nextVal) => {
+		    		return subtotal + nextVal
+		    	},0) - b.filter(el => {
+		    		if(typeof el === 'number'){
+		    			return el
+		    		}
+		    	}).reduce((subtotal, nextVal) => {
+		    		return subtotal + nextVal
+		    	},0)
+		    	})
+		    }       
+
          //populate or put the value  in the table
-      for(var i= 0; i<array_tags.length ;i++){ 
+      for(var i= 0; i<sortedTags.length ;i++){ 
         var data_array = [];
-        for(var j=0 ; j<array_tags[i].length; j++){
-            if(array_tags[i][j] == "0" || array_tags[i][j] == 0){
+        for(var j=0 ; j<sortedTags[i].length; j++){
+            if(sortedTags[i][j] == "0" || sortedTags[i][j] == 0){
               var data = {text : ""}
             }else {
-               var data = {text : array_tags[i][j]}
+               var data = {text : sortedTags[i][j]}
             }
            
            
@@ -93,7 +125,7 @@ if(options.option_metrics =='tag'){
            
         }
         //filter out the non number element and get the total value of all number element in filtered array
-        var total = array_tags[i].filter(el => {
+        var total = sortedTags[i].filter(el => {
            if(typeof el === 'number'){
             return el
            }
@@ -102,7 +134,7 @@ if(options.option_metrics =='tag'){
         },0)
          var t = {text : total}
          data_array.push(t)
-        jsonobj.tableData[0].data.push(data_array)
+         jsonobj.tableData[0].data.push(data_array)
       }
        var data_range = { text : `Date Range: ${dataobj.dateRange}`}
        var grand_total_tag = {text : `Grand Total Tag: ${dataobj.total_records}`}
@@ -135,6 +167,31 @@ if(options.option_metrics =='tag'){
       var extension = {text :"EXTENSION"};
       metrics.push(name);
       metrics.push(extension);
+      
+      //perform map function to  response[1] array  to get  and add the total percentage to each object and make save it to new mapResponse array  
+		    var mapResponse = dataobj[1].map(function(el){
+		    	el.c_percentage = (Number(el.total_answered /dataobj[0].grand_total_counts)* Number(options.callcount_weight)).toFixed(3)
+		        el.d_percentage =(Number(el.total_sec /dataobj[0].grand_total_duration_sec) * Number(options.duration_weight)).toFixed(3)	
+		        el.total_percentage =  (Number(el.c_percentage) + Number(el.d_percentage)).toFixed(4)
+		         return el;
+
+		    })
+
+		     // adding sorting features
+		     var sortedResponse;
+              
+		     if(options.sorted_order === "descending"){
+		     	 sortedResponse = mapResponse.sort(function(a,b){
+		     	 	return b.total_percentage - a.total_percentage;
+		    	   
+		    	})
+		     }else {
+		     	 sortedResponse = mapResponse.sort(function(a,b){
+		     	 	return a.total_percentage - b.total_percentage;
+		    	   
+		    	})		     	
+		     }
+
       if(dataobj[0].duration_weight != 0 && dataobj[0].callcount_weight != 0 ){
         
         var total_counts = {text : "Total Counts(#)"};
@@ -148,18 +205,20 @@ if(options.option_metrics =='tag'){
         metrics.push(call_duration_percentage)
         metrics.push(total_percent)
         jsonobj.tableData[0].data.push(metrics)
-        for(var i=0;i<dataobj[1].length; i++){
+
+        
+        for(var i=0;i<sortedResponse.length; i++){
           let metrics = [];
           
-          let name = {text: `${dataobj[1][i].name}` };
-          let extension = {text : dataobj[1][i].extension};
-          let total_counts = {text :dataobj[1][i].total_answered };
-          let total_call_duration = {text : dataobj[1][i].total_duration };
-          let c_percentage = (Number(dataobj[1][i].total_answered /dataobj[0].grand_total_counts)* Number(dataobj[0].callcount_weight)).toFixed(3)
-          let d_percentage =(Number(dataobj[1][i].total_sec /dataobj[0].grand_total_duration_sec) * Number(dataobj[0].duration_weight)).toFixed(3)
-          let call_counts_percentage = {text : c_percentage + "%"};
-          let call_duration_percentage = {text : d_percentage + "%"};
-          let total = (Number(c_percentage) + Number(d_percentage)).toFixed(4)
+          let name = {text: `${sortedResponse[i].name}` };
+          let extension = {text : sortedResponse[i].extension};
+          let total_counts = {text :sortedResponse[i].total_answered };
+          let total_call_duration = {text : sortedResponse[i].total_duration };
+          // let c_percentage = (Number(sortedResponse[i].total_answered /dataobj[0].grand_total_counts)* Number(dataobj[0].callcount_weight)).toFixed(3)
+          // let d_percentage =(Number(sortedResponse[i].total_sec /dataobj[0].grand_total_duration_sec) * Number(dataobj[0].duration_weight)).toFixed(3)
+          let call_counts_percentage = {text : sortedResponse[i].c_percentage + "%"};
+          let call_duration_percentage = {text : sortedResponse[i].d_percentage + "%"};
+          let total = sortedResponse[i].total_percentage
           let total_percent = {text :  `${total}%` };
           metrics.push(name);
           metrics.push(extension);
@@ -193,17 +252,17 @@ if(options.option_metrics =='tag'){
         metrics.push(call_counts_percentage)
         metrics.push(total_percent)
         jsonobj.tableData[0].data.push(metrics)
-         for(var i=0;i<dataobj[1].length; i++){
-             let metrics = [];
+         for(var i=0;i<sortedResponse.length; i++){
+            let metrics = [];
             let blank = [];
-            let name = {text: `${dataobj[1][i].name}` };
-            let extension = {text : dataobj[1][i].extension};
-            let total_counts = {text :dataobj[1][i].total_answered };
-            let c_percentage = (Number(dataobj[1][i].total_answered /dataobj[0].grand_total_counts)* Number(dataobj[0].callcount_weight)).toFixed(3)
+            let name = {text: `${sortedResponse[i].name}` };
+            let extension = {text : sortedResponse[i].extension};
+            let total_counts = {text :sortedResponse[i].total_answered };
+            let c_percentage = sortedResponse[i].c_percentage //(Number(sortedResponse[i].total_answered /dataobj[0].grand_total_counts)* Number(dataobj[0].callcount_weight)).toFixed(3)
             let call_counts_percentage = {text : c_percentage + "%"};
             let total = c_percentage
             let total_percent = {text :  `${total}%` };
-             metrics.push(name);
+            metrics.push(name);
             metrics.push(extension);
             metrics.push(total_counts)
             metrics.push(call_counts_percentage)
@@ -222,8 +281,6 @@ if(options.option_metrics =='tag'){
            jsonobj.options.fileName = `${dataobj[0].option}-${dataobj[0].datetimeRange}-callcounts`;
         Jhxlsx.export(jsonobj.tableData, jsonobj.options);
 
-
-
       }
       //generate callduration metrics
       if(dataobj[0].callcount_weight == 0){
@@ -235,16 +292,16 @@ if(options.option_metrics =='tag'){
         metrics.push(total_percent)
         jsonobj.tableData[0].data.push(metrics)
         console.log(JSON.stringify(jsonobj));
-         for(var i=0;i<dataobj[1].length; i++){
+         for(var i=0;i<sortedResponse.length; i++){
             let metrics = [];
             let blank = [];
-            let name = {text: `${dataobj[1][i].name}` };
-            let extension = {text : dataobj[1][i].extension};
-            let total_call_duration = {text : dataobj[1][i].total_duration };
-            let d_percentage =(Number(dataobj[1][i].total_sec /dataobj[0].grand_total_duration_sec) * Number(dataobj[0].duration_weight)).toFixed(3)
+            let name = {text: `${sortedResponse[i].name}` };
+            let extension = {text : sortedResponse[i].extension};
+            let total_call_duration = {text : sortedResponse[i].total_duration };
+            let d_percentage = sortedResponse[i].d_percentage  //(Number(sortedResponse[i].total_sec /dataobj[0].grand_total_duration_sec) * Number(dataobj[0].duration_weight)).toFixed(3)
             let call_duration_percentage = {text : d_percentage + "%"};
             let total = d_percentage
-           let total_percent = {text :  `${total}%` };
+            let total_percent = {text :  `${total}%` };
            metrics.push(name);
            metrics.push(extension);
            metrics.push(total_call_duration)
@@ -253,10 +310,9 @@ if(options.option_metrics =='tag'){
            jsonobj.tableData[0].data.push(metrics)
           
 
-
          }
          let grandata = [];
-          let grand_total_duration = {text: 'Grand Total Call Duration(HH:MM:SS): ' + dataobj[0].grand_total_duration };
+         let grand_total_duration = {text: 'Grand Total Call Duration(HH:MM:SS): ' + dataobj[0].grand_total_duration };
          let date_time_range = {text: 'Date Range: ' + dataobj[0].datetimeRange}
         jsonobj.tableData[0].data.push(blank);
         grandata.push(date_time_range);
@@ -285,6 +341,7 @@ function getMetrics(){
    options.option_metrics = split_the_querystring[3].split("=")[1];
    options.duration_weight = split_the_querystring[4].split("=")[1];
    options.callcount_weight = split_the_querystring[5].split("=")[1];
+   options.sorted_order = split_the_querystring[6].split("=")[1];
 
    //hide the duration and callcounts table and make the tag metrics table visible
    
@@ -377,13 +434,50 @@ function getMetricsTagTable(res){
     }
 
    }
+
+    //sort the tags base on the selected order
+    var sortedTags;
+    if(options.sorted_order === "descending"){
+    	sortedTags = array_tags.sort(function(a,b){
+    	return b.filter(el =>{
+    		if(typeof el === 'number'){
+    			return el
+    		}
+    	}).reduce((subtotal,nextVal) => {
+    		return subtotal + nextVal
+    	},0) - a.filter(el => {
+    		if(typeof el === 'number'){
+    			return el
+    		}
+    	}).reduce((subtotal, nextVal) => {
+    		return subtotal + nextVal
+    	},0)
+    })
+    }else{
+    	 sortedTags = array_tags.sort(function(a,b){
+    	return a.filter(el =>{
+    		if(typeof el === 'number'){
+    			return el
+    		}
+    	}).reduce((subtotal,nextVal) => {
+    		return subtotal + nextVal
+    	},0) - b.filter(el => {
+    		if(typeof el === 'number'){
+    			return el
+    		}
+    	}).reduce((subtotal, nextVal) => {
+    		return subtotal + nextVal
+    	},0)
+    	})
+    }
+   
     //populate or put the value  in the table
-    for(var i= 0; i<array_tags.length ;i++){ 
+    for(var i= 0; i<sortedTags.length ;i++){ 
       var tr = document.createElement('tr')
       var tdtotal = document.createElement('td')
-      for(var j=0 ; j<array_tags[i].length; j++){
+      for(var j=0 ; j<sortedTags[i].length; j++){
        var td = document.createElement('td')
-       td.textContent = array_tags[i][j]
+       td.textContent = sortedTags[i][j]
        if(td.textContent == '0' || td.textContent == 0){
         td.textContent= ''
        }
@@ -391,7 +485,7 @@ function getMetricsTagTable(res){
        table_tag.appendChild(tr)
       }
       //filter out the non number element and get the total value of all number element in filtered array
-      var total = array_tags[i].filter(el => {
+      var total = sortedTags[i].filter(el => {
          if(typeof el === 'number'){
           return el
          }
@@ -422,71 +516,98 @@ function getMetricsTable(res,tbody) {
       collection_tbody.appendChild(tr);
 
     }else{
-    document.getElementById('options').textContent = `${response[0].option.toString().toUpperCase()}#`;
-    document.getElementById('call_count_percentage').textContent = `Call Counts Percentage(${options.callcount_weight}%)`
-   document.getElementById('call_duration_percentage').textContent = `Call Duration Percentage(${options.duration_weight}%)`
-   document.getElementById('date_time_range').textContent = response[0].datetimeRange;
-   document.getElementById('grand_total_counts').innerHTML = `Grand Total Counts:<span class="font-weight-bold text-danger">${response[0].grand_total_counts}</span>`;
-   document.getElementById('grand_total_call_duration').innerHTML = `Grand Total Call Duration(HH:MM:SS): <span class="font-weight-bold text-danger">${response[0].grand_total_duration}</span>` ;
+		    document.getElementById('options').textContent = `${response[0].option.toString().toUpperCase()}#`;
+		    document.getElementById('call_count_percentage').textContent = `Call Counts Percentage(${options.callcount_weight}%)`
+		   document.getElementById('call_duration_percentage').textContent = `Call Duration Percentage(${options.duration_weight}%)`
+		   document.getElementById('date_time_range').textContent = response[0].datetimeRange;
+		   document.getElementById('grand_total_counts').innerHTML = `Grand Total Counts:<span class="font-weight-bold text-danger">${response[0].grand_total_counts}</span>`;
+		   document.getElementById('grand_total_call_duration').innerHTML = `Grand Total Call Duration(HH:MM:SS): <span class="font-weight-bold text-danger">${response[0].grand_total_duration}</span>` ;
 
-   if(response[0].callcount_weight == 0){
-       document.getElementById('call_count_percentage').style.display = 'none';
-       document.getElementById('grand_total_counts').style.display = 'none';
-       document.getElementById('total_counts').style.display = 'none';
-   }
-   if(response[0].duration_weight == 0){
-       document.getElementById('call_duration_percentage').style.display = 'none';
-       document.getElementById('grand_total_call_duration').style.display = 'none';
-       document.getElementById('total_duration').style.display = 'none';
-   }
-    var i;
-    for(i=0; i< response[1].length ; i++){
-      //create elements
-      var tr =  document.createElement('tr');
-      var tdi = document.createElement('td');
-      var tdname = document.createElement('td');
-      var tdextension = document.createElement('td');
-      var tdtotalcallcounts = document.createElement('td');
-      var tdtotalduration = document.createElement('td');
-      var call_count_percentage = document.createElement('td');
-      var call_duration_percentage = document.createElement('td');
-      var total_percentage = document.createElement('td');
+		   if(response[0].callcount_weight == 0){
+		       document.getElementById('call_count_percentage').style.display = 'none';
+		       document.getElementById('grand_total_counts').style.display = 'none';
+		       document.getElementById('total_counts').style.display = 'none';
+		   }
+		   if(response[0].duration_weight == 0){
+		       document.getElementById('call_duration_percentage').style.display = 'none';
+		       document.getElementById('grand_total_call_duration').style.display = 'none';
+		       document.getElementById('total_duration').style.display = 'none';
+		   }
+		   
+            //perform map function to  response[1] array  to get  and add the total percentage to each object and make save it to new mapResponse array  
+		    var mapResponse = response[1].map(function(el){
+		    	el.c_percentage = (Number(el.total_answered /response[0].grand_total_counts)* Number(options.callcount_weight)).toFixed(3)
+		        el.d_percentage =(Number(el.total_sec /response[0].grand_total_duration_sec) * Number(options.duration_weight)).toFixed(3)	
+		        el.total_percentage =  (Number(el.c_percentage) + Number(el.d_percentage)).toFixed(4)
+		         return el;
+
+		    })
+
+		     // adding sorting features
+		     var sortedResponse;
+              
+		     if(options.sorted_order === "descending"){
+		     	 sortedResponse = mapResponse .sort(function(a,b){
+		     	 	return b.total_percentage - a.total_percentage;
+		    	   
+		    	})
+		     }else {
+		     	 sortedResponse = mapResponse .sort(function(a,b){
+		     	 	return a.total_percentage - b.total_percentage;
+		    	   
+		    	})		     	
+		     }
+
+		   
+
+		    var i;
+		    for(i=0; i< sortedResponse.length ; i++){
+		      //create elements
+		      var tr =  document.createElement('tr');
+		      var tdi = document.createElement('td');
+		      var tdname = document.createElement('td');
+		      var tdextension = document.createElement('td');
+		      var tdtotalcallcounts = document.createElement('td');
+		      var tdtotalduration = document.createElement('td');
+		      var call_count_percentage = document.createElement('td');
+		      var call_duration_percentage = document.createElement('td');
+		      var total_percentage = document.createElement('td');
 
 
-      if(response[0].callcount_weight == 0){
-       call_count_percentage.style.display = 'none';
-       tdtotalcallcounts.style.display = 'none';
-   }
-   if(response[0].duration_weight == 0){
-      tdtotalduration.style.display = 'none';
-      call_duration_percentage.style.display = 'none';
-   }
+		      if(response[0].callcount_weight == 0){
+		       call_count_percentage.style.display = 'none';
+		       tdtotalcallcounts.style.display = 'none';
+		   }
+		   if(response[0].duration_weight == 0){
+		      tdtotalduration.style.display = 'none';
+		      call_duration_percentage.style.display = 'none';
+		   }
 
-      //put values on the elements
-      tdi.textContent = i+1;
-      tdextension.textContent = response[1][i].extension;
-      tdname.textContent = response[1][i].name;
-      tdtotalcallcounts.textContent = response[1][i].total_answered;
-      tdtotalduration.textContent = response[1][i].total_duration;
-      var c_percentage = (Number(response[1][i].total_answered /response[0].grand_total_counts)* Number(options.callcount_weight)).toFixed(3)
-      var d_percentage =(Number(response[1][i].total_sec /response[0].grand_total_duration_sec) * Number(options.duration_weight)).toFixed(3)
-      call_count_percentage.textContent = c_percentage + '%'
-      call_duration_percentage.textContent = d_percentage + '%'
-      total_percentage.textContent = (Number(c_percentage) + Number(d_percentage)).toFixed(4) + '%';
+		      //put values on the elements
+		      tdi.textContent = i+1;
+		      tdextension.textContent = sortedResponse[i].extension;
+		      tdname.textContent = sortedResponse[i].name;
+		      tdtotalcallcounts.textContent = sortedResponse[i].total_answered;
+		      tdtotalduration.textContent = sortedResponse[i].total_duration;
+		     
+		      call_count_percentage.textContent = sortedResponse[i].c_percentage + '%'
+		      call_duration_percentage.textContent = sortedResponse[i].d_percentage + '%'
+		     
+		      total_percentage.textContent = sortedResponse[i].total_percentage + '%'
 
-      //tds to tr
+		      //tds to tr
 
-      tr.appendChild(tdi);
-      tr.appendChild(tdname);
-      tr.appendChild(tdextension);
+		      tr.appendChild(tdi);
+		      tr.appendChild(tdname);
+		      tr.appendChild(tdextension);
 
-      tr.appendChild(tdtotalcallcounts);
-      tr.appendChild(tdtotalduration);
-      tr.appendChild(call_count_percentage);
-       tr.appendChild(call_duration_percentage);
-       tr.appendChild(total_percentage);
-      //append tr to tbody
-      collection_tbody.appendChild(tr);
-    }
-  }
+		      tr.appendChild(tdtotalcallcounts);
+		      tr.appendChild(tdtotalduration);
+		      tr.appendChild(call_count_percentage);
+		       tr.appendChild(call_duration_percentage);
+		       tr.appendChild(total_percentage);
+		      //append tr to tbody
+		      collection_tbody.appendChild(tr);
+		    }
+		  }
 }

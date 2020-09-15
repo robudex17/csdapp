@@ -11,9 +11,9 @@ function getCsdOutboundCallSummaryExport(){
    var getmonth = months[d.getMonth()];
    var getdate = `${d.getFullYear()}-${getmonth}-${d.getDate()}`;
    console.log(getdate)
-  var url = `${HTTPADDR }api/csdoutbound/csd_outbound_call_agent_details_export_api.php`;
+  var url = `${HTTPADDR }api/csdoutbound/csd_outbound_call_summary_export_api.php`;
   if (querystring !== ''){
-       url = `${HTTPADDR}api/csdoutbound/csd_outbound_call_agent_details_export_api.php?${querystring}`;
+       url = `${HTTPADDR}api/csdoutbound/csd_outbound_call_summary_export_api.php?${querystring}`;
        var splitquery = querystring.split('&');
        var startdate = splitquery[0].split('=')[1];
        var enddate = splitquery[1].split('=')[1]

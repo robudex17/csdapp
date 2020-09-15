@@ -7,20 +7,23 @@ date_default_timezone_set('Asia/Tokyo');
 // // database connection will be here...
 
 // //include database and object files
-include_once '../config/database.php';
-include_once '../objects/csd.php';
+include_once '../../config/database.php';
+include_once '../../objects/csd.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
 $csd = new Csd($db);
 
-if(isset($_GET['getdate']) && isset($_GET['option']) ){
+if(isset($_GET['startdate']) && isset($_GET['enddate']) && isset($_GET['option']) ){
 
-	$getdate = $_GET['getdate'];
+	$startdate = $_GET['startdate'];
+	$enddate = $_GET['enddate'];
 	$option =  $_GET['option'];
 }else{
-	$getdate = date('Y-m-d');
-	$option = 'details';
+	$startdate = date('Y-m-d');
+	$enddate = date('Y-m-d');
+	$option = 'summary';
+	
 }
-$stmnt = $csd->csdMissedCalls($getdate,$option);
+$stmnt = $csd->csdMissedCalls($startdate,$enddate,$option);

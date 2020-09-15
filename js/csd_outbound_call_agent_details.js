@@ -52,7 +52,7 @@ function csdoutboundCallAgentDetailsExport() {
         }
 
     
-    let url = `${HTTPADDR}api/csdoutbound/csd_outbound_call_agent_details_api.php?${querystring}`
+    let url = `${HTTPADDR}api/csdoutbound/csd_outbound_call_agent_details_export_api.php?${querystring}`
     fetch(url).then(response => {
         return response.json();
     }).then(data => {
