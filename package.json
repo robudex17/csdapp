@@ -1,0 +1,22 @@
+{
+  "name": "csdapp",
+  "version": "1.0.0",
+  "description": "Converting from MPA to SPA application",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robudex17/csdapp.git"
+  },
+  "author": "Rogmer Bulaclac",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robudex17/csdapp/issues"
+  },
+  "homepage": "https://github.com/robudex17/csdapp#readme"
+}
