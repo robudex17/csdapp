@@ -30,30 +30,29 @@ function logout() {
 
 function alreadyLogin() {
 
-  var jwt = getCookie('jwt')
-  if (jwt != ''){
-    window.location.href = HTTPADDR
-  }
-
-
+  var jwt = getCookie('jwt',function(jwt){
+  	 if (jwt != ''){
+     window.location.href = HTTPADDR
+    }
+  })  
 }
 
 function getLoginUser() {
-  getTotalCounts()
-  var jwt = getCookie('jwt');
+  
+   getCookie('jwt', function(jwt){
+	   	if (jwt === ''){
+	    window.location.href = `${HTTPADDR}login.php`;
+	  }else{
+	    getTotalCounts()
+	    var token = JSON.parse(decodeToken(jwt));
+	    document.getElementById('user').textContent = token.data.name;
+	    document.getElementById('hidden_extension').value = token.data.extension;
+	    document.getElementById('position').value  = token.data.position;
+	    //document.getElementById('hidden_username') = token.data.name;
+	  }
+  });
 
-  if (jwt === ''){
-    window.location.href = `${HTTPADDR}login.php`;
-  }else{
-
-    var token = JSON.parse(decodeToken(jwt));
-    document.getElementById('user').textContent = token.data.name;
-    document.getElementById('hidden_extension').value = token.data.extension;
-    document.getElementById('position').value  = token.data.position;
-    //document.getElementById('hidden_username') = token.data.name;
-
-
-  }
+  
 }
 
 // function to set cookie
@@ -65,7 +64,24 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 // get or read cookie
-function getCookie(cname){
+// function getCookie(cname){
+//     var name = cname + "=";
+//     var decodedCookie = decodeURIComponent(document.cookie);
+//     var ca = decodedCookie.split(';');
+//     for(var i = 0; i <ca.length; i++) {
+//         var c = ca[i];
+//         while (c.charAt(0) == ' '){
+//             c = c.substring(1);
+//         }
+
+//         if (c.indexOf(name) == 0) {
+//             return c.substring(name.length, c.length);
+//         }
+//     }
+//     return "";
+// }
+
+function getCookie(cname,callback){
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
@@ -76,12 +92,13 @@ function getCookie(cname){
         }
 
         if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
+            callback(c.substring(name.length, c.length));
+        }else{
+        	callback("")
         }
     }
-    return "";
+    
 }
-
 function decodeToken(token){
   var playload = atob(token.split('.')[1]);
     return playload;
