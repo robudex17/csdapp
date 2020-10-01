@@ -104,10 +104,10 @@ function csdOutboundCallSummaryTable(res,tbody) {
       //put values on the elements
       tdi.textContent = i+1;
       tdextension.textContent = response[i].extension;
-      tdname.textContent = response[i].username;
-      tdtotalmadecalls.textContent = response[i].totalmadecalls;
-      tdtotal_duration.textContent = response[i].totalduration;
-     linkdate.href = response[i].calldetails;
+      tdname.textContent = response[i].name;
+      tdtotalmadecalls.textContent = response[i].total_counts;
+      tdtotal_duration.textContent = response[i].total_duration;
+     linkdate.href = response[i].call_details;
       linkdate.textContent = response[i].getdate;
       tddate.appendChild(linkdate)
       

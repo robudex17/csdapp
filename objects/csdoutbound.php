@@ -96,11 +96,11 @@
                  }
                  $outbound_agent_summary = array(
                     "extension" => $row['extension'],
-                    "username" => $row['username'],
-                    "totalmadecalls" => $totalMadeCalls,
-                    "totalduration" => $total_duration,
+                    "name" => $row['username'],
+                    "total_counts" => $totalMadeCalls,
+                    "total_duration" => $total_duration,
                     "getdate" => $getdate,
-                    "calldetails" => "csd_outbound_call_agent_details.php?extension=" . $row['extension'] . "&username=" . $row['username'] . "&startdate=" . $startdate. "&enddate=".$enddate ."&tagname=" .$tagname
+                    "call_details" => "csd_outbound_call_agent_details.php?extension=" . $row['extension'] . "&username=" . $row['username'] . "&startdate=" . $startdate. "&enddate=".$enddate ."&tagname=" .$tagname
 
                  );
 

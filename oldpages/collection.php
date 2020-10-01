@@ -1,43 +1,16 @@
 
+<?php include ('header.php');?>
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="images/favicon.ico">
-
-    <title>CSD PHILIPPINES CALLS MONITORING</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/offcanvas.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.4/xlsx.core.min.js"></script>
-  <script src="js/FileSaver.js"></script>
-  <script src="js/jhxlsx.js"></script>
-
-  </head>
-
-<body class="bg-light"  >
+<body class="bg-light" onload="getCollectionCallSummary()" >
 
      <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-      <a class="navbar-brand mr-auto mr-lg-0 "id="index_menu" href="index.php">CSD PHILIPPINES CALLS MONITORING</a>
+      <a class="navbar-brand mr-auto mr-lg-0 " id="index_menu" href="index.php">CSD PHILIPPINES CALLS MONITORING</a>
        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" href="#" id="user"></a>
                 <input type="hidden" name="hidden_extension" id="hidden_extension">
                  <input type="hidden" name="position" id="position">
-                 <input type="hidden" name="type" id="type" value="csdoutbound">
             </li>
             <li class="nav-item">
                 <button type="button" class="btn btn-primary btn-small btn-nav" id="logout" onclick="logout()">Logout</button>
@@ -48,7 +21,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     </nav>
-     <style> 
+    <style> 
        #index_menu:hover {
           color: magenta;
        }
@@ -59,19 +32,20 @@
         <a class="nav-link mx-0 px-2" href="active.php">ACTIVE</a>
         <a class="nav-link mx-0 px-2" href="inactive.php">INACTIVE</a>
         <a class="nav-link mx-0 px-2" href="csd_inbound.php">CSD-INBOUND</a>
-        <a class="nav-link mx-0 px-2 btn btn-primary btn-lg active" href="csd_outbound.php">CSD-OUTBOUND</a>
-        <a class="nav-link mx-0 px-2" href="csd_missedcalls.php">CSD-MISSED-CALLS </a>
+        <a class="nav-link mx-0 px-2" href="csd_outbound.php">CSD-OUTBOUND</a>
+         <a class="nav-link mx-0 px-2" href="csd_missedcalls.php">CSD-MISSED-CALLS</a>
         <a class="nav-link mx-0 px-2" href="parked_calls.php">PARKED-CALLS </a>
         <a class="nav-link mx-0 px-2" href="voicemails.php">VOICE-MAILS </a> 
-        <a class="nav-link mx-0 px-2" href="collection.php">COLLECTION-TEAM</a>
-       <a class="nav-link mx-0 px-2" href="management.php">MANAGEMENT</a>   
+        <a class="nav-link mx-0 px-2 btn btn-primary btn-lg active" href="collection.php">COLLECTION-TEAM</a>
+        <a class="nav-link mx-0 px-2" href="management.php">MANAGEMENT</a> 
+
        
       </nav>
 </div>
 
     <main role="main" class="container" >
           <div>
-             <button class="btn btn-primary btn-lg btn-block" id="outbound_summary_export" > EXPORT <i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+              <button class="btn btn-primary btn-lg btn-block" id="collection_summary_export" > EXPORT <i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
               <table class="table">
                 <thead class="thead-dark">
                    <tr>
@@ -81,19 +55,20 @@
                       <th scope="col" class="text-center">Total Made Calls </th>
                       <th scope="col">Total Calls Duration</th>
                       <th scope="col">
-                      
+                       
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myDateRange" dataset-backdrop="static" dataset-keyboard="false" id="selectdate">SELECT DATE</button>
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mySearch" dataset-backdrop="static" dataset-keyboard="false">SEARCH</button>
-                         
+                               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mySearch" dataset-backdrop="static" dataset-keyboard="false">SEARCH</button>
+                        
                       </th>
                   </tr>
                 </thead>
-                <tbody id="call-summary-body">
+                <tbody id="collection_summary">
                 
                 </tbody>
             </table>
           </div>
-           <div class="modal fade" id="mySearch" role="dialog">
+
+          <div class="modal fade" id="mySearch" role="dialog">
               <div class="modal-dialog">
               
                 <!-- Modal content-->
@@ -103,7 +78,7 @@
                     <h4 class="modal-title">SEARCH PHONE NUMBER</h4>
                    </div>
                    <div class="modal-body">
-                        <form method="GET" id="search_number" name="search_number" action="search_outbound_number.php">
+                        <form method="GET" id="search_number" name="search_number" action="search_collection_number.php">
                             <div class="form-group">
                               <label for="search_caller">Search</label>
                               <input type="text" class="form-control" id="callednumber" name="callednumber" aria-describedby="callednumber" placeholder="Type or Paste number here!" required="true">
@@ -124,7 +99,7 @@
       
                </div>
            </div>
-            <div class="modal fade" id="myDateRange" role="dialog">
+           <div class="modal fade" id="myDateRange" role="dialog">
               <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -134,7 +109,7 @@
                     <h4 class="modal-title">Select Date Range</h4>
                   </div>
                   <div class="modal-body">
-                        <form method="GET" id="daterange" action="csd_outbound.php">
+                        <form method="GET" id="daterange" action="collection.php">
                             <div class="form-group">
                               <label for="startdate">From:</label>
                               <input type="date" class="form-control" id="startdate" name="startdate" aria-describedby="dateHelp" placeholder="Add Tag" required="true" onchange="validateDate()">
@@ -166,7 +141,7 @@
 
               </div>
          </div>
-      <script type="text/javascript">
+       <script type="text/javascript">
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-36251023-1']);
           _gaq.push(['_setDomainName', 'jqueryscript.net']);
@@ -208,21 +183,9 @@
              }
           }
 
-      </script>  
+      </script>
     </main>
- 
 
-     <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/holder.min.js"></script>
-    <script src="js/offcanvas.js"></script>
-    <script src="js/script.js"></script>
-    <script type="module" src="js/controllers/callctrl.js"></script>  
-  </body>
-</html>
+
+ <script src="js/collection_call_summary.js"></script>
+ <?php include ('footer.php');?>

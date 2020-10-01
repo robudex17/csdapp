@@ -1,0 +1,1 @@
+export const HTTPADDR = "http://192.168.70.250/sbtph_csd_dev/";

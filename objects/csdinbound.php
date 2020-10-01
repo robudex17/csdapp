@@ -112,7 +112,7 @@ class CSDINBOUND {
 		            $agent = array(
 		            	"extension" => $row['extension'],
 		            	"name" => $row['username'],
-		            	"total_answered" => $total_answered,
+		            	"total_counts" => $total_answered,
 		            	"total_duration" => $total_duration,
 		            	"getdate" => $getdate,
 		                "call_details" => "csd_inbound_call_agent_details.php?extension=" .$row['extension'] . "&username=" .$row['username'] . "&startdate=" .$startdate . "&enddate=".$enddate ."&tagname=" .$tagname

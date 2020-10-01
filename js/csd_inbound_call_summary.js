@@ -109,7 +109,7 @@ function csdInboundCallSummaryTable(res,tbody) {
       tdi.textContent = i+1;
       tdextension.textContent = response[i].extension;
       tdname.textContent = response[i].name;
-      tdtotal_answered.textContent = response[i].total_answered;
+      tdtotal_answered.textContent = response[i].total_counts;
       tdtotal_duration.textContent = response[i].total_duration;
       linkdate.href = response[i].call_details;
       linkdate.textContent = response[i].getdate

@@ -257,10 +257,10 @@ class Collection {
                  $collection_agent_summary = array(
                     "extension" => $row['extension'],
                     "name" => $row['name'],
-                    "totalmadecalls" => $totalMadeCalls,
-                    "totalduration" => $total_duration,
+                    "total_counts" => $totalMadeCalls,
+                    "total_duration" => $total_duration,
                     "getdate" => $getdate,
-                    "calldetails" => "collection_call_agent_details.php?extension=" . $row['extension'] . "&username=" . $row['name'] .  "&startdate=" . $startdate. "&enddate=".$enddate ."&tagname=" .$tagname
+                    "call_details" => "collection_call_agent_details.php?extension=" . $row['extension'] . "&username=" . $row['name'] .  "&startdate=" . $startdate. "&enddate=".$enddate ."&tagname=" .$tagname
                  );
 
                  array_push($collection_summary, $collection_agent_summary);
