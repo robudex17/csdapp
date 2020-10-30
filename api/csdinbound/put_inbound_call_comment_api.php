@@ -22,9 +22,10 @@ $startimestamp = htmlspecialchars($data->startimestamp) ;
 $getdate =  htmlspecialchars($data->getdate);
 $whoansweredcall = htmlspecialchars($data->whoansweredcall);
 $comment = htmlspecialchars($data->comment);
+$commentby = htmlspecialchars($data->commentby);
 $tag= htmlspecialchars($data->tag);
 
-$stmnt = $csdinbound->putInboundCallComment($startimestamp, $getdate, $whoansweredcall, $comment,$tag);
+$stmnt = $csdinbound->putInboundCallComment($startimestamp, $getdate, $whoansweredcall, $comment,$commentby,$tag);
 //$stmnt = $csd->putComment("20200602-000009", "2020-06-02", "6308", "", "");
 // echo json_encode($data);
 //echo $startimestamp;

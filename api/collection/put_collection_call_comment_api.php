@@ -22,7 +22,8 @@ $starttimestamp = htmlspecialchars($data->starttimestamp) ;
 $getdate =  htmlspecialchars($data->getdate);
 $caller = htmlspecialchars($data->caller);
 $comment = htmlspecialchars($data->comment);
+$commentby = htmlspecialchars($data->commentby);
 $tag = htmlspecialchars($data->tag);
 
-$stmnt = $collection->putCollectionCallComment($starttimestamp, $getdate, $caller, $comment,$tag);
+$stmnt = $collection->putCollectionCallComment($starttimestamp, $getdate, $caller,$comment,$commentby,$tag);
 //$stmnt = $csd->putComment("20190920-131217", "2019-09-20", "6328", "This is updated comment");

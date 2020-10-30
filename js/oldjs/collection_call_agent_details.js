@@ -1,48 +1,46 @@
 var report = document.getElementById('export')
-   report.addEventListener('click', csdoutboundCallAgentDetailsExport)
+   report.addEventListener('click', collectionCallAgentDetailsExport)
 
-//document.getElementById('clickdate').addEventListener('submit', csdoutboundCallDetails)
+document.getElementById('clickdate').addEventListener('submit', collectionCallAgentDetails)
 
-
-function csdoutboundCallAgentDetails() {
+function collectionCallAgentDetails() {
 
     getLoginUser()
     var querystring = window.location.search.substring(1);
 
-    //get username and extension from the query
+    //get name and extension from the query
     var split = querystring.split('&');
     var extension = split[0].split('=');
-    var username = split[1].split('=');
+    var name = split[1].split('=');
     
    document.getElementById('extension').value = extension[1];
-   document.getElementById('username').value = username[1];
+   document.getElementById('name').value = name[1];
    document.getElementById('modalextension').value = extension[1];
-   document.getElementById('modalusername').value = username[1];
-   document.getElementById('agentusername').innerHTML = username[1];
-
+   document.getElementById('modalname').value = name[1];
+   document.getElementById('agentname').innerHTML = name[1];
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        var tbody = 'csdoutbound_call_details_tbody'
-        csdoutboundCallAgentDetailsTable(this.responseText,tbody);
+        var tbody = 'collection_call_details_tbody'
+        collectionCallAgentDetailsTable(this.responseText,tbody);
         
       }
     };
    
-      var apiquery = `api/csdoutbound/csd_outbound_call_agent_details_api.php?${querystring}`;
+      var apiquery = `api/collection/collection_call_agent_details_api.php?${querystring}`;
       xhttp.open("GET", apiquery  , true);
       xhttp.send();
      
 }
 
-function csdoutboundCallAgentDetailsExport() {
+function collectionCallAgentDetailsExport() {
 
     let querystring = window.location.search.substring(1);
     let split = querystring.split('&');
     let extension = split[0].split('=');
-    let username = split[1].split('=');
-   let startdate = split[2].split('=')[1];
+    let name = split[1].split('=');
+    let startdate = split[2].split('=')[1];
     let enddate = split[3].split('=')[1];
     let tag = split[4].split('=')[1];
 
@@ -51,34 +49,31 @@ function csdoutboundCallAgentDetailsExport() {
           getdate = startdate
         }
 
-    
-    let url = `${HTTPADDR}api/csdoutbound/csd_outbound_call_agent_details_export_api.php?${querystring}`
+    let url = `${HTTPADDR}api/collection/collection_call_agent_details_export_api.php?${querystring}`
     fetch(url).then(response => {
         return response.json();
     }).then(data => {
-        data.options.fileName = `${username}-${getdate}-${tag}-outbound-calldetails`
+        data.options.fileName = `${name}-${getdate}-${tag}-collection-calldetails`
         Jhxlsx.export(data.tableData, data.options);
     })
 }
 
 
-function csdoutboundCallAgentDetailsTable(res,tbody) {
+function collectionCallAgentDetailsTable(res,tbody) {
    var agent_data = JSON.parse(res);  // the parent array  agent call detials and inbound tags array
    var response = agent_data[0];   //array of agent call detials
-   var outbound_tags = agent_data[1]; // array of inbound tags of agents
+   var collection_tags = agent_data[1]; // array of inbound tags of agents
+  var active_tbody = document.getElementById(tbody);
+  var i;
   
    var tagname_select = document.getElementById('tagname')
-   
-   for(var t=0;t<outbound_tags.length;t++){
+   for(var t=0;t<collection_tags.length;t++){
         var option_el = document.createElement('option')
-        option_el.setAttribute("value",outbound_tags[t])
-        var text_node = document.createTextNode(outbound_tags[t])
+        option_el.setAttribute("value",collection_tags[t])
+        var text_node = document.createTextNode(collection_tags[t])
         option_el.appendChild(text_node)
         tagname_select.appendChild(option_el)
        }
-
-  var active_tbody = document.getElementById(tbody);
-  var i;
   for(i=0; i< response.length ; i++){
     //create elements
     var tr =  document.createElement('tr');
@@ -130,14 +125,10 @@ function csdoutboundCallAgentDetailsTable(res,tbody) {
         textAreaBody.cols = "62";
         textAreaBody.placeholder = "Put Your Comment Here."
         textAreaBody.textContent = response[i].comment;
-        //textAreaBody.textContent = response[i].extension + " Channel is Currently Active";
         
-        // var outbound_tags = ['MISSED CALL RETURN CALL','DROPPED CALL RETURN CALL','CONSIGNEE CALL',
-        //                            'COURIER CALL','FOLLOW UP CALL INQUIRY','FOLLOW UP CALL PAYMENT','FOLLOW UP CALL SHIPMENT',
-        //                     'FOLLOW UP CALL COMPLAINT', 'NO TAG']
 
         var select_tag = document.createElement('SELECT')
-       select_tag.setAttribute("id", i+" outbound_select_tag")
+       select_tag.setAttribute("id", i+" collection_select_tag")
        select_tag.style.width = "450px"
        var ptag = document.createElement('p')
        ptag.textContent = "SELECT TAG:"
@@ -145,10 +136,10 @@ function csdoutboundCallAgentDetailsTable(res,tbody) {
        ptag.style.margin = "0"
        ptag.style.fontWeight = "500"
 
-       for(var t=0;t<outbound_tags.length;t++){
+       for(var t=0;t<collection_tags.length;t++){
         var option_el = document.createElement('option')
-        option_el.setAttribute("value",outbound_tags[t])
-        var text_node = document.createTextNode(outbound_tags[t])
+        option_el.setAttribute("value",collection_tags[t])
+        var text_node = document.createTextNode(collection_tags[t])
         option_el.appendChild(text_node)
         select_tag.appendChild(option_el)
        }
@@ -181,26 +172,25 @@ function csdoutboundCallAgentDetailsTable(res,tbody) {
        // listenBtn.dataset.dismiss = "modal";
         updateBtn.textContent = "Update";
         updateBtn.addEventListener('click', function(e){
-            e.preventDefault() 
+            e.preventDefault();
            var id = e.path[0].id
             var getExistingComment = document.getElementById(id + "message")
-            var getExistingTag = document.getElementById(id+ " outbound_select_tag")
+            var getExistingTag = document.getElementById(id+ " collection_select_tag")
            var data = {};
             data.starttimestamp = response[id].starttimestamp;
             data.getdate = response[id].getDate
            data.caller =response[id].caller
            data.comment = getExistingComment.value
            data.tag =  getExistingTag.value
-           
             
-             fetch(`${HTTPADDR}api/csdoutbound/put_outbound_call_comment_api.php`, {method:'post', body:JSON.stringify(data)})
+             fetch(`${HTTPADDR}api/collection/put_collection_call_comment_api.php`, {method:'post', body:JSON.stringify(data)})
              .then(response => {
                  return response.json()
               }).then(res => {
                 
                   alert(res.message)
                  let params = `caller=${response[id].caller}&getdate=${response[id].getDate}&starttimestamp=${response[id].starttimestamp}`
-                 let url = `${HTTPADDR}api/csdoutbound/get_outbound_call_comment_api.php?${params}`
+                 let url = `${HTTPADDR}api/collection/get_collection_call_comment_api.php?${params}`
                  console.log(url)
                  return fetch(url)
              }).then(response => 
@@ -210,7 +200,7 @@ function csdoutboundCallAgentDetailsTable(res,tbody) {
                 let btncomment = document.getElementById(response[id].caller + id);
                 
                 console.log(btncomment.id)
-                if ( data.tag == "" || data.tag == "NO TAG"){
+                if (data.tag == "" || data.tag == "NO TAG"){
                      btncomment.textContent = "NO TAG";
                      btncomment.className  = "btn btn-outline-info btn-sm text-justify ";
                 }else {
@@ -220,7 +210,6 @@ function csdoutboundCallAgentDetailsTable(res,tbody) {
              }).catch(err =>{
                  console.log(err)
              })
-             
         })
 
         modalFooter.appendChild(updateBtn);
@@ -247,8 +236,8 @@ function csdoutboundCallAgentDetailsTable(res,tbody) {
     tdstarttime.textContent = response[i].startime;
     tdendtime.textContent = response[i].endtime;
     tdcallduration.textContent = response[i].callDuration;
-   // linkrecording.textContent = "Call Recording";
-   // linkrecording.href = response[i].callrecording;
+    //linkrecording.textContent = "Call Recording";
+    //linkrecording.href = response[i].callrecording;
     linkrecording.setAttribute("src",response[i].callrecording);
     linkrecording.setAttribute("controls","controls");
     linkrecording.style.width = "130px";
@@ -257,7 +246,7 @@ function csdoutboundCallAgentDetailsTable(res,tbody) {
     btncomment.id = response[i].caller + i;
     //Check if commeent is blank
     if(response[i].tag == "" || response[i].tag == "NO TAG"){
-        btncomment.textContent = "NO TAG";
+        btncomment.textContent = "TO TAG";
         btncomment.className  = "btn btn-outline-info btn-sm text-justify ";
     }else{
         btncomment.textContent = response[i].tag;

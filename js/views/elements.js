@@ -4,6 +4,11 @@ export const elements = {
 	addAgentFrom: document.querySelector('#addAgent'),
 	type: document.querySelector('#type'),
 	call_summary_body: document.querySelector('#call-summary-body'),
-	tagname: document.querySelector('#tagname')
+	call_detail_body: document.querySelector('#call-detail-body'),
+	tagname: document.querySelector('#tagname'),
+	agentname: document.querySelector('#agentname'),
+	modaltagcomment: document.querySelector('#modaltagcomment'),
+	modalextension: document.querySelector('#modalextension'),
+	modalname: document.querySelector('#modalname')
 	
 }

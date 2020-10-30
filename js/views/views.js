@@ -52,16 +52,73 @@ export const agentCallSummary = (agentCallSummary,id) =>{
 						<td>${agentCallSummary.total_counts}</td>
 						<td>${agentCallSummary.total_duration}</td>
 						<td>
-							<a href="csd_inbound_call_agent_details.php?extension=6308&amp;username=JM&amp;startdate=2020-10-02&amp;enddate=2020-10-02&amp;tagname=all">2020-10-02</a>
+							<a href="${agentCallSummary.call_details}">${agentCallSummary.getdate}</a>
 						</td>
 					</tr>
 				  `			
 		elements.call_summary_body.insertAdjacentHTML('beforeend', markup)		  
 	}
+
+export const agentCallDetails =(type,agent, id,tags) => {
+	let markup ;
+		markup = `<tr>
+					<td>${id+1}</td>
+					<td ${type !=='csdinbounddetails' ? 'style="display:none;"':''}>${agent.extension}</td>
+					<td>${agent.calledNumber}</td>
+					<td>${agent.caller}</td>
+					<td>${agent.callStatus}</td>
+					<td>${agent.startime}</td>
+					<td>${agent.endtime}</td>
+					<td>${agent.callDuration}</td>
+					<td>
+						<audio src="${agent.callrecording}" controls="controls" style="width: 130px;"></audio>
+					</td>
+					<td>${agent.getDate}</td>
+					<td>
+						<button id="${agent.extension}${id}" class=" ${agent.tag ==="" || agent.tag === "NO TAG" ? 'btn btn-outline-info btn-sm text-justify' : 'btn btn-info btn-sm text-justify red' } " data-toggle="modal" data-target="#myModal${id}" data-backdrop="static" data-keyboard="false" style="margin: 5px;">
+							${agent.tag ==="" || agent.tag === "NO TAG" ? 'NO TAG' : `${agent.tag}`} 
+						</button>
+					</td>
+				</tr>`
+
+	const modalform = `<div id="myModal${id}" class="modal" style="display: none;" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">YOUR COMMENT</h4>
+										<button class="close" data-dismiss="modal"></button>
+									</div>
+									<div class="modal-body">
+										<textarea id="${id}message" cols="62" placeholder="Put Your Comment Here.">${agent.comment}</textarea>
+										<p style="padding: 0px; margin: 0px; font-weight: 500;">SELECT TAG:</p>
+										<select id="${id}select_tag" style="width: 450px;">
+                                            ${tags.map((tag)=> {
+										  		return `<option value="${tag}">${tag}</option>`
+											})}
+										
+											${agent.tag === "" || agent.tag ==="NO TAG" ? 
+											    '<option value="" selected disabled>SELECT TAG</option>': 
+												`<option value="${agent.tag}"  selected>${agent.tag}</option>`}
+												
+										</select>
+									</div>
+									<div id="${agent.extension}modalfooter" class="modal-footer">
+										<button id="${id}" class="btn btn-primary" data-action="update">Update</button>
+										<button id=${agent.extension}cancel" class="btn btn-danger" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>`
+
+	elements.call_detail_body.insertAdjacentHTML('beforeend', markup);
+	elements.modaltagcomment.insertAdjacentHTML("beforeend",modalform);
+}
  export const tags = (tag) => {
 	const markup = ` <option value="${tag}">${tag}</option>`
 	elements.tagname.insertAdjacentHTML('beforeend', markup);
  }
+
+ 
 		
  export const getNewAgent = () => {
 	 return {

@@ -20,6 +20,12 @@
               "text": "CallStatus"
             },
             {
+              "text": "Comment"
+            },
+            {
+              "text": "CommentBy"
+            },
+            {
               "text": "Date"
             }
            

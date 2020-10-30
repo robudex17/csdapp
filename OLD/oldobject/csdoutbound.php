@@ -1,7 +1,5 @@
 <?php
 
-include_once '../../config/config.php';
-
  class CSDOUTBOUND {
 
  	//CSD class properties
@@ -25,7 +23,7 @@ include_once '../../config/config.php';
 	public $tagId;
 	private $tag = "tag";
 
-	
+	private $json_addr = "/var/www/html/sbtph_csd/json/";
   
    //create database connection  when this class instantiated
     public function __construct($db){
@@ -114,6 +112,73 @@ include_once '../../config/config.php';
             echo json_encode($data);
         }
 
+    }
+
+    public function csdOutboundCallSummaryExport($startdate,$enddate,$tagname){
+        $currentdate = date('Y-m-d');
+
+        if(strtotime($getdate) > strtotime($currentdate)){
+            echo json_encode(array ("message" => "No Records Found"));
+            exit();
+        }
+
+        // build the query
+        $query = "SELECT * FROM ".$this->csdinbound_table."  ";
+
+        //prepare the query
+        $stmnt = $this->conn->prepare($query);
+
+        if($stmnt->execute()){
+
+             $outbound_summary_template_json = file_get_contents($this->json_addr."outbound_summary.json");
+            //make an object
+            $outbound_summary_call_details_obj = json_decode($outbound_summary_template_json, FALSE);
+            while($row = $stmnt->fetch(PDO::FETCH_ASSOC)){
+                $getAgentTotalRecords = $this->getTotalAgentOutboundRecords($startdate,$enddate,$tagname,$row['extension']);
+
+                 //total answer calls of each agent
+                $totalMadeCalls = $getAgentTotalRecords->rowCount();
+                                /*This section calculate the total call duration of each agents..
+                                    Duration field is newly added  on the table.
+                                    On the  old records that Duration field is empty, Duraiton is calculated using the End and start timestamp
+                                */
+                 $total=0;
+                 while($row_calls = $getAgentTotalRecords->fetch(PDO::FETCH_ASSOC)) {
+                                     if($row_calls['Duration'] != 0){
+                                         $total = $total +  $row_calls['Duration'];
+                                     }else{
+                                            $endtime = explode("-", $row_calls['EndTimeStamp']);
+                                            $startime = explode("-", $row_calls['StartTimeStamp']);
+                                            $total = $total + ( (strtotime($endtime[0]) + strtotime($endtime[1])) - (strtotime($startime[0]) +strtotime($startime[1])) );
+                                     }
+                 }
+                // make H:m:s time format
+                 $total_duration = $this->secToHR($total);
+                  $getdate = '('.$startdate.')'. "-".'('.$enddate.')';
+                 if(strtotime($startdate) == strtotime($enddate)){
+                    $getdate = $startdate;
+                 }
+                 $outbound_summary = array();
+                 //put each field to each array
+                 $array_extension = array("text" => $row['extension']);
+                 $array_name = array("text" => $row['username']);
+                 $array_totalmadecalls = array("text" =>  $totalMadeCalls);
+                 $array_totalduration = array("text" => $total_duration);
+                 $array_getdate = array("text" => $getdate);
+
+                 //push it one by one
+                 array_push($outbound_summary,$array_extension);
+                 array_push($outbound_summary, $array_name);
+                 array_push($outbound_summary, $array_totalmadecalls);
+                 array_push($outbound_summary, $array_totalduration);
+                 array_push($outbound_summary, $array_getdate);
+
+                 array_push($outbound_summary_call_details_obj->tableData[0]->data, $outbound_summary);
+             }
+            //echo as json
+            echo json_encode($outbound_summary_call_details_obj);
+
+        }
     }
 
 
@@ -249,7 +314,106 @@ include_once '../../config/config.php';
         }
      }
 
-    
+     public function csdOutboundCallAgentDetailsExport($extension,$username,$startdate,$enddate,$tagname){
+
+          if($tagname == 'all'){
+         $query = "SELECT * FROM " . $this->csdoutbound . " WHERE Caller=? AND CallStatus='ANSWER' AND getDate BETWEEN ? AND ? ORDER BY StartTimeStamp DESC ";
+         $stmnt = $this->conn->prepare($query);
+
+         //bind values from question mark (?) place holder
+         $stmnt->bindParam(1, $extension);
+          $stmnt->bindParam(2,$startdate);
+          $stmnt->bindParam(3,$enddate);
+
+      }else{
+         $query = "SELECT * FROM " . $this->csdoutbound . " WHERE Caller=? AND CallStatus='ANSWER' AND getDate BETWEEN ? AND ? AND tag=? ORDER BY StartTimeStamp DESC";
+          $stmnt = $this->conn->prepare($query);
+
+         //bind values from question mark (?) place holder
+         $stmnt->bindParam(1, $extension);
+         $stmnt->bindParam(2,$startdate);
+          $stmnt->bindParam(3,$enddate);
+          $stmnt->bindParam(4,$tagname);
+      }
+
+         $stmnt->execute();
+
+         $num = $stmnt->rowCount();
+
+
+        if ($num != 0 ){
+
+            $outbound_call_details_template_json = file_get_contents($this->json_addr."outbound_call_details.json");
+            //make an object
+            $outbound_call_details_obj = json_decode($outbound_call_details_template_json, FALSE);
+
+            while($row = $stmnt->fetch(PDO::FETCH_ASSOC)){
+                            $total=0;
+                            //Duration Field is new added to the table and the old records has empty duration field so need to used start and end timestamp to compute the duration
+                             if($row['Duration'] != 0){
+                                 $total = $total + $row['Duration'];
+                                 $EndTime  = str_replace("-", " ", $row['EndTimeStamp']);
+                                 $EndTime = strtotime($EndTime);
+                                 $StartTime =  $EndTime - $duration;
+
+                             }
+                             // this is where the duration is available so no need to compute the duration but need to compute the start timestamp.
+                             else{
+                                 $endtime = explode("-", $row['EndTimeStamp']);
+                                 $startime = explode("-", $row['StartTimeStamp']);
+                                 $total = $total + ((strtotime($endtime[0]) + strtotime($endtime[1])) - (strtotime($startime[0]) +strtotime($startime[1])) );
+
+                                 $StartTime = str_replace("-", " ", $row['StartTimeStamp']);
+                                 $EndTime  = str_replace("-", " ", $row['EndTimeStamp']);
+                                 $StartTime = strtotime($StartTime);
+                                 $EndTime = strtotime($EndTime);
+                             }
+                                $duration = $this->secToHR($total);
+
+                //get recordings url
+                $base_url = "http://211.0.128.110/callrecording/outgoing/";
+                $date_folder = str_replace('-',"", $row['getDate']);
+                $filename = $row['Caller'] .'-'. $row['CalledNumber'] .'-' .$row['StartTimeStamp']. ".mp3";
+                $full_url = $base_url . $date_folder .'/'.$filename;
+
+                 $agent = array();
+                //put each field to each array
+                $array_username = array("text" => $username);
+                $array_extension = array("text" => $extension);
+                $array_calledNumber = array("text" => $row['CalledNumber']);
+                $array_caller = array("text" => $row['Caller'] );
+                $array_callStatus = array("text" => $row['CallStatus']);
+                $array_startime = array("text" => date( "h:i:s a",$StartTime));
+                $array_endtime = array("text" => date("h:i:s a",$EndTime));
+                $array_callDuration = array("text" => $duration );
+                $array_callrecording = array("text" => $full_url);
+                $array_getDate = array("text" => $row['getDate']);
+                $array_comment = array("text" =>  $row['comment']);
+                $array_tag = array("text" => $row['tag']);
+
+                //push it
+                array_push($agent,$array_username);
+                array_push($agent, $array_extension);
+                array_push($agent,$array_calledNumber);
+                array_push($agent,$array_caller);
+                array_push($agent, $array_callStatus);
+                array_push($agent,$array_startime);
+                array_push($agent, $array_endtime);
+                array_push($agent, $array_callDuration);
+                array_push($agent,$array_callrecording);
+                array_push($agent, $array_getDate);
+                array_push($agent,$array_comment);
+                array_push($agent,$array_tag);
+                array_push($outbound_call_details_obj->tableData[0]->data, $agent);
+            }
+            //http_response_code(201);
+
+            echo json_encode($outbound_call_details_obj);
+        }else{
+            echo json_encode(array ("message" => "No Records Found"));
+        }
+     }
+
       public function getTags($tagtype){
 
 	      //build query

@@ -1,5 +1,5 @@
   import CSD from "../../js/models/csd.js"
-  import * as agentViews from  "../../js/views/views.js"
+  import * as Views from  "../../js/views/views.js"
   import { elements }  from  "../../js/views/elements.js"
 
   //at page load IIFE function
@@ -11,7 +11,7 @@
 	const allAgents =  new CSD ();
 	allAgents.getAgents(elements.type.value).then(agents => {
 		 agents.forEach((agent,id) =>{
-		 	agentViews.agentHtml(agent,id)
+		 	Views.agentHtml(agent,id)
 		 })
 
 	}) .catch(err => console.log(err));
@@ -22,7 +22,7 @@
 		//ADDING AGENTS
 		if(e.target.matches('#addbtn')){
 			//1. get the Input in views
-			const newAgent = agentViews.getNewAgent()
+			const newAgent = Views.getNewAgent()
 			console.log(newAgent)
 			//2.create new Instance of CSD and save the new agent
 			const csd = new CSD(newAgent.name, newAgent.extension, newAgent.email);
@@ -32,10 +32,10 @@
 					return csd.getAgents(elements.type.value)
 			}).then(agents => {
 				//clear table
-					agentViews.clearTable()
+					Views.clearTable()
 				//3. output the new agents to the views
 					agents.forEach((agent,id) => {
-						agentViews.agentHtml(agent,id)	   
+						Views.agentHtml(agent,id)	   
 					})
 
 			}).catch(err => {
@@ -65,10 +65,10 @@
 			return Agent.getAgents(elements.type.value)
 		}).then(agents =>{
 			  //clear table
-			  agentViews.clearTable()
+			  Views.clearTable()
 			  //2. output the new agents to the views
 			  agents.forEach((agent,id) => {
-					agentViews.agentHtml(agent,id)	   
+					Views.agentHtml(agent,id)	   
 			  })
 		}).catch(err =>{
 			alert(err.message)
@@ -85,10 +85,10 @@
 				return Agent.getAgents(elements.type.value)
 			}).then(agents => {
 				 //clear table
-				 agentViews.clearTable()
+				 Views.clearTable()
 				 //2. output the new agents to the views
 				 agents.forEach((agent,id) => {
-					   agentViews.agentHtml(agent,id)	   
+					   Views.agentHtml(agent,id)	   
 				 })
 			}
 

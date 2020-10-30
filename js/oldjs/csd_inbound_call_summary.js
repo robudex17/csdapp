@@ -82,8 +82,6 @@ function csdInboundCallSummaryTable(res,tbody) {
      var select_tag = document.getElementById('tagname')
        
       
-
-
        for(var t=0;t<inbound_tags.length;t++){
         var option_el = document.createElement('option')
         option_el.setAttribute("value",inbound_tags[t])

@@ -2,7 +2,7 @@
 
 <?php include ('header.php');?>
 
-<body class="bg-light" onload="collectionCallAgentDetails()">
+<body class="bg-light">
 
    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
       <a class="navbar-brand mr-auto mr-lg-0 " id="index_menu" href="index.php">CSD PHILIPPINES CALLS MONITORING</a>
@@ -12,6 +12,8 @@
                 <a class="nav-link" href="#" id="user"></a>
                 <input type="hidden" name="hidden_extension" id="hidden_extension">
                  <input type="hidden" name="position" id="position">
+                 <input type="hidden" name="type" id="type" value="collectiondetails">
+            </li>
             </li>
             <li class="nav-item">
                 <button type="button" class="btn btn-primary btn-small btn-nav" id="logout" onclick="logout()">Logout</button>
@@ -44,14 +46,15 @@
 </div>
 
     <main role="main" id="main" >
-      <h2 class="text-center font-weight-bold text-primary"><span  id="agentusername"></span><span class='text-danger'> CALLS DETAILS </span><button class="btn btn-secondary btn-sm" id="export"> EXPORT <i class="fa fa-file-excel-o" aria-hidden="true"></i></button></span></span></h2>
+      <h2 class="text-center font-weight-bold text-primary"><span  id="agentname"></span><span class='text-danger'> CALLS DETAILS </span><button class="btn btn-secondary btn-sm" id="collection_details_export"> EXPORT <i class="fa fa-file-excel-o" aria-hidden="true"></i></button></span></span></h2>
           <div>
               <table class="table">
                 <thead class="thead-dark">
                    <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Caller</th>
+                      <th scope="col" style="display:none;">Extension</th>
                       <th scope="col">Called(#)</th>
+                      <th scope="col">Caller</th>
                       <th scope="col">CallStatus</th>
                       <th scope="col">StartTime</th>
                       <th scope="col">EndTime</th>
@@ -59,16 +62,17 @@
                       <th scope="col">Recordings</th> 
                       <th scope="col">
                           <input type="hidden" name="extension" id="extension">
-                            <input type="hidden" name="username" id="username">
+                            <input type="hidden" name="name" id="name">
                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myDateRange" dataset-backdrop="static" dataset-keyboard="false" id="selectdate">SELECT DATE</button>
 
                       </th>
                       <th scope="col">Comment/Tag</th>
                   </tr>
                 </thead>
-                <tbody id="collection_call_details_tbody">
+                <tbody id="call-detail-body">
                 
                 </tbody>
+                <div id="modaltagcomment"></div>
             </table>
           </div>
           <div class="modal fade" id="myDateRange" role="dialog">
@@ -83,7 +87,7 @@
                   <div class="modal-body">
                         <form method="GET" id="daterange" action="collection_call_agent_details.php"> 
                             <input type="hidden" name="modalextension" id="modalextension">
-                            <input type="hidden" name="modalusername" id="modalusername">
+                            <input type="hidden" name="modalname" id="modalname">
                             <div class="form-group">
                               <label for="startdate">From:</label>
                               <input type="date" class="form-control" id="startdate" name="startdate" aria-describedby="dateHelp" placeholder="Add Tag" required="true" onchange="validateDate()">
@@ -157,7 +161,9 @@
           }
 
       </script>   
-        <script src="js/collection_call_agent_details.js"></script>  
+       
     </main>
 
+
+ <script type="module" src="js/controllers/callctrl.js"></script>
  <?php include ('footer.php');?>

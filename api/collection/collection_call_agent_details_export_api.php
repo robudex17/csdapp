@@ -16,26 +16,26 @@ $db = $database->getConnection();
 $collection = new Collection($db);
 
 
-if( isset($_GET['extension']) && isset($_GET['username']) && isset($_GET['startdate'])  && isset($_GET['enddate']) && isset($_GET['tagname'])){
+if( isset($_GET['extension']) && isset($_GET['name']) && isset($_GET['startdate'])  && isset($_GET['enddate']) && isset($_GET['tagname'])){
 
 	$extension = $_GET['extension'];
-	$username = $_GET['username'];
+	$name = $_GET['name'];
 	$startdate = $_GET['startdate'];
 	$enddate = $_GET['enddate'];
 	$tagname = $_GET['tagname'];
 
-	$stmnt =  $collection->collectionCallAgentDetailsExport($extension,$username,$startdate,$enddate,$tagname);
+	$stmnt =  $collection->collectionCallAgentDetailsExport($extension,$name,$startdate,$enddate,$tagname);
 
 
-}elseif(isset($_GET['modalextension']) && isset($_GET['modalusername']) && isset($_GET['startdate'])  && isset($_GET['enddate']) && isset($_GET['tagname'])){
+}elseif(isset($_GET['modalextension']) && isset($_GET['modalname']) && isset($_GET['startdate'])  && isset($_GET['enddate']) && isset($_GET['tagname'])){
 
 	$extension = $_GET['modalextension'];
-	$username = $_GET['modalusername'];
+	$name = $_GET['modalname'];
 	$startdate = $_GET['startdate'];
 	$enddate = $_GET['enddate'];
 	$tagname = $_GET['tagname'];
 
-	$stmnt =  $collection->collectionCallAgentDetailsExport($extension,$username,$startdate,$enddate,$tagname);
+	$stmnt =  $collection->collectionCallAgentDetailsExport($extension,$name,$startdate,$enddate,$tagname);
 
 
 }else{

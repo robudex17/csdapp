@@ -29,7 +29,7 @@ class Csd {
 
   // end
 
-  private $json_addr = "/var/www/html/sbtph_csd/json/";
+  private $json_addr = "/var/www/html/sbtph_csd_dev/json/";
   
    //create database connection  when this class instantiated
   public function __construct($db){
@@ -47,9 +47,9 @@ class Csd {
         $calls_status = 'ANSWER';
        // $caller = '';
         //bind values from question mark (?) place holder
-         $stmnt->bindParam(1, $calls_status);
-         $stmnt->bindParam(2, $startdate);
-          $stmnt->bindParam(3, $enddate);
+        $stmnt->bindParam(1, $calls_status);
+        $stmnt->bindParam(2, $startdate);
+        $stmnt->bindParam(3, $enddate);
          
          
 
@@ -90,9 +90,12 @@ class Csd {
 
                     $missedcall = array(
                              "startime" =>  $StartTime,
+                             "startimestamp" => $row['StartTimeStamp'],
                              "endtime" =>  $EndTime,
                              "caller" => $row['Caller'],
                              "callStatus" => $row['CallStatus'],
+                             "comment" => $row['comment'],
+                             "commentby" => $row['commentby'],
                              "getdate" => $row['getDate']
                        );
 
@@ -150,6 +153,8 @@ class Csd {
                     $array_endtime = array("text" => $EndTime);
                     $array_caller = array("text" => $row['Caller']);
                     $array_callStatus = array("text" => $row['CallStatus']);
+                    $array_comment = array("text" => $row['comment']);
+                    $array_commentby = array("text" => $row['commentby']);
                     $array_getdate = array("text" => $row['getDate']);
 
                      //push it
@@ -157,8 +162,9 @@ class Csd {
                     array_push($missedcall,$array_endtime);
                     array_push($missedcall, $array_caller);
                     array_push($missedcall,$array_callStatus);
+                    array_push($missedcall,$array_comment);
+                    array_push($missedcall,$array_commentby);
                     array_push($missedcall,$array_getdate);
-
 
                   array_push($missed_calls_details_obj->tableData[0]->data,$missedcall);
                 }
@@ -169,9 +175,6 @@ class Csd {
          }
 
     }
-
-
-
 
     public function getVoicemails() {
           $query = "SELECT * FROM ".$this->voicemail." ORDER BY date DESC ";

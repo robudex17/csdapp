@@ -55,6 +55,8 @@
                       <th scope="col">EndTime</th>
                       <th scope="col">Caller</th>
                       <th scope="col">CallStatus</th>
+                      <th scope="col">Comment</th>
+                      <th scope="col">Comment By</th>
                       <th scope="col">
                           <input type="hidden" name="extension" id="extension">
                             <input type="hidden" name="username" id="username">

@@ -1,6 +1,8 @@
 
+
 <?php include ('header.php');?>
-<body class="bg-light" ">
+
+<body class="bg-light" onload="csdoutboundCallAgentDetails()">
 
    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
       <a class="navbar-brand mr-auto mr-lg-0 " id="index_menu" href="index.php">CSD PHILIPPINES CALLS MONITORING</a>
@@ -10,7 +12,6 @@
                 <a class="nav-link" href="#" id="user"></a>
                 <input type="hidden" name="hidden_extension" id="hidden_extension">
                  <input type="hidden" name="position" id="position">
-                 <input type="hidden" name="type" id="type" value="csdoutbounddetails">
             </li>
             <li class="nav-item">
                 <button type="button" class="btn btn-primary btn-small btn-nav" id="logout" onclick="logout()">Logout</button>
@@ -43,15 +44,14 @@
 </div>
 
     <main role="main" id="main" >
-      <h2 class="text-center font-weight-bold text-primary"><span  id="agentname"></span><span class='text-danger'> CALLS DETAILS </span><button class="btn btn-secondary btn-sm" id="outbound_details_export"> EXPORT <i class="fa fa-file-excel-o" aria-hidden="true"></i></button></span></h2>
+      <h2 class="text-center font-weight-bold text-primary"><span  id="agentname"></span><span class='text-danger'> CALLS DETAILS </span><button class="btn btn-secondary btn-sm" id="export"> EXPORT <i class="fa fa-file-excel-o" aria-hidden="true"></i></button></span></h2>
           <div>
               <table class="table">
                 <thead class="thead-dark">
                    <tr>
-                       <th scope="col">#</th>
-                      <th scope="col" style="display:none;">Extension</th>
-                      <th scope="col">Called(#)</th>
+                      <th scope="col">#</th>
                       <th scope="col">Caller</th>
+                      <th scope="col">Called(#)</th>
                       <th scope="col">CallStatus</th>
                       <th scope="col">StartTime</th>
                       <th scope="col">EndTime</th>
@@ -67,11 +67,10 @@
                       <th scope="col">Comment/Tag</th>
                   </tr>
                 </thead>
-                <tbody id="call-detail-body">
+                <tbody id="csdoutbound_call_details_tbody">
                 
                 </tbody>
             </table>
-            <div id="modaltagcomment"></div>
           </div>
           <div class="modal fade" id="myDateRange" role="dialog">
               <div class="modal-dialog">
@@ -159,7 +158,7 @@
           }
 
       </script>  
-        
+        <script src="js/csd_outbound_call_agent_details.js"></script>  
     </main>
- <script type="module" src="js/controllers/callctrl.js"></script> 
+
  <?php include ('footer.php');?>
