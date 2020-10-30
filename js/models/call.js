@@ -96,7 +96,7 @@ export default class CALL extends CSD {
         }else if(this.type === "csdoutbound"){
             return {type:'outbound_summary_export',jsonfile:`${HTTPADDR}json/outbound_summary.json`}
         }else if(this.type ==="collection"){ 
-            return 'collection_summary_export'
+            
             return { type:'collection_summary_export',jsonfile:`${HTTPADDR}json/collection_summary.json`}
         }else{
             throw new Error('Missing Type argument');
