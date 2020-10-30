@@ -166,7 +166,7 @@ if(elements.type.value === "csdinbounddetails" || elements.type.value ==="csdout
                     agentarray.push(tag)
                     resobj.tableData[0].data.push(agentarray);
                 })
-            resobj.options.fileName = `${agentCallDetails[0].name}-(${agentCallDetails[0].getDate})-calldetails`
+            resobj.options.fileName = `${agentCallDetails[0].name}-(${agentCallDetails[0].daterange})-calldetails`
             Jhxlsx.export(resobj.tableData, resobj.options);
         })
     })

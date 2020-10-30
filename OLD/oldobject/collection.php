@@ -434,8 +434,8 @@ class Collection {
                 $date_folder = str_replace('-',"", $row['getDate']);
                 $filename = $row['Caller'] .'-'. $row['CalledNumber'] .'-' .$row['StartTimeStamp']. ".mp3";
                 $full_url = $base_url . $date_folder .'/'.$filename;
-
-
+                
+               
 
                 $get_single_agent =  $this->getSingle($row['Caller']);
                 if($get_single_agent->rowCount() !=0) {
@@ -459,6 +459,7 @@ class Collection {
                     "comment" => $row['comment'],
                     "starttimestamp" => $row['StartTimeStamp'],
                     "tag" => $row['tag']
+                   
                 );
                 array_push($collection_calls_details, $agent);
             }
@@ -559,6 +560,11 @@ class Collection {
                 $filename = $row['Caller'] .'-'. $row['CalledNumber'] .'-' .$row['StartTimeStamp']. ".mp3";
                 $full_url = $base_url . $date_folder .'/'.$filename;
 
+                $daterange = '('.$startdate.')'. "-".'('.$enddate.')';
+                if(strtotime($startdate) == strtotime($enddate)){
+                    $daterange  = $startdate;
+                } 
+
                  $agent = array(
                     "name" => $username,
                     "extension" => $extension,
@@ -572,7 +578,8 @@ class Collection {
                     "getDate" => $row['getDate'],
                     "comment" => $row['comment'],
                     "starttimestamp" => $row['StartTimeStamp'],
-                    "tag" => $row['tag']
+                    "tag" => $row['tag'],
+                    "daterange" => $daterange
                 );
                 array_push($collection_calls_details, $agent);
             }

@@ -237,20 +237,26 @@ class CSDINBOUND {
                 $filename = $row['Caller'] .'-'. $row['CalledNumber'] .'-' .$row['StartTimeStamp']. ".mp3";
                 $full_url = $base_url . $date_folder .'/'.$filename;
 
+                $daterange = '('.$startdate.')'. "-".'('.$enddate.')';
+                if(strtotime($startdate) == strtotime($enddate)){
+                    $daterange  = $startdate;
+                }
+
 				 $agent = array(
-                    			 "name" => $username,
+                  "name" => $username,
 								 "extension" => $extension,
 								 "calledNumber" => $row['CalledNumber'],
 								 "caller" => $row['Caller'],
 								 "callStatus" => $row['CallStatus'],
-                   				 "startime" => date( "h:i:s a",$StartTime),
-                    			 "endtime" =>  date("h:i:s a",$EndTime),
+                  "startime" => date( "h:i:s a",$StartTime),
+                 "endtime" =>  date("h:i:s a",$EndTime),
 								 "callDuration" => $duration,
-                   				 "callrecording" => $full_url,
+                 "callrecording" => $full_url,
 								 "getDate" => $row['getDate'],
-                   				 "comment" => $row['comment'],
-                   				 "starttimestamp" => $row['StartTimeStamp'],
-                    			 "tag" => $row['tag']
+                 "comment" => $row['comment'],
+                 "starttimestamp" => $row['StartTimeStamp'],
+                  "tag" => $row['tag'],
+                   "daterange" => $daterange        
 							    );
 				array_push($agent_calls_details,$agent);
 			}

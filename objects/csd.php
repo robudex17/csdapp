@@ -90,7 +90,8 @@ class Csd {
 
                     $missedcall = array(
                              "startime" =>  $StartTime,
-                             "startimestamp" => $row['StartTimeStamp'],
+                             "starttimestamp" => $row['StartTimeStamp'],
+                             "extension" => $row['WhoAnsweredCall'],
                              "endtime" =>  $EndTime,
                              "caller" => $row['Caller'],
                              "callStatus" => $row['CallStatus'],

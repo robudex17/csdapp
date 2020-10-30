@@ -138,9 +138,9 @@ function missedCallDetailsTable(res,tbody) {
           
           var data = {};
           data.tag =  "NO TAG";
-          data.startimestamp = response[id].startimestamp;
+          data.starttimestamp = response[id].starttimestamp;
           data.getdate = response[id].getdate
-          data.whoansweredcall = "NONE"
+          data.whoansweredcall =   response[id].extension; //"NONE"
           data.comment = getExistingComment.value
           data.commentby = username
           if(data.comment == ""){
@@ -154,7 +154,7 @@ function missedCallDetailsTable(res,tbody) {
             }).then(res => {
                
                  alert(res.message)
-                let params = `extension=${data.whoansweredcall}&getdate=${response[id].getdate}&startimestamp=${response[id].startimestamp}`
+                let params = `extension=${data.whoansweredcall}&getdate=${response[id].getdate}&starttimestamp=${response[id].starttimestamp}`
                 console.log(params)
                 let url = `${HTTPADDR}api/csdinbound/get_inbound_call_comment_api.php?${params}`
                 return fetch(url)

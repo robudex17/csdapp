@@ -490,6 +490,11 @@ class Collection {
                 $filename = $row['Caller'] .'-'. $row['CalledNumber'] .'-' .$row['StartTimeStamp']. ".mp3";
                 $full_url = $base_url . $date_folder .'/'.$filename;
 
+                $daterange = '('.$startdate.')'. "-".'('.$enddate.')';
+                if(strtotime($startdate) == strtotime($enddate)){
+                    $daterange  = $startdate;
+                } 
+
                  $agent = array(
                     "name" => $username,
                     "extension" => $extension,
@@ -503,7 +508,8 @@ class Collection {
                     "getDate" => $row['getDate'],
                     "comment" => $row['comment'],
                     "starttimestamp" => $row['StartTimeStamp'],
-                    "tag" => $row['tag']
+                    "tag" => $row['tag'],
+                    "daterange" => $daterange
                 );
                 array_push($collection_calls_details, $agent);
             }
