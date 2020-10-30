@@ -520,7 +520,7 @@ class Collection {
      }
 
   
-      public function getCollectionCallComment($caller,$getdate,$startimestamp) {
+      public function getCollectionCallComment($caller,$getdate,$starttimestamp) {
           //build query
           $query = "SELECT * FROM  ".$this->collectionteam_callsummary_table." WHERE Caller=? AND getDate=? AND StartTimeStamp=?";
 
@@ -530,7 +530,7 @@ class Collection {
           //bind values
           $stmnt->bindParam(1,$caller);
           $stmnt->bindParam(2,$getdate);
-          $stmnt->bindParam(3,$startimestamp);
+          $stmnt->bindParam(3,$starttimestamp);
 
           $stmnt->execute();
 
@@ -545,10 +545,10 @@ class Collection {
               echo json_encode(array ("comment" => "No comment"));
           }
     }
-     public function putCollectionCallComment($startimestamp, $getdate, $caller, $comment,$tag) {
+     public function putCollectionCallComment($starttimestamp,$getdate,$caller,$comment,$commentby,$tag) {
         //build query
 
-       $query = "UPDATE `collectionteam_callsummary` SET `comment`='$comment', `commentby`='$commentby',`tag`='$tag' WHERE `StartTimeStamp`='$startimestamp' AND `getDate`='$getdate' AND `Caller`='$caller'";
+       $query = "UPDATE `collectionteam_callsummary` SET `comment`='$comment', `commentby`='$commentby',`tag`='$tag' WHERE `StartTimeStamp`='$starttimestamp' AND `getDate`='$getdate' AND `Caller`='$caller'";
         //prepare query
         $stmnt = $this->conn->prepare($query);
 

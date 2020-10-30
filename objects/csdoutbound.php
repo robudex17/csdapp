@@ -267,7 +267,7 @@ include_once '../../config/config.php';
 	      return $stmnt;
     }
 
-     public function getOutboundCallComment($caller,$getdate,$startimestamp) {
+     public function getOutboundCallComment($caller,$getdate,$starttimestamp) {
         //build query
         $query = "SELECT * FROM  ".$this->csdoutbound." WHERE Caller=? AND getDate=? AND StartTimeStamp=?";
 
@@ -277,7 +277,7 @@ include_once '../../config/config.php';
         //bind values
         $stmnt->bindParam(1,$caller);
         $stmnt->bindParam(2,$getdate);
-        $stmnt->bindParam(3,$startimestamp);
+        $stmnt->bindParam(3,$starttimestamp);
 
         $stmnt->execute();
 
@@ -301,9 +301,10 @@ include_once '../../config/config.php';
          return "$hours:$minutes:$seconds";
     }
 
-    public function putOutboundCallComment($startimestamp, $getdate, $caller, $comment,$tag) {
+    public function putOutboundCallComment($starttimestamp, $getdate, $caller, $comment,$commentby,$tag) {
+        
         //build query
-       $query = "UPDATE `outbound` SET `comment`='$comment', `commentby`='$commentby',`tag`='$tag' WHERE `StartTimeStamp`='$startimestamp' AND `getDate`='$getdate' AND `Caller`='$caller'";
+       $query = "UPDATE `outbound` SET `comment`='$comment', `commentby`='$commentby', `tag`='$tag' WHERE `StartTimeStamp`='$starttimestamp' AND `getDate`='$getdate' AND `Caller`='$caller'";
         //prepare query
         $stmnt = $this->conn->prepare($query);
         //excute

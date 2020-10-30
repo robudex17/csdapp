@@ -16,9 +16,9 @@ $db = $database->getConnection();
 $collection = new Collection($db);
 
 
-if(isset($_GET['caller']) && isset($_GET['getdate']) && isset($_GET['starttimestamp'])){
-    $caller = $_GET['caller'];
+if(isset($_GET['extension']) && isset($_GET['getdate']) && isset($_GET['starttimestamp'])){
+    $caller = $_GET['extension'];
 	$getdate = $_GET['getdate'];
-	$startimestamp = $_GET['starttimestamp'];
+	$starttimestamp = $_GET['starttimestamp'];
 }
-$stmnt = $collection->getCollectionCallComment($caller,$getdate,$startimestamp);
+$stmnt = $collection->getCollectionCallComment($caller,$getdate,$starttimestamp);

@@ -16,9 +16,9 @@ $db = $database->getConnection();
 $csdoutbound = new CSDOUTBOUND($db);
 
 
-if(isset($_GET['caller']) && isset($_GET['getdate']) && isset($_GET['starttimestamp'])){
-    $caller = $_GET['caller'];
+if(isset($_GET['extension']) && isset($_GET['getdate']) && isset($_GET['starttimestamp'])){
+    $caller = $_GET['extension'];
 	$getdate = $_GET['getdate'];
-	$startimestamp = $_GET['starttimestamp'];
+	$starttimestamp = $_GET['starttimestamp'];
 }
-$stmnt = $csdoutbound->getOutboundCallComment($caller,$getdate,$startimestamp);
+$stmnt = $csdoutbound->getOutboundCallComment($caller,$getdate,$starttimestamp);

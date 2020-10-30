@@ -53,7 +53,7 @@ export default class CALL extends CSD {
         if(this.type ==="csdinbounddetails"){
             apiPath = `${HTTPADDR}api/csdinbound/put_inbound_call_comment_api.php`;
         }else if(this.type === "csdoutbounddetails"){
-            apiPath = `${HTTPADDR}api/csdinbound/put_inbound_call_comment_api.php`;
+            apiPath = `${HTTPADDR}api/csdoutbound/put_outbound_call_comment_api.php`;
         }else if(this.type === "collectiondetails"){
             apiPath =`${HTTPADDR}api/collection/put_collection_call_comment_api.php`;
         }else{
@@ -61,7 +61,7 @@ export default class CALL extends CSD {
         }
 
        const response = await fetch(apiPath,{method:'post', body:JSON.stringify(data)});
-       console.log(response.status)
+      
        if(response.status !== 200 ){
            throw new Error('Cannot Acces the API');
        }

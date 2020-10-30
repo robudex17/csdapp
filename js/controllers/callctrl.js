@@ -89,17 +89,19 @@ if(elements.type.value === "csdinbounddetails" || elements.type.value ==="csdout
                 let getExistingTag = document.getElementById(id+"select_tag")
                 let username = document.getElementById('user').textContent
                 let data = {};
-                data.startimestamp = agentsCallDetails[id].startimestamp;
+                data.starttimestamp = agentsCallDetails[id].starttimestamp;
                 data.getdate = agentsCallDetails[id].getDate
                 data.whoansweredcall = agentsCallDetails[id].extension
+                data.caller = agentsCallDetails[id].caller
                 data.comment = getExistingComment.value
                 data.commentby = username
                 data.tag =  getExistingTag.value
-                console.log(data)
+
+               
                 call.updateTagComment(data)
                     .then(res => {
                         alert(res.message);
-                        let params = `extension=${agentsCallDetails[id].extension}&getdate=${agentsCallDetails[id].getDate}&startimestamp=${agentsCallDetails[id].startimestamp}`
+                        let params = `extension=${agentsCallDetails[id].extension}&getdate=${agentsCallDetails[id].getDate}&starttimestamp=${agentsCallDetails[id].starttimestamp}`
                         return call.getTagComment(params);
                     }).then(data => {
                         let btncomment = document.getElementById(agentsCallDetails[id].extension+id);

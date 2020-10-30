@@ -16,9 +16,9 @@ $db = $database->getConnection();
 $csdinbound = new CSDINBOUND($db);
 
 
-if(isset($_GET['extension']) && isset($_GET['getdate']) && isset($_GET['startimestamp'])){
+if(isset($_GET['extension']) && isset($_GET['getdate']) && isset($_GET['starttimestamp'])){
     $extension = $_GET['extension'];
 	$getdate = $_GET['getdate'];
-	$startimestamp = $_GET['startimestamp'];
+	$starttimestamp = $_GET['starttimestamp'];
 }
-$stmnt = $csdinbound->getInboundCallComment($extension,$getdate,$startimestamp);
+$stmnt = $csdinbound->getInboundCallComment($extension,$getdate,$starttimestamp);

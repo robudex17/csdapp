@@ -18,14 +18,15 @@ $csdinbound = new CSDINBOUND($db);
  // get posted data
   $data = json_decode(file_get_contents("php://input"));
 
-$startimestamp = htmlspecialchars($data->startimestamp) ; 
+$starttimestamp = htmlspecialchars($data->starttimestamp) ; 
 $getdate =  htmlspecialchars($data->getdate);
 $whoansweredcall = htmlspecialchars($data->whoansweredcall);
+$caller = htmlspecialchars($data->caller);
 $comment = htmlspecialchars($data->comment);
 $commentby = htmlspecialchars($data->commentby);
 $tag= htmlspecialchars($data->tag);
 
-$stmnt = $csdinbound->putInboundCallComment($startimestamp, $getdate, $whoansweredcall, $comment,$commentby,$tag);
+$stmnt = $csdinbound->putInboundCallComment($starttimestamp, $getdate, $whoansweredcall, $comment,$commentby,$tag);
 //$stmnt = $csd->putComment("20200602-000009", "2020-06-02", "6308", "", "");
 // echo json_encode($data);
 //echo $startimestamp;

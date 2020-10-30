@@ -1,6 +1,6 @@
 <?php
 
-include_once '../../config/config.php';
+
 class CSDINBOUND {
      //CSD class properties
 	private $csdinbound_table = "csdinbound";
@@ -249,7 +249,7 @@ class CSDINBOUND {
                    				 "callrecording" => $full_url,
 								 "getDate" => $row['getDate'],
                    				 "comment" => $row['comment'],
-                   				 "startimestamp" => $row['StartTimeStamp'],
+                   				 "starttimestamp" => $row['StartTimeStamp'],
                     			 "tag" => $row['tag']
 							    );
 				array_push($agent_calls_details,$agent);
@@ -334,7 +334,7 @@ class CSDINBOUND {
                     "callrecording" => $full_url,
                     "getDate" => $row['getDate'],
                     "comment" => $row['comment'],
-                    "startimestamp" => $row['StartTimeStamp'],
+                    "starttimestamp" => $row['StartTimeStamp'],
                     "tag" => $row['tag']
                 );
                 array_push($search_details,$agent);
@@ -349,7 +349,7 @@ class CSDINBOUND {
         }
     }
 
-    public function getInboundCallComment($extension,$getdate,$startimestamp) {
+    public function getInboundCallComment($extension,$getdate,$starttimestamp) {
         //build query
         $query = "SELECT * FROM  ".$this->inbound_callstatus_table." WHERE WhoAnsweredCall=? AND getDate=? AND StartTimeStamp=?";
 
@@ -359,7 +359,7 @@ class CSDINBOUND {
         //bind values
         $stmnt->bindParam(1,$extension);
         $stmnt->bindParam(2,$getdate);
-        $stmnt->bindParam(3,$startimestamp);
+        $stmnt->bindParam(3,$starttimestamp);
 
         $stmnt->execute();
 
@@ -391,9 +391,9 @@ class CSDINBOUND {
       return $stmnt;
     }
 
-    public function putInboundCallComment($startimestamp, $getdate, $whoansweredcall, $comment, $commentby,$tag) {
+    public function putInboundCallComment($starttimestamp, $getdate, $whoansweredcall, $comment,$commentby,$tag) {
       
-       $query = "UPDATE `inbound_callstatus` SET `comment`='$comment', `commentby`='$commentby',`tag`='$tag' WHERE `StartTimeStamp`='$startimestamp' AND `getDate`='$getdate' AND `WhoAnsweredCall`='$whoansweredcall'";
+       $query = "UPDATE `inbound_callstatus` SET `comment`='$comment', `commentby`='$commentby',`tag`='$tag' WHERE `StartTimeStamp`='$starttimestamp' AND `getDate`='$getdate' AND `WhoAnsweredCall`='$whoansweredcall'";
         //prepare query
         $stmnt = $this->conn->prepare($query);
 
