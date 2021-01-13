@@ -40,7 +40,9 @@ if($num !=0){
 	 		"loginduration" => $login_duration,
 	 		"channelstat" => $getchannelcounterStat['status'],
 	 		"counter" => $getchannelcounterStat['counter'],
-	 		"activecalltime" => secToHR($getchannelcounterStat['counter'])
+			 "activecalltime" => secToHR($getchannelcounterStat['counter']),
+			 "serverip" => $row['serverip'],
+			 "serverstatus" => $row['serverstatus']
 	 	);
 	 	array_push($csd_active, $csd_active_agent);
 	 }

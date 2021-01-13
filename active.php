@@ -78,6 +78,8 @@
                       <th scope="col">NAME</th>
                       <th scope="col">LOGIN/LOGOUT</th>
                       <th scope="col">LOGIN DURATION</th>
+                      <th scope="col">SERVER USED</th>
+                      <th scope="col">SERVER STATUS</th>
                       <th scope="col">CHANNEL STAT</th>
                   </tr>
                 </thead>

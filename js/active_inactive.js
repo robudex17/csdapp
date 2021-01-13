@@ -62,6 +62,31 @@ function logInOutTable(data,tbody) {
     tr.appendChild(tdloginlogout);
     tr.appendChild(tdloginduration);
 
+
+    if(response[i].hasOwnProperty('serverip') && response[i].hasOwnProperty('serverstatus')){
+      var tdserverip = document.createElement('td');
+      var tdserverstatus = document.createElement('td');
+      tdserverstatus.style.fontSize = "20px";
+      tdserverstatus.style.fontWeight ="bold"
+      tdserverip.style.fontSize = "20px";
+      tdserverip.style.fontWeight = "bold"
+
+      if(response[i].serverstatus === 'DOWN'){
+        tdserverip.style.color = "RED";
+        tdserverstatus.style.color = "RED";
+      }else{
+        tdserverip.style.color = "GREEN";
+        tdserverstatus.style.color = "GREEN";
+      }
+      tdserverip.textContent = response[i].serverip;
+      tdserverstatus.textContent = response[i].serverstatus;
+
+      tr.appendChild(tdserverip)
+      tr.appendChild(tdserverstatus)
+
+    }
+
+
     //for active channels and counter greater or equal than 10 only
     if(response[i].channelstat == 1 && response[i].counter >= 10 ){
 
@@ -163,6 +188,8 @@ function logInOutTable(data,tbody) {
         tr.appendChild(channelbtn);
         
     }
+
+    
    
     //append tr to tbody
     tb_body.appendChild(tr);

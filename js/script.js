@@ -1,5 +1,5 @@
 
-const HTTPADDR = "http://210.1.86.211/sbtph_csd_dev/";
+const HTTPADDR = "http://192.168.70.250/sbtph_csd_dev/";
 setInterval(function() {
   getTotalCounts()
 },5000)
