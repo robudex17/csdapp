@@ -623,7 +623,7 @@ class Collection {
        $stmnt = $this->conn->prepare($query);
 
         //bind values
-        $calltype = "csd";
+        $calltype = "collection";
        $stmnt->bindParam(":extension", $this->extension);
        $stmnt->bindParam(":calltype", $calltype);
 
