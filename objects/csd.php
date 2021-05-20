@@ -854,13 +854,23 @@ class Csd {
           return false;
         }
 
-       
- 
-       
     }
 
    public function agentCalltype(){
-        //create query
+
+    $query  = "SELECT * FROM ".$this->calltype." WHERE  extension=?";
+     //bind values
+    
+     $stmnt->bindParam(1,$this->extension);
+     
+     //execute
+     $stmnt->execute();
+     $num = $stmnt->rowCount();
+
+     if($num !=0){
+       return true;
+     }else { 
+            //create query
         $query = " INSERT INTO " . $this->calltype . " SET  extension = :extension, calltype = :calltype";
         // prepare query
         $stmnt = $this->conn->prepare($query);
@@ -875,6 +885,9 @@ class Csd {
         }else{
           return false;
         }
+     }
+
+      
    }
    
    public function updateCSDAgent($extension,$name,$email) {
