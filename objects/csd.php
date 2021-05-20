@@ -849,19 +849,9 @@ class Csd {
 
         //execute query
         if($stmnt->execute()){
-            //create query
-          $query = " INSERT INTO " . $this->calltype . " SET  extension = :extension, calltype = :calltype";
-          // prepare query
-          $stmnt1 = $this->conn->prepare($query);
-
-           //bind values
-          $stmnt1->bindParam(":extension", $this->extension);
-          $stmnt1->bindParam(":calltype", "csd");
-
-          if($stmnt1->execute()){
-            return true;
-          }
           
+            return true;
+           
         }else{
           return false;
         }
