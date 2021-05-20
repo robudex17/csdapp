@@ -52,7 +52,7 @@
 
     <div class="nav-scroller bg-blue shadow-sm">
           <nav class="nav nav-underline ">
-                 <p id="blended-p"></p>
+                 
                  <a class="nav-link mx-0 px-2" href="active.php">ACTIVE</a>
                  <a class="nav-link mx-0 px-2" href="inactive.php">INACTIVE</a>
                  <a class="nav-link mx-0 px-2" href="csd_inbound.php">CSD-INBOUND</a>
@@ -68,7 +68,7 @@
     </div>
 
     <main role="main" class="container">
-       
+    <p id="blended-p"></p>
     </main>
 
     <!-- Bootstrap core JavaScript

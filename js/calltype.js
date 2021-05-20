@@ -1,3 +1,5 @@
+getLoginUser()
+
 var calltype = document.getElementById('calltype');
 var blended = document.getElementById('blended').value;
 
