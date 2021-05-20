@@ -848,13 +848,23 @@ class Csd {
         $stmnt->bindParam(":email", $this->email);
 
         //execute query
-        if($stmnt->execute()){
-          
+        $stmnt->execute();
+
+          //create query
+          $query = " INSERT INTO " . $this->calltype . " SET  extension = :extension, calltype = :calltype";
+          // prepare query
+          $stmnt = $this->conn->prepare($query);
+
+           //bind values
+          $stmnt->bindParam(":extension", $this->extension);
+          $stmnt->bindParam(":calltype", "csd");
+
+          if($stmnt->execute()){
             return true;
-           
-        }else{
-          return false;
-        }
+          }else{
+            return false;
+          }
+ 
        
     }
 
