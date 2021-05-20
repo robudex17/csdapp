@@ -7,6 +7,7 @@ class Collection {
     private $collectionteam = "collectionteam";
     private $collectionteam_callsummary_table = "collectionteam_callsummary";
     private $tag = "tag";
+    private $calltype = "calltype";
     private $conn;
     public $extension;
     public $name;
@@ -598,6 +599,41 @@ class Collection {
         }
         return false;
     }
+
+    public function getCallType($extension) {
+      //build query
+      $query = "SELECT * FROM  ".$this->calltype." WHERE extension=?";
+
+      //prepare the query
+      $stmnt = $this->conn->prepare($query);
+
+      //bind values
+      $stmnt->bindParam(1,$extension);
+     
+
+      $stmnt->execute();
+
+      return $stmnt;
+ }
+  public function agentCalltype(){
+
+           //create query
+       $query = " INSERT INTO " . $this->calltype . " SET  extension = :extension, calltype = :calltype";
+       // prepare query
+       $stmnt = $this->conn->prepare($query);
+
+        //bind values
+        $calltype = "csd";
+       $stmnt->bindParam(":extension", $this->extension);
+       $stmnt->bindParam(":calltype", $calltype);
+
+       if($stmnt->execute()){
+         return true;
+       }else{
+         return false;
+       }
+      
+  }
 
      public function updateCollectionAgent() {
 

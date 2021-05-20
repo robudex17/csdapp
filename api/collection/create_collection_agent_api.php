@@ -28,10 +28,22 @@ $collection = new Collection($db);
 
   		if($collection->createCollectionAgent()){
 
-  			//set response code - 201 created
-  			http_response_code(201);
+			$stmnt = $collection->getCallType($collection->extension) ;
+			$num = $stmnt->rowCount(); 
 
-  			echo json_encode(array("message" => "Collection Agent was added"));
+			if($num != 0){
+				//set response code - 201 created
+				http_response_code(201);
+	
+				echo json_encode(array("message" => "CollectionAgent was added"));
+			}else{
+				if($csd->agentCalltype()){
+					//set response code - 201 created
+					http_response_code(201);
+	
+					echo json_encode(array("message" => "CollectionAgent was added"));
+				}
+			}
 
   		}else{
   			//set response code to 503
