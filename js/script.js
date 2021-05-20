@@ -51,11 +51,11 @@ function getLoginUser() {
            
       document.getElementById('blended').value = token.data.blended;
 
-      var calltype = document.getElementById('calltype');
+      // var calltype = document.getElementById('calltype');
 
-      if(token.data.blended==1){
-        calltype.style.display = "block";
-      }
+      // if(token.data.blended==1){
+      //   calltype.style.display = "block";
+      // }
       
 	  }
   });
