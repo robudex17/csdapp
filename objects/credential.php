@@ -84,11 +84,8 @@ class Credential {
         } else{
         	return false;
         }
-	
 
 }
-
-
 
 
 public function checkIfAgentIsInTheTable($table) {
@@ -119,9 +116,6 @@ public function checkIfAgentIsInTheTable($table) {
 
 
 }
-
-
-
 
 }
 ?>

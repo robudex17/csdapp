@@ -49,7 +49,12 @@ function getLoginUser() {
 	    document.getElementById('hidden_extension').value = token.data.extension;
 	    document.getElementById('position').value  = token.data.position;
            
-	    document.getElementById('blended').value = token.data.blended;
+      document.getElementById('blended').value = token.data.blended;
+      if(token.data.blended == 1){
+        alert("Blended")
+      }else{
+        alert("Not Blended")
+      }
 	  }
   });
 

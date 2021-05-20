@@ -48,10 +48,10 @@
                  <a class="nav-link mx-0 px-2" href="inactive.php">INACTIVE</a>
                  <a class="nav-link mx-0 px-2" href="csd_inbound.php">CSD-INBOUND</a>
                  <a class="nav-link mx-0 px-2" href="csd_outbound.php">CSD-OUTBOUND</a>
-                  <a class="nav-link mx-0 px-2" href="csd_missedcalls.php">CSD-MISSED-CALLS <span id="miss_calls_counts"></span></a>
-                     <a class="nav-link mx-0 px-2" href="collection.php">COLLECTION-TEAM</a>
-                   <a class="nav-link mx-0 px-2" href="parked_calls.php">PARKED-CALLS <span id="parked_calls_counts"></a>
-                   <a class="nav-link mx-0 px-2" href="voicemails.php">VOICE-MAILS <span id="voicemail_counts"></a> 
+                 <a class="nav-link mx-0 px-2" href="csd_missedcalls.php">CSD-MISSED-CALLS <span id="miss_calls_counts"></span></a>
+                 <a class="nav-link mx-0 px-2" href="collection.php">COLLECTION-TEAM</a>
+                 <a class="nav-link mx-0 px-2" href="parked_calls.php">PARKED-CALLS <span id="parked_calls_counts"></a>
+                <a class="nav-link mx-0 px-2" href="voicemails.php">VOICE-MAILS <span id="voicemail_counts"></a> 
                  <a class="nav-link mx-0 px-2" href="management.php">MANAGEMENT</a>   
                
 
