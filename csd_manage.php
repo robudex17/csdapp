@@ -29,6 +29,8 @@
                 <input type="hidden" name="hidden_extension" id="hidden_extension">
                 <input type="hidden" name="position" id="position">
                 <input type="hidden" name="type" id="type" value="csdAgent">
+                <input type="hidden" name="blended" id="blended">
+
             </li>
             <li class="nav-item">
                 <button type="button" class="btn btn-primary btn-small btn-nav" id="logout" onclick="logout()">Logout</button>

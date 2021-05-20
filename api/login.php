@@ -31,12 +31,14 @@ $userlogin = new Credential($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
+//$data->extension = "6336";
+//$data->secret = "20006336";
 //set properties
 $userlogin->extension = $data->extension;
 
 $checkUser = $userlogin->checkUser();
 
-if($checkUser && ($userlogin->secret === $data->secret)){
+if($checkUser && ($userlogin->secret === $data->secret )){
 	$token = array(
        "iss" => $iss,
        "aud" => $aud,
@@ -45,14 +47,15 @@ if($checkUser && ($userlogin->secret === $data->secret)){
        "data" => array(
            "extension" => $userlogin->extension,
            "name" => $userlogin->name,
-           "position" => $userlogin->position
+           "position" => $userlogin->position,
+           "blended" =>  $userlogin->blended
        )
     );
 
     //set response code
     http_response_code(200);
     //generate jwt
-
+  //  print_r($token);
     $jwt = JWT::encode($token, $key);
     echo json_encode(array("message" => "Successful login", "jwt" => $jwt));
 }else{

@@ -5,12 +5,14 @@ class Credential {
 	//Credential Properties
 
 	private $logintable = "login";
+        private $collectiontable = "collectionteam";
 	private $conn;
 	public $extension;
 	public $secret;
 	public $name;
 	public $position;
-
+        public $blended;
+    
 
 	//create database connection  when this class instantiated
     public function __construct($db){
@@ -54,27 +56,50 @@ class Credential {
         	$this->name = $row['name'];
         	$this->position = $row['position'];
 
-            return true;
+                if($this->checkIfAgentIsInCollectionTable() != 0){
+		   $this->blended = 1;
+		}else{
+		   $this->blended = 0;
+                }
+               return true;
         } else{
         	return false;
         }
 	
 
+}
+
+
+
+
+public function checkIfAgentIsInCollectionTable() {
+	 $query = "SELECT *
+         FROM " . $this->collectiontable . "
+         WHERE extension = ?
+         LIMIT 0,1";
+
+         // prepare the query
+         $stmt = $this->conn->prepare($query);
+	 
+        $stmt->bindParam(1, $this->extension);
+
+        //execute
+         $stmt->execute();
+        //get the number of rows
+
+        $num = $stmt->rowCount();
+         
+	 if($num>0){
+               
+	   return 1;
+                
+        } else{
+          return  0;
+        
 	}
 
 
-
-
-	public function test() {
-		echo $this->extension;
-	}
-
-
-
-
-
-
-
+}
 
 
 }

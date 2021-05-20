@@ -1,5 +1,5 @@
 
-const HTTPADDR = "http://192.168.70.250/sbtph_csd_dev/";
+const HTTPADDR = "http://103.5.6.2/sbtph_csd_dev/";
 setInterval(function() {
   getTotalCounts()
 },5000)
@@ -45,10 +45,11 @@ function getLoginUser() {
 	  }else{
 	    getTotalCounts()
 	    var token = JSON.parse(decodeToken(jwt));
-	    document.getElementById('user').textContent = token.data.name;
+	    document.getElementById('user').value = token.data.name;
 	    document.getElementById('hidden_extension').value = token.data.extension;
 	    document.getElementById('position').value  = token.data.position;
-	    //document.getElementById('hidden_username') = token.data.name;
+           
+	    document.getElementById('blended').value = token.data.blended;
 	  }
   });
 

@@ -13,6 +13,8 @@
                 <input type="hidden" name="hidden_extension" id="hidden_extension">
                  <input type="hidden" name="position" id="position">
                  <input type="hidden" name="type" id="type" value="collectiondetails">
+                 <input type="hidden" name="blended" id="blended">
+
             </li>
             </li>
             <li class="nav-item">
