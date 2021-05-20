@@ -68,7 +68,7 @@
     </div>
 
     <main role="main" class="container">
-      <p id="blended-p"></p>  
+
     </main>
 
     <!-- Bootstrap core JavaScript
