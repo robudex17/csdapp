@@ -866,7 +866,7 @@ class Csd {
      //execute
      $stmnt->execute();
      $num = $stmnt->rowCount();
-
+     echo $num;
      if($num !=0){
        return true;
      }else { 
