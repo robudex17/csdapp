@@ -50,6 +50,12 @@ function getLoginUser() {
 	    document.getElementById('position').value  = token.data.position;
            
       document.getElementById('blended').value = token.data.blended;
+
+      var calltype = document.getElementById('calltype');
+
+      if(token.data.blended==1){
+        calltype.style.display = "block";
+      }
       
 	  }
   });
@@ -88,3 +94,5 @@ function decodeToken(token){
     return playload;
 
 };
+
+
