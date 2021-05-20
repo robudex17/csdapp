@@ -848,27 +848,35 @@ class Csd {
         $stmnt->bindParam(":email", $this->email);
 
         //execute query
-        $stmnt->execute();
+        if($stmnt->execute()){
+          return true;
+        }else{
+          return false;
+        }
 
-          //create query
-          $query = " INSERT INTO " . $this->calltype . " SET  extension = :extension, calltype = :calltype";
-          // prepare query
-          $stmnt = $this->conn->prepare($query);
-
-           //bind values
-          $stmnt->bindParam(":extension", $this->extension);
-          $stmnt->bindParam(":calltype", "csd");
-
-          if($stmnt->execute()){
-            return true;
-          }else{
-            return false;
-          }
+       
  
        
     }
 
-      public function updateCSDAgent($extension,$name,$email) {
+   public function agentCalltype(){
+        //create query
+        $query = " INSERT INTO " . $this->calltype . " SET  extension = :extension, calltype = :calltype";
+        // prepare query
+        $stmnt = $this->conn->prepare($query);
+
+         //bind values
+        $stmnt->bindParam(":extension", $this->extension);
+        $stmnt->bindParam(":calltype", "csd");
+
+        if($stmnt->execute()){
+          return true;
+        }else{
+          return false;
+        }
+   }
+   
+   public function updateCSDAgent($extension,$name,$email) {
 
       // $query = "UPDATE `csdinbound` SET `comment`='$comment' WHERE `StartTimeStamp`='$startimestamp' AND `getDate`='$getdate' AND `WhoAnsweredCall`='$whoansweredcall'";
        $query = "UPDATE `csdinbound` SET `extension`='$extension',`username`='$name',`email`='$email' WHERE `extension`='$extension'";

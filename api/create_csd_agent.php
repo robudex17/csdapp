@@ -27,16 +27,18 @@ $csd = new Csd($db);
   		$csd->email = $data->email;
 
   		if($csd->createAgent()){
+            if($csd->agentCalltype()){
+				//set response code - 201 created
+				http_response_code(201);
 
-  			//set response code - 201 created
-  			http_response_code(201);
-
-  			echo json_encode(array("message" => "CSDAgent was added"));
+				echo json_encode(array("message" => "CSDAgent was added"));
+			}
+  			
 
   		}else{
   			//set response code to 503
   			http_response_code(503);
-
+            
   			echo json_encode(array("message" => "Unable to add new Agent.All fields must not empty"));
   		}
   }else{
