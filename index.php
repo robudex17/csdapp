@@ -20,7 +20,7 @@
   <body class="bg-light" onload="getLoginUser()">
 
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-      <a class="navbar-brand mr-auto mr-lg-0 " href="#">CSD PHILIPPINES CALLS MONITORING</a><span><button  class="btn btn-primary btn-small btn-nav">CSD</button></span>
+      <a class="navbar-brand mr-auto mr-lg-0 " href="#">CSD PHILIPPINES CALLS MONITORING</a><span><button  class="btn btn-primary btn-small btn-nav"><i class="fas fa-blender-phone"></i></button></span>
        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
