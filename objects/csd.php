@@ -8,6 +8,7 @@ class Csd {
     private $csdoutbound = "outbound";
     private $parked_calls_tb = "waiting_calls";
     private $voicemail = "voicemail";
+    private $calltype = "calltype";
 
 	private $logs_table = "logs";
 	private $event_log = "event_log";
@@ -848,9 +849,23 @@ class Csd {
 
         //execute query
         if($stmnt->execute()){
+            //create query
+          $query = " INSERT INTO " . $this->calltype . " SET  extension = :extension, calltype = :calltype";
+          // prepare query
+          $stmnt = $this->conn->prepare($query);
+
+           //bind values
+          $stmnt->bindParam(":extension", $this->extension);
+          $stmnt->bindParam(":calltype", "csd");
+
+          if($stmnt->execute()){
             return true;
+          }
+          
+        }else{
+          return false;
         }
-        return false;
+       
     }
 
       public function updateCSDAgent($extension,$name,$email) {
