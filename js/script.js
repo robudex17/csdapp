@@ -44,12 +44,13 @@ function getLoginUser() {
 	    window.location.href = `${HTTPADDR}login.php`;
 	  }else{
 	    getTotalCounts()
-	    var token = JSON.parse(decodeToken(jwt));
+      var token = JSON.parse(decodeToken(jwt));
+      console.log(token.data);
 	    document.getElementById('user').textContent = token.data.name;
 	    document.getElementById('hidden_extension').value = token.data.extension;
 	    document.getElementById('position').value  = token.data.position;
            
-      document.getElementById('blended').value = token.data.blended;
+           document.getElementById('blended').value = token.data.blended;
      
    
 	  }
