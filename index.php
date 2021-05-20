@@ -75,7 +75,7 @@
       <div class="modal-content">
         <div class="modal-header">
 
-          <h4 class="modal-title">CALLTYPE</h4>
+          <h4 class="modal-title">CALL-TYPE</h4>
         </div>
         <div class="modal-body">
               <form method="POST" id="addTag">
