@@ -28,7 +28,7 @@
  <body class="bg-light" onload="getLoginUser()">
 
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-      <a class="navbar-brand mr-auto mr-lg-0 " href="#">CSD PHILIPPINES CALLS MONITORING</a><span style="margin:3px"><button  id="calltype" class="btn btn-primary btn-small btn-nav"  ><i class="fa fa-phone" aria-hidden="true"  style="font-size:15px"></i></button></span>
+      <a class="navbar-brand mr-auto mr-lg-0 " href="#">CSD PHILIPPINES CALLS MONITORING</a><span style="margin:3px"><button  class="btn btn-primary btn-small btn-nav" data-toggle="modal" data-target="#myModal" dataset-backdrop="static" dataset-keyboard="false"  id="calltype" ><i class="fa fa-phone" aria-hidden="true"  style="font-size:15px"></i></button></span>
        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
@@ -68,7 +68,43 @@
     </div>
 
     <main role="main" class="container">
-    <p id="blended-p"></p>
+    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <h4 class="modal-title">CALLTYPE</h4>
+        </div>
+        <div class="modal-body">
+              <form method="POST" id="addTag">
+
+                   <div class="form-group">
+                    <label for="TagType">Select CallType:</label>
+                     <select class="custom-select" name="tagtype" form="addTag" required id="tagtype">
+                            <option value="CSDINBOUND">CSD</option>
+                            <option value="COLLECTION">COLLECTION</option>
+
+                    </select>
+                  </div>
+                  
+                  <hr>
+                  <div class="text-right mb-3">
+                      <button type="button" class="btn btn-primary ml-auto" data-dismiss="modal" id="selectcalltype" >Submit</button>
+                    <button type="button" class="btn btn-danger ml-auto"  data-dismiss="modal" >Close</button>
+                  </div>
+
+          </form>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
     </main>
 
     <!-- Bootstrap core JavaScript
