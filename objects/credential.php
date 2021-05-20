@@ -6,6 +6,7 @@ class Credential {
 
 	private $logintable = "login";
         private $collectiontable = "collectionteam";
+        private $csdtable = "csdinbound" ;
 	private $conn;
 	public $extension;
 	public $secret;
@@ -46,6 +47,8 @@ class Credential {
         //get the number of rows
 
         $num = $stmt->rowCount();
+        $csd = 0;
+        $collection = 0;
  
         if($num>0){
         	//get record details
@@ -56,10 +59,26 @@ class Credential {
         	$this->name = $row['name'];
         	$this->position = $row['position'];
 
-                if($this->checkIfAgentIsInCollectionTable() != 0){
-		   $this->blended = 1;
-		}else{
-		   $this->blended = 0;
+                if($this->checkIfAgentIsInTheTable($this->csdtable) != 0){
+                   $csd = 1;
+		   if($this->checkIfAgentIsInTheTable($this->collectiontable) != 0){
+                     $collection = 1;     
+                   }
+                   if($csd == 1 && $collection == 1){
+                        $this->blended = 1;
+                   }else{
+                           $this->blended = 0;
+                   }
+		}elseif($this->checkIfAgentIsInTheTable($this->collectiontable) != 0){
+                  $collection = 1;
+                  if($this->checkIfAgentIsInTheTable($this->csdtable) != 0){
+                        $csd = 1;
+                  }
+                  if($csd == 1 && collection == 1){
+                          $this->blended = 1;
+                  }else{
+                          $this->blended = 0;
+                  }
                 }
                return true;
         } else{
@@ -72,9 +91,9 @@ class Credential {
 
 
 
-public function checkIfAgentIsInCollectionTable() {
+public function checkIfAgentIsInTheTable($table) {
 	 $query = "SELECT *
-         FROM " . $this->collectiontable . "
+         FROM " . $table . "
          WHERE extension = ?
          LIMIT 0,1";
 
@@ -100,6 +119,8 @@ public function checkIfAgentIsInCollectionTable() {
 
 
 }
+
+
 
 
 }
