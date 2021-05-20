@@ -65,9 +65,9 @@ class Credential {
                      $collection = 1;     
                    }
                    if($csd == 1 && $collection == 1){
-                        $this->blended = 1;
+                        $this->blended = "1";
                    }else{
-                           $this->blended = 0;
+                           $this->blended = "0";
                    }
 		}elseif($this->checkIfAgentIsInTheTable($this->collectiontable) != 0){
                   $collection = 1;
