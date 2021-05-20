@@ -27,13 +27,24 @@ $csd = new Csd($db);
   		$csd->email = $data->email;
 
   		if($csd->createAgent()){
-            if($csd->agentCalltype()){
+			
+			$stmnt = $csd->getCallType($csd->extension) ;
+			$num = $stmnt->rowCount(); 
+
+			if($num != 0){
 				//set response code - 201 created
 				http_response_code(201);
-
+	
 				echo json_encode(array("message" => "CSDAgent was added"));
+			}else{
+				if($csd->agentCalltype()){
+					//set response code - 201 created
+					http_response_code(201);
+	
+					echo json_encode(array("message" => "CSDAgent was added"));
+				}
 			}
-  			
+    		
 
   		}else{
   			//set response code to 503
