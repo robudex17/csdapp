@@ -37,7 +37,7 @@
                 <input type="hidden" name="hidden_extension" id="hidden_extension">
                  <input type="hidden" name="position" id="position">
 	             	<input type="hidden" name="blended" id="blended">
-                 <p id="blended-p"></p>
+              
 
             </li>
             <li class="nav-item">
@@ -52,7 +52,7 @@
 
     <div class="nav-scroller bg-blue shadow-sm">
           <nav class="nav nav-underline ">
-           
+                 <p id="blended-p"></p>
                  <a class="nav-link mx-0 px-2" href="active.php">ACTIVE</a>
                  <a class="nav-link mx-0 px-2" href="inactive.php">INACTIVE</a>
                  <a class="nav-link mx-0 px-2" href="csd_inbound.php">CSD-INBOUND</a>
