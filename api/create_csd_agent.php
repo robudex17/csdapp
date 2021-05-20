@@ -35,7 +35,7 @@ $csd = new Csd($db);
 				//set response code - 201 created
 				http_response_code(201);
 	
-				echo json_encode(array("message" => "CSDAgent was added"));
+				echo json_encode(array("message" => "CSD-Agent was added"));
 			}else{
 				if($csd->agentCalltype()){
 					//set response code - 201 created
