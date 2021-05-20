@@ -878,7 +878,7 @@ class Csd {
         $stmnt = $this->conn->prepare($query);
 
          //bind values
-         $calltype = "csd";
+        $calltype = "csd";
         $stmnt->bindParam(":extension", $this->extension);
         $stmnt->bindParam(":calltype", $calltype);
 
@@ -927,7 +927,7 @@ class Csd {
              echo json_encode(array("message" => "Agent Cannot be Deleted"));
         }
      }
-     private function deleteAgentCallType ($extension){
+     private function deleteAgentCallType($extension){
         $query = "DELETE FROM `calltype` WHERE `extension`='$extension'";
 
         $stmnt = $this->conn->prepare($query);
