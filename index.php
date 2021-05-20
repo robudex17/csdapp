@@ -25,7 +25,7 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                
-             <a class="nav-link" href="#" id="user"></a>
+             <a class="nav-link" href="#" id="user"></a><span><button><i class="fas fa-blender-phone"></i></button></span>
                 <input type="hidden" name="hidden_extension" id="hidden_extension">
                  <input type="hidden" name="position" id="position">
 	             	<input type="hidden" name="blended" id="blended">
