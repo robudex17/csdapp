@@ -25,10 +25,10 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                
-             <a class="nav-link" href="#" id="user"><span><i class="fas fa-blender-phone"></i></span</a>
+             <a class="nav-link" href="#" id="user"></a>
                 <input type="hidden" name="hidden_extension" id="hidden_extension">
                  <input type="hidden" name="position" id="position">
-		<input type="hidden" name="blended" id="blended">
+	             	<input type="hidden" name="blended" id="blended">
 
             </li>
             <li class="nav-item">
