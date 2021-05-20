@@ -56,9 +56,9 @@ if($checkUser && ($userlogin->secret === $data->secret )){
     //set response code
     http_response_code(200);
     //generate jwt
-    print_r($token);
+  //  print_r($token);
     $jwt = JWT::encode($token, $key);
-//    echo json_encode(array("message" => "Successful login", "jwt" => $jwt));
+    echo json_encode(array("message" => "Successful login", "jwt" => $jwt));
 }else{
 	// set response code
     http_response_code(401);
