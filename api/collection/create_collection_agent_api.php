@@ -37,7 +37,7 @@ $collection = new Collection($db);
 	
 				echo json_encode(array("message" => "CollectionAgent was added"));
 			}else{
-				if($csd->agentCalltype()){
+				if($collection->agentCalltype()){
 					//set response code - 201 created
 					http_response_code(201);
 	
