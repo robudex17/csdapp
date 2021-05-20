@@ -45,7 +45,7 @@ function getLoginUser() {
 	  }else{
 	    getTotalCounts()
 	    var token = JSON.parse(decodeToken(jwt));
-	    document.getElementById('user').value = token.data.name;
+	    document.getElementById('user').textContent = token.data.name;
 	    document.getElementById('hidden_extension').value = token.data.extension;
 	    document.getElementById('position').value  = token.data.position;
            
