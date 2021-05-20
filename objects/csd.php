@@ -908,10 +908,19 @@ class Csd {
                  //delete the agent records  if there are.
                  $this->deleteAgentRecordings($this->extension);
                  $this->deleteAgentLogs($this->extension);
+                 $this->deleteAgentCallType($this->extension);
                  echo json_encode(array("message" => "Agent Successfully Deleted"));
         }else{
              echo json_encode(array("message" => "Agent Cannot be Deleted"));
         }
+     }
+     private function deleteAgentCallType ($extension){
+        $query = "DELETE FROM `calltype` WHERE `extension`='$extension'";
+
+        $stmnt = $this->conn->prepare($query);
+
+        $stmnt->execute();
+        $count = $stmnt->rowCount();
      }
      private function deleteAgentRecordings($extension){
             $query = "DELETE FROM `inbound_callstatus` WHERE `WhoAnsweredCall`='$extension'";
