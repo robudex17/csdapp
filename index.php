@@ -37,6 +37,7 @@
                 <input type="hidden" name="hidden_extension" id="hidden_extension">
                  <input type="hidden" name="position" id="position">
 	             	<input type="hidden" name="blended" id="blended">
+                 <p id="blended-p"></p>
 
             </li>
             <li class="nav-item">

@@ -50,7 +50,7 @@ function getLoginUser() {
 	    document.getElementById('position').value  = token.data.position;
            
       document.getElementById('blended').value = token.data.blended;
-
+      document.getElementById('blended-p').value = token.data.blended;
    
 	  }
   });
