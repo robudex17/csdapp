@@ -866,8 +866,9 @@ class Csd {
         $stmnt = $this->conn->prepare($query);
 
          //bind values
+         $calltype = "csd";
         $stmnt->bindParam(":extension", $this->extension);
-        $stmnt->bindParam(":calltype", "csd");
+        $stmnt->bindParam(":calltype", $calltype);
 
         if($stmnt->execute()){
           return true;
