@@ -69,7 +69,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
      }).then(data => {
         message = JSON.stringify(data.message);
         alert(message);
-        location.reload();
+        //location.reload();
    
      }).catch(err =>{
          console.log(err)
