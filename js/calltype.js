@@ -25,7 +25,7 @@ const Elements = {
  return data.json()
 .then(calltype => {
     alert("test");
-    Elements.calltypebtn.value = calltype;
+    document.querySelector('#calltypebtn').value = "test";
 }) 
  }).catch(err => {
      alert(err);
