@@ -14,19 +14,21 @@ const Elements = {
 {
     getLoginUser();
     
-    var params = {}
-    params.extension = Elements.extension.value;
-
-    fetch(`${HTTPADDR}api/getCalltype.php`, {method:'post', body:JSON.stringify(params)}).then(calltype =>{
-        alert(JSON.stringify(calltype));
-        Elements.calltypebtn.value = calltype;
-    }).catch(err => {
-        alert(err.message);
-    })
+  
     
  }
  
 
+ var params = {}
+ params.extension = Elements.extension.value;
+
+ fetch(`${HTTPADDR}api/getCalltype.php`, {method:'post', body:JSON.stringify(params)}).then(calltype =>{
+     alert(JSON.stringify(calltype));
+     Elements.calltypebtn.value = calltype;
+ }).catch(err => {
+     alert(err.message);
+ })
+ 
 if(Elements.blended.value === "1"){
     Elements.calltypebtn.style.display = "block";
 }else{
