@@ -14,12 +14,13 @@ $database = new Database();
 $db = $database->getConnection();
 
 $csd = new Csd($db);
-
-if(isset($_GET['extension']) ) {
-	$extension = $_GET['extension'];
+$condition=true;
+//isset($_GET['extension'])
+if( $condition) {
+	$extension = "6336";
 	$stmnt = $csd->getCallType($extension);
 	$num = $stmnt->rowCount();
-	$agents_logs = array();
+	
 
 	if($num != 0){
         $row = $stmnt->fetch(PDO::FETCH_ASSOC);
