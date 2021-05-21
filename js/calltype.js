@@ -63,7 +63,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
     
     // alert(JSON.stringify(params))
 
-     fetch(`${HTTPADDR}api/collection/updateCAllType.php`, {method:'post', body:JSON.stringify(params)})
+     fetch(`${HTTPADDR}api/collection/updateCallType.php`, {method:'post', body:JSON.stringify(params)})
      .then(response => {
          return response.json()
      }).then(data => {
