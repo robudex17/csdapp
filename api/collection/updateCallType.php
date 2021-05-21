@@ -15,11 +15,11 @@ $database = new Database();
 $db = $database->getConnection();
 
 $collection = new Csd($db);
-//  // get posted data
-//   $data = json_decode(file_get_contents("php://input"));
-//   	$collection->name = $data->name;
-// 	$collection->extension = $data->extension;
-//  	$collection->email = $data->email;
+ // get posted data
+  $data = json_decode(file_get_contents("php://input"));
+  	$collection->calltype = $data->calltype;
+	$collection->extension = $data->extension;
+ 	
 
 
-$collection->updateCallType("6336", "csd");
+$collection->updateCallType($collection->extension, $collection->calltype);
