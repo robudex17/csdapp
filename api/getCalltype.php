@@ -17,7 +17,7 @@ $csd = new Csd($db);
 $condition=true;
 
 if( isset($_GET['extension'])) {
-	$extension = $_GET['extension'];
+	$extension = "6336";
 	$stmnt = $csd->getCallType($extension);
 	$num = $stmnt->rowCount();
 	
