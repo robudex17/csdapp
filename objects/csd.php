@@ -900,6 +900,7 @@ class Csd {
       $stmnt->execute();
       $count = $stmnt->rowCount();
       if($count !=0){
+                $this->getAllCollectionCallType();
                echo json_encode(array("message" => "Successfully Updated CallType"));
       }else{
            echo json_encode(array("message" => "Update was not Successfull"));
