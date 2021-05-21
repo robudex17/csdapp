@@ -16,10 +16,10 @@ $db = $database->getConnection();
 
 $collection = new Csd($db);
  // get posted data
-  $data = json_decode(file_get_contents("php://input"));
-  	$collection->calltype = $data->calltype;
-	$collection->extension = $data->extension;
+//  $data = json_decode(file_get_contents("php://input"));
+  	//$collection->calltype = "collection"; $data->calltype;
+	//$collection->extension = "6363";  $data->extension;
  	
 
 
-$collection->updateCallType($collection->extension,$collection->calltype);
+$collection->updateCallType("6336","collection");
