@@ -22,7 +22,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.4/xlsx.core.min.js"></script>
   <script src="js/FileSaver.js"></script>
   <script src="js/jhxlsx.js"></script>
-
+  <input type="hidden" name="calltype" id="calltype">
   </head>
 
   
