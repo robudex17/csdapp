@@ -22,7 +22,7 @@ if ($conn->connect_error) {
 	echo "good"; 
 	
 } 
- $query = "SELECT extension FROM calltype WHERE calltype=collection ";
+ $query = "SELECT extension FROM `calltype` WHERE calltype='collection' ";
 
 $result->$conn->query($query);
 
