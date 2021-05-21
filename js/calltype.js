@@ -14,7 +14,7 @@ const Elements = {
 {
     getLoginUser();
     
-    let querystring = `extension=${Elements.extension.value}`;
+    let querystring = `extension=${Elements.extension.value}`; 
     alert(querystring);
     fetch(`${HTTPADDR}api/getCalltype.php?${querystring}`).then(calltype =>{
         alert(JSON.stringify(calltype));
