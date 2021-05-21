@@ -139,6 +139,7 @@ public function getCallType($extension) {
                 $calltype;
                 $row = $stmnt->fetch(PDO::FETCH_ASSOC);
                 $calltype = $row['calltype'];
+                return $calltype;
         }else{
            return false;
         }
