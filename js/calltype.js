@@ -16,7 +16,7 @@ const Elements = {
     
     let querystring = `extension=${Elements.extension.value}`;
     fetch(`${HTTPADDR}api/getCalltype.php?${querystring}`).then(calltype =>{
-        alert(calltype);
+        alert(JSON.stringify(calltype));
         calltypebtn.value = calltype;
     }).catch(err => {
         alert(err.message);
