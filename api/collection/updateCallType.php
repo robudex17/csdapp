@@ -16,6 +16,7 @@ $db = $database->getConnection();
 
 $collection = new Csd($db);
  // get posted data
+<<<<<<< HEAD
 //  $data = json_decode(file_get_contents("php://input"));
   	//$collection->calltype = "collection"; $data->calltype;
 	//$collection->extension = "6363";  $data->extension;
@@ -23,3 +24,12 @@ $collection = new Csd($db);
 
 
 $collection->updateCallType("6336","collection");
+=======
+  $data = json_decode(file_get_contents("php://input"));
+  	$calltype = $data->calltype;
+	$extension = $data->extension;
+ 	
+
+
+$collection->updateCallType($extension,$calltype);
+>>>>>>> fcdfc0a6f584e1d533574c1d1bc41943b89d6209
