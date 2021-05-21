@@ -72,7 +72,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
             
             alert(message); 
             alert('Need Logout and Login to the effect the changes...');
-        }, 120000);
+        }, 12000);
        
         //location.reload();
    
