@@ -22,7 +22,7 @@ const Elements = {
 
 
  fetch(`${HTTPADDR}api/getCalltype.php`, {method:'post', body:JSON.stringify(params)}).then(data =>{
-    return data.json()
+ return data.json()
 .then(calltype => {
     Elements.calltypebtn.value = calltype;
 }) 
