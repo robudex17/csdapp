@@ -908,7 +908,7 @@ class Csd {
 
   public function getAllCollectionCallType(){
          // build the query
-         $query = "SELECT extension FROM ".$this->collection_table." WHERE calltype=? ";
+         $query = "SELECT extension FROM ".$this->calltype." WHERE calltype=? ";
          $calltype = "collection";
          //prepare the query
          $stmnt = $this->conn->prepare($query);
