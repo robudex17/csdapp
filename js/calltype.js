@@ -60,8 +60,8 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
     var params = {};
     params.extension = Elements.extension.value;
     params.calltype =  document.getElementById('select_calltype').value;
-    
-    // alert(JSON.stringify(params))
+     
+     alert(JSON.stringify(params))
 
      fetch(`${HTTPADDR}api/collection/updateCallType.php`, {method:'post', body:JSON.stringify(params)})
      .then(response => {
