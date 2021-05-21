@@ -33,8 +33,7 @@ if( $extension != "") {
         $data= array();
         $row = $stmnt->fetch(PDO::FETCH_ASSOC);
         $calltype = $row['calltype'];
-        array_push($data,$calltype);
-        echo json_encode($data);
+        echo $calltype;
 		
 
 	}else{
