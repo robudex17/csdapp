@@ -23,7 +23,7 @@ if(Elements.blended.value === "1"){
     Elements.calltypebtn.style.display = "none";
 }
 
-
+alert(Elements.calltype.value);
 const modalform = `<div id="myModal" class="modal" style="display: none;" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
@@ -33,7 +33,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 									</div>
 									<div class="modal-body">
 										
-										<p style="padding: 0px; margin: 0px; font-weight: 500;">SELECT TAG:</p>
+										<p style="padding: 0px; margin: 0px; font-weight: 500;">SELECT CALLTYPE:</p>
 										<select id="select_calltype" style="width: 450px;">
                                                 <option value="collection"  >collection</option>
                                                 <option value="csd" >csd</option>
