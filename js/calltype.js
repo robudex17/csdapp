@@ -52,7 +52,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 										<select id="select_calltype" style="width: 450px;">
                                                 <option value="collection"  >collection</option>
                                                 <option value="csd" >csd</option>
-												<option value="${calltypeValue}"  selected>${calltypeValue}</option>
+												<option value="${Elements.calltype.value}"  selected>${Elements.calltype.value}</option>
 												
 										</select>
 									</div>
