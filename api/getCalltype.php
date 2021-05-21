@@ -15,7 +15,7 @@ $db = $database->getConnection();
 
 $csd = new Csd($db);
 $condition=true;
-
+echo $_GET['extension'];
 if( isset($_GET['extension'])) {
 	$extension = "6336";
 	$stmnt = $csd->getCallType($extension);
