@@ -69,43 +69,9 @@
     </div>
 
     <main role="main" class="container">
-    <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+   
+      <div id="index_body"></div>
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-
-          <h4 class="modal-title">CALL-TYPE</h4>
-        </div>
-        <div class="modal-body">
-              <form method="POST" id="addTag" action="index.php">
-
-                   <div class="form-group">
-                    <label for="TagType">Select CallType:</label>
-                     <select class="custom-select" name="tagtype" form="addTag" required id="tagtype">
-                            <option value="CSD">CSD</option>
-                            <option value="COLLECTION">COLLECTION</option>
-
-                    </select>
-                  </div>
-                  
-                  <hr>
-                  <div class="text-right mb-3">
-                      <button type="button" class="btn btn-primary ml-auto" data-dismiss="modal" id="selectcalltype" >Submit</button>
-                    <button type="button" class="btn btn-danger ml-auto"  data-dismiss="modal" >Close</button>
-                  </div>
-
-          </form>
-        </div>
-
-
-      </div>
-
-    </div>
-  </div>
-
-</div>
     </main>
 
     <!-- Bootstrap core JavaScript
