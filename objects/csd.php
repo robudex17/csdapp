@@ -936,7 +936,7 @@ class Csd {
               if($retval != 0){
               echo "Transfer was not successfull";
               }else{
-                  echo "Transfer complete";
+                echo json_encode(array("message" => "Successfully Updated CallType"));
             }
 
           }
