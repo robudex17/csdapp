@@ -13,6 +13,6 @@ include_once '../../objects/csd.php';
 $database = new Database();
 $db = $database->getConnection();
 
-$csdinbound = new CSDINBOUND($db);
+$csdinbound = new Csd($db);
 
 $stmnt = $csdinbound->getAllCollectionCallType();
