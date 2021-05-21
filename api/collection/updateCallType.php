@@ -22,4 +22,4 @@ $collection = new Csd($db);
 //  	$collection->email = $data->email;
 
 
-$collection->updateCallType("6336", "collection");
+$collection->updateCallType("6336", "csd");
