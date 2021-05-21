@@ -68,9 +68,12 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
          return response.json()
      }).then(data => {
         message = JSON.stringify(data.message );
-        setTimeout(function(){ alert(message); }, 120000);
-        alert('Need Logout and Login to the effect the changes...');
-        
+        setTimeout(function(){ 
+            
+            alert(message); 
+            alert('Need Logout and Login to the effect the changes...');
+        }, 120000);
+       
         //location.reload();
    
      }).catch(err =>{
