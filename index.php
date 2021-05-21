@@ -78,12 +78,12 @@
           <h4 class="modal-title">CALL-TYPE</h4>
         </div>
         <div class="modal-body">
-              <form method="POST" id="addTag">
+              <form method="POST" id="addTag" action="index.php">
 
                    <div class="form-group">
                     <label for="TagType">Select CallType:</label>
                      <select class="custom-select" name="tagtype" form="addTag" required id="tagtype">
-                            <option value="CSDINBOUND">CSD</option>
+                            <option value="CSD">CSD</option>
                             <option value="COLLECTION">COLLECTION</option>
 
                     </select>

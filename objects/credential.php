@@ -7,12 +7,15 @@ class Credential {
 	private $logintable = "login";
         private $collectiontable = "collectionteam";
         private $csdtable = "csdinbound" ;
+        private $calltype_table= "calltype";
 	private $conn;
 	public $extension;
 	public $secret;
 	public $name;
 	public $position;
         public $blended;
+        public $calltype;
+        
     
 
 	//create database connection  when this class instantiated
@@ -57,7 +60,8 @@ class Credential {
         	$this->extension = $row['extension'];
         	$this->secret = $row['secret'];
         	$this->name = $row['name'];
-        	$this->position = $row['position'];
+                $this->position = $row['position'];
+                $this->calltype = $this->getCallType[$row['extension']];
 
                 if($this->checkIfAgentIsInTheTable($this->csdtable) != 0){
                    $csd = 1;
@@ -116,6 +120,28 @@ public function checkIfAgentIsInTheTable($table) {
 
 
 }
+
+public function getCallType($extension) {
+        //build query
+        $query = "SELECT * FROM  ".$this->calltype_table." WHERE extension=?";
+ 
+        //prepare the query
+        $stmnt = $this->conn->prepare($query);
+  
+        //bind values
+        $stmnt->bindParam(1,$extension);
+       
+  
+        $stmnt->execute();
+  
+        if($stmnt->execute()){
+           $calltype ;
+           $row = $stmnt->fetch(PDO::FETCH_ASSOC))
+           $calltype = $row['calltype'];
+       }
+       return $calltype;
+}
+
 
 }
 ?>
