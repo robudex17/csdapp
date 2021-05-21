@@ -29,10 +29,10 @@ $db = $database->getConnection();
 $userlogin = new Credential($db);
 
 // get posted data
-$data = json_decode(file_get_contents("php://input"));
+//$data = json_decode(file_get_contents("php://input"));
 
-//$data->extension = "6336";
-//$data->secret = "20006336";
+$data->extension = "6336";
+$data->secret = "20006336";
 
 //set properties
 $userlogin->extension = $data->extension;
@@ -49,16 +49,17 @@ if($checkUser && ($userlogin->secret === $data->secret )){
            "extension" => $userlogin->extension,
            "name" => $userlogin->name,
            "position" => $userlogin->position,
-           "blended" =>  $userlogin->blended
+           "blended" =>  $userlogin->blended,
+           "calltype" => $userlogin->calltype
        )
     );
 
     //set response code
     http_response_code(200);
     //generate jwt
-   // print_r($token);
-    $jwt = JWT::encode($token, $key);
-   echo json_encode(array("message" => "Successful login", "jwt" => $jwt));
+    print_r($token);
+    //$jwt = JWT::encode($token, $key);
+   //echo json_encode(array("message" => "Successful login", "jwt" => $jwt));
 }else{
 	// set response code
     http_response_code(401);
