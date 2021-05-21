@@ -25,7 +25,7 @@ const Elements = {
  return data.json()
 .then(calltype => {
     alert("test");
-    document.querySelector('#calltypebtn').value = "test";
+    document.querySelector('#calltypebtn').textContent= "test";
 }) 
  }).catch(err => {
      alert(err);
