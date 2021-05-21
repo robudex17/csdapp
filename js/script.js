@@ -51,7 +51,7 @@ function getLoginUser() {
 	    document.getElementById('position').value  = token.data.position;
            
       document.getElementById('blended').value = token.data.blended;
-     
+      document.getElementById('calltype').value = token.data.calltype;
    
 	  }
   });
