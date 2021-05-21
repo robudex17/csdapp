@@ -56,8 +56,8 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 
 
  document.getElementById('update').addEventListener('click', (e) => {
-      document.getElementById('udpate').disabled = true;
-      document.getElementById('cancel').disabled = true;
+    //   document.getElementById('udpate').disabled = true;
+    //   document.getElementById('cancel').disabled = true;
     var params = {};
     params.extension = Elements.extension.value;
     params.calltype =  document.getElementById('select_calltype').value;
