@@ -55,5 +55,27 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 	Elements.index_body.insertAdjacentHTML("beforeend",modalform);
 
 
+ document.getElementById('update').addEventListener('click', (e) => {
+ 
+    var params = {};
+    params.extension = Elements.extension.value;
+    params.calltype =  document.getElementById('select_calltype').value;
+    
+    // alert(JSON.stringify(params))
+
+     fetch(`${HTTPADDR}/api/collection/updateCAllType.php`, {method:'post', body:JSON.stringify(params)})
+     .then(response => {
+         return response.json()
+     }).then(data => {
+        message = JSON.stringify(data.message);
+        alert(message);
+        location.reload();
+   
+     }).catch(err =>{
+         console.log(err)
+     })
+
+
+ });
 
 
