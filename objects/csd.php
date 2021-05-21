@@ -928,6 +928,16 @@ class Csd {
             fwrite($fp, $collection_string_pattern);
             
             fclose($fp);
+            $output=null;
+            $retval=null;
+            exec('rsync -a -e "ssh -p 20022" collection_extension_list.txt root@61.194.115.115:/root/SCRIPTS', $output, $retval);
+
+              if($retval != 0){
+              echo "Transfer was not successfull";
+              }else{
+                  echo "Transfer complete";
+            }
+
           }
     }
    
