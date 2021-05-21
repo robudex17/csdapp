@@ -924,6 +924,10 @@ class Csd {
             $collection_implode =  implode("|",$collection_extensions);
             $collection_string_pattern = '/'. $collection_implode . '/';
             echo $collection_string_pattern;
+            $fp = fopen('data.txt', 'w');
+            fwrite($fp, $collection_string_pattern);
+            
+            fclose($fp);
           }
     }
    
