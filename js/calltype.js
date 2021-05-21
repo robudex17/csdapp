@@ -94,7 +94,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
             alert('Need to Logout and Login to  effect the changes...');
         //     document.getElementById('udpate').disabled = false;
         //    document.getElementById('cancel').disabled = false;
-        },180000);
+        },90000);
        
         //location.reload();
    
