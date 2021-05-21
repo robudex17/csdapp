@@ -19,16 +19,16 @@ const Elements = {
  }
  
 
- var params = {}
- params.extension = Elements.extension.value;
+//  var params = {}
+//  params.extension = Elements.extension.value;
 
- fetch(`${HTTPADDR}api/getCalltype.php`, {method:'post', body:JSON.stringify(params)}).then(calltype =>{
-     alert(JSON.stringify(calltype));
-     Elements.calltypebtn.value = calltype;
- }).catch(err => {
-     alert(err.message);
- })
- 
+//  fetch(`${HTTPADDR}api/getCalltype.php`, {method:'post', body:JSON.stringify(params)}).then(calltype =>{
+//      alert(JSON.stringify(calltype));
+//      Elements.calltypebtn.value = calltype;
+//  }).catch(err => {
+//      alert(err.message);
+//  })
+
 if(Elements.blended.value === "1"){
     Elements.calltypebtn.style.display = "block";
 }else{
