@@ -29,7 +29,7 @@ $db = $database->getConnection();
 $userlogin = new Credential($db);
 
 // get posted data
-$data = json_decode(file_get_contents("php://input"));
+//$data = json_decode(file_get_contents("php://input"));
 
 $data->extension = "6336";
 $data->secret = "20006336";
