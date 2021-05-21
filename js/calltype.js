@@ -25,7 +25,7 @@ const Elements = {
      alert(JSON.stringify(calltype));
     
  }).catch(err => {
-     alert(err.message);
+     alert(err);
  })
 
 if(Elements.blended.value === "1"){
