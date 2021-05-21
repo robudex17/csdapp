@@ -21,9 +21,11 @@ const Elements = {
  params.extension = Elements.extension.value;
 
 
- fetch(`${HTTPADDR}api/getCalltype.php`, {method:'post', body:JSON.stringify(params)}).then(calltype =>{
-     alert(JSON.stringify(calltype));
-    
+ fetch(`${HTTPADDR}api/getCalltype.php`, {method:'post', body:JSON.stringify(params)}).then(data =>{
+    return data.json()
+.then(calltype => {
+    alert(calltype);
+}) 
  }).catch(err => {
      alert(err);
  })
