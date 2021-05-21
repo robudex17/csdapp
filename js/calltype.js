@@ -77,7 +77,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
             alert('Need Logout and Login to the effect the changes...');
             document.getElementById('udpate').disabled = false;
            document.getElementById('cancel').disabled = false;
-        }, 6000);
+        },6000);
        
         //location.reload();
    
