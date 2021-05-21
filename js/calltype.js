@@ -7,7 +7,8 @@ const Elements = {
     blended: document.querySelector('#blended'),
     extension: document.querySelector('#hidden_extension'),
     calltype: document.querySelector('#calltype'),
-    index_body: document.querySelector('#index_body')  
+    index_body: document.querySelector('#index_body'),
+    calltypevalue: document.querySelector('#calltypelabel')
 
 }
 //at page load IIFE function
@@ -51,7 +52,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 										<select id="select_calltype" style="width: 450px;">
                                                 <option value="collection"  >collection</option>
                                                 <option value="csd" >csd</option>
-												<option value="${Elements.calltype.value}"  selected>${Elements.calltype.value}</option>
+												<option value="${Elements.calltypelabel.textContent}"  selected>${Elements.calltypelabel.textContent}</option>
 												
 										</select>
 									</div>
