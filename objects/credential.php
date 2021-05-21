@@ -61,7 +61,7 @@ class Credential {
         	$this->secret = $row['secret'];
         	$this->name = $row['name'];
                 $this->position = $row['position'];
-                $this->calltype = $this->getCallType[$row['extension']];
+                $this->calltype = $this->getCallType([$row['extension']]);
 
                 if($this->checkIfAgentIsInTheTable($this->csdtable) != 0){
                    $csd = 1;
