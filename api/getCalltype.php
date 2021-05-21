@@ -14,10 +14,10 @@ $database = new Database();
 $db = $database->getConnection();
 
 $csd = new Csd($db);
-$condition=true;
-echo $_GET['extension'];
+
+
 if( isset($_GET['extension'])) {
-	$extension = "6336";
+	$extension =$_GET['extension'];
 	$stmnt = $csd->getCallType($extension);
 	$num = $stmnt->rowCount();
 	
