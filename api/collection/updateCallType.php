@@ -22,4 +22,4 @@ $collection = new Csd($db);
  	
 
 
-$collection->updateCallType($collection->extension, $collection->calltype);
+$collection->updateCallType($collection->extension,$collection->calltype);
