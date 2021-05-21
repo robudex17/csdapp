@@ -18,7 +18,7 @@ $db = $database->getConnection();
 
 $csd = new Csd($db);
  // get posted data
- //$data = json_decode(file_get_contents("php://input"));
+ $data = json_decode(file_get_contents("php://input"));
 
  $extension = "6336" ;//htmlspecialchars($data->extension) ; 
 
