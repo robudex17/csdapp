@@ -19,7 +19,7 @@ const Elements = {
 
  var params = {}
  params.extension = Elements.extension.value;
- alert(params);
+ alert(JSON.stringify(params));
 
  fetch(`${HTTPADDR}api/getCalltype.php`, {method:'post', body:JSON.stringify(params)}).then(calltype =>{
      alert(JSON.stringify(calltype));
