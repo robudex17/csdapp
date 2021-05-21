@@ -26,7 +26,7 @@ if( isset($_GET['extension'])) {
         $row = $stmnt->fetch(PDO::FETCH_ASSOC);
         $calltype = $row['calltype'];
 
-		echo $calltype;
+		echo json_encode($calltype);
 
 	}else{
 		echo json_encode(array("message" => "No Details"));
