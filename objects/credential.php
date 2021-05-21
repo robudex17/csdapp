@@ -106,7 +106,7 @@ public function checkIfAgentIsInTheTable($table) {
         //execute
          $stmt->execute();
         //get the number of rows
-
+        
         $num = $stmt->rowCount();
          
 	 if($num>0){
@@ -133,13 +133,17 @@ public function getCallType($extension) {
        
   
         $stmnt->execute();
-  
-        if($stmnt->execute()){
-           $calltype ;
-           $row = $stmnt->fetch(PDO::FETCH_ASSOC))
-           $calltype = $row['calltype'];
-       }
-       return $calltype;
+        $num = $stmnt->rowCount();
+
+        if($num>0){
+                $calltype;
+                $row = $stmnt->fetch(PDO::FETCH_ASSOC);
+                $calltype = $row['calltype'];
+        }else{
+           return false;
+        }
+
+        
 }
 
 
