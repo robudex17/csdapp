@@ -38,7 +38,7 @@ if(Elements.blended.value === "1"){
     Elements.calltypebtn.style.display = "none";
 }
 
-
+var calltypeValue = document.querySelector('#calltypelabel').textContent;
 const modalform = `<div id="myModal" class="modal" style="display: none;" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
@@ -52,7 +52,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 										<select id="select_calltype" style="width: 450px;">
                                                 <option value="collection"  >collection</option>
                                                 <option value="csd" >csd</option>
-												<option value="${Elements.calltypelabel.value}"  selected>${Elements.calltypelabel.value}</option>
+												<option value="${calltypeValue}"  selected>${calltypeValue}</option>
 												
 										</select>
 									</div>
