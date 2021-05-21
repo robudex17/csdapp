@@ -9,6 +9,7 @@ class Csd {
     private $parked_calls_tb = "waiting_calls";
     private $voicemail = "voicemail";
     private $calltype = "calltype";
+    private $collection_table = "collectionteam";
 
 	private $logs_table = "logs";
 	private $event_log = "event_log";
@@ -889,6 +890,39 @@ class Csd {
         }
        
    }
+
+   public function updateCallType($extension,$calltype) {
+
+    // $query = "UPDATE `csdinbound` SET `comment`='$comment' WHERE `StartTimeStamp`='$startimestamp' AND `getDate`='$getdate' AND `WhoAnsweredCall`='$whoansweredcall'";
+     $query = "UPDATE `calltype` SET `extension`='$extension',`calltype`='$calltype' WHERE `extension`='$extension'";
+      //prepare query
+      $stmnt = $this->conn->prepare($query);
+      $stmnt->execute();
+      $count = $stmnt->rowCount();
+      if($count !=0){
+               echo json_encode(array("message" => "Successfully Updated CallType"));
+      }else{
+           echo json_encode(array("message" => "Update was not Successfull"));
+      }
+  }
+
+  public function getAllCollectionCallType(){
+         // build the query
+         $query = "SELECT extension FROM ".$this->collection_table." WHERE calltype=? ";
+         $calltype = "collection";
+         //prepare the query
+         $stmnt = $this->conn->prepare($query);
+          //bind values
+        $stmnt->bindParam(1,$calltype);
+
+         if($stmnt->execute()){
+             $collection_extensions = array();
+             while($row = $stmnt->fetch(PDO::FETCH_ASSOC)){
+               array_push($collection_extensions, $row['extension']);
+            }
+            echo json_encode($collection_extensions);
+          }
+    }
    
    public function updateCSDAgent($extension,$name,$email) {
 
@@ -921,7 +955,7 @@ class Csd {
                  //delete the agent records  if there are.
                  $this->deleteAgentRecordings($this->extension);
                  $this->deleteAgentLogs($this->extension);
-                 $this->deleteAgentCallType($this->extension);
+                //  $this->deleteAgentCallType($this->extension);
                  echo json_encode(array("message" => "Agent Successfully Deleted"));
         }else{
              echo json_encode(array("message" => "Agent Cannot be Deleted"));
