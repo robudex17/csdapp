@@ -15,6 +15,4 @@ $db = $database->getConnection();
 
 $csdinbound = new CSDINBOUND($db);
 
-
-
 $stmnt = $csdinbound->getAllCollectionCallType();
