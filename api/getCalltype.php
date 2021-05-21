@@ -30,10 +30,12 @@ if( $extension != "") {
 	
 
 	if($num != 0){
+        $data= array();
         $row = $stmnt->fetch(PDO::FETCH_ASSOC);
         $calltype = $row['calltype'];
-
-		echo $calltype;
+        array_push($data,$calltype);
+        echo json_encode($data);
+		
 
 	}else{
 		echo json_encode(array("message" => "No Details"));
