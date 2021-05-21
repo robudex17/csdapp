@@ -14,9 +14,9 @@ const Elements = {
 {
     getLoginUser();
     
-    
-    $params.extension = Elements.extension.value;
-    
+    var params = {}
+    params.extension = Elements.extension.value;
+
     fetch(`${HTTPADDR}api/getCalltype.php`, {method:'post', body:JSON.stringify(params)}).then(calltype =>{
         alert(JSON.stringify(calltype));
         Elements.calltypebtn.value = calltype;
