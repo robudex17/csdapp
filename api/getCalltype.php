@@ -15,9 +15,9 @@ $db = $database->getConnection();
 
 $csd = new Csd($db);
 $condition=true;
-//isset($_GET['extension'])
-if( $condition) {
-	$extension = "6336";
+
+if( isset($_GET['extension'])) {
+	$extension = $_GET['extension'];
 	$stmnt = $csd->getCallType($extension);
 	$num = $stmnt->rowCount();
 	
