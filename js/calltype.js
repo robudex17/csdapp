@@ -1,10 +1,5 @@
 
-//at page load IIFE function
-{
-    getLoginUser();
-    
- }
- 
+
 //Element Declaration
 
 const Elements = {
@@ -15,7 +10,19 @@ const Elements = {
     index_body: document.querySelector('#index_body')  
 
 }
-
+//at page load IIFE function
+{
+    getLoginUser();
+    
+    let querystring = `extension=${Elements.calltype.value}`;
+    fetch(`${HTTPADDR}api/getCalltype.php?${querystring}`).then(calltype =>{
+        calltypebtn.value = calltype;
+    }).catch(err => {
+        alert(err.message);
+    })
+    
+ }
+ 
 
 if(Elements.blended.value === "1"){
     Elements.calltypebtn.style.display = "block";
@@ -23,7 +30,7 @@ if(Elements.blended.value === "1"){
     Elements.calltypebtn.style.display = "none";
 }
 
-alert(Elements.calltype.value);
+
 const modalform = `<div id="myModal" class="modal" style="display: none;" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
@@ -55,6 +62,8 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 	Elements.index_body.insertAdjacentHTML("beforeend",modalform);
 
 
+ 
+//update calltype
  document.getElementById('update').addEventListener('click', (e) => {
     //   document.getElementById('udpate').disabled = true;
     //   document.getElementById('cancel').disabled = true;
