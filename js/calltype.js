@@ -67,6 +67,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
      .then(response => {
          return response.json()
      }).then(data => {
+         alert('Its take 1 minute or two to transfer calltype');
         message = JSON.stringify(data.message );
         setTimeout(function(){ 
             
