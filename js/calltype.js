@@ -56,7 +56,8 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 
 
  document.getElementById('update').addEventListener('click', (e) => {
- 
+      document.getElementById('udpate').disabled = true;
+      document.getElementById('cancel').disabled = true;
     var params = {};
     params.extension = Elements.extension.value;
     params.calltype =  document.getElementById('select_calltype').value;
@@ -68,15 +69,14 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
          return response.json()
      }).then(data => {
          alert('Its take 1 minute or two to transfer calltype');
-        //  document.getElementById('udpate').disabled = true;
-        //  document.getElementById('cancel').disabled = true;
+        
         message = JSON.stringify(data.message );
         setTimeout(function(){ 
             
             alert(message); 
             alert('Need Logout and Login to the effect the changes...');
-        //     document.getElementById('udpate').disabled = false;
-        //    document.getElementById('cancel').disabled = false;
+            document.getElementById('udpate').disabled = false;
+           document.getElementById('cancel').disabled = false;
         },6000);
        
         //location.reload();
