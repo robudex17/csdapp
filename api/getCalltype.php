@@ -2,7 +2,10 @@
 //required headers
 header("Access-Control-Allow-Origin: * ");
 header("Content-Type: application/json; charset=UTF-8");
-date_default_timezone_set('Asia/Tokyo');
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+// // database connection will be here...
 
 // // database connection will be here...
 
@@ -14,10 +17,14 @@ $database = new Database();
 $db = $database->getConnection();
 
 $csd = new Csd($db);
+ // get posted data
+ $data = json_decode(file_get_contents("php://input"));
+
+ $extension = htmlspecialchars($data->extension) ; 
 
 
-if( isset($_GET['extension'])) {
-	$extension =$_GET['extension'];
+if( $extension != "") {
+	
 	$stmnt = $csd->getCallType($extension);
 	$num = $stmnt->rowCount();
 	

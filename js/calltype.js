@@ -14,11 +14,12 @@ const Elements = {
 {
     getLoginUser();
     
-    let querystring = `extension=${Elements.extension.value}`; 
-    alert(querystring);
-    fetch(`${HTTPADDR}api/getCalltype.php?${querystring}`).then(calltype =>{
+    
+    $params.extension = Elements.extension.value;
+    
+    fetch(`${HTTPADDR}api/getCalltype.php`, {method:'post', body:JSON.stringify(params)}).then(calltype =>{
         alert(JSON.stringify(calltype));
-        calltypebtn.value = calltype;
+        Elements.calltypebtn.value = calltype;
     }).catch(err => {
         alert(err.message);
     })
