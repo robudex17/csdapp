@@ -920,7 +920,10 @@ class Csd {
              while($row = $stmnt->fetch(PDO::FETCH_ASSOC)){
                array_push($collection_extensions, $row['extension']);
             }
-            echo json_encode($collection_extensions);
+           
+            $collection_implode =  implode("|",$collection_extensions);
+            $collection_string_pattern = '/'. $collection_implode . '/';
+            echo $collection_string_pattern;
           }
     }
    
