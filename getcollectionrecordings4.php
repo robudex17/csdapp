@@ -64,8 +64,45 @@ if (preg_match($collection_pattern, $vCaller)) {
 	}
 	$conn->close();
 
+
+}
+//FALLBACK  if Colllection parttern is not working
+elseif ( ($vCaller == '6373') || ($vCaller == '6373')  || ($vCaller == '6340') || ($vCaller == '6379') || ($vCaller == '6309') || ($vCaller == '6369') || ($vCaller == '6334') || ($vCaller == '6390')) {
+	// Create connection
+	$conn = new mysqli($myServer, $myUser, $myPass, $myDB);
+	// Check connection
+	if ($conn->connect_error) {
+		 //USE BACKUP IS INCASE PRIMARY IS DOWN
+		$conn = new mysqli($myServer2, $myUser, $myPass, $myDB);
+		if($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+	}else {
+		echo "Connected...";
+	}
+
+	$comment = "";
+	$commentby = "";
+	$tag = "";
+	$query = "INSERT INTO collectionteam_callsummary";
+	$query .= "(StartTimeStamp, EndTimeStamp, Duration, CallStatus, Caller, CalledNumber, getDate,recording_link, comment, commentby, tag) VALUES ";
+	$query .= "('".$vStartTimeStamp."','".$vEndTimeStamp."','".$vDuration."','".$vCallStatus."','".$vCaller."','".$vCalledNumber."','".$getCurrentdate."','".$vRecFileName."', '".$comment."', '".$commentby."', '".$tag."')";
+
+
+	$result = $conn->query($query);
+
+	if(!$result){
+		echo("Error description: " . mysqli_error($conn));
+
+	}else{
+		echo "success";
+	}
+	$conn->close();
+
 //FETCH  SBTPH STAFF RECORDING
-}elseif(preg_match($pattern, $vCaller)){
+}
+
+elseif(preg_match($pattern, $vCaller)){
 	// Create connection
 	$conn = new mysqli($myServer, $myUser, $myPass, $myDB);
 	// Check connection
