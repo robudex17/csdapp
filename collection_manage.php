@@ -30,6 +30,7 @@
                 <input type="hidden" name="position" id="position">
                 <input type="hidden" name="type" id="type" value="collectionAgent">
                <input type="hidden" name="blended" id="blended">
+               <input type="hidden" name="calltype" id="calltype">
 
             </li>
             <li class="nav-item">
