@@ -108,13 +108,13 @@ progress();
      .then(response => {
          return response.json()
      }).then(data => {
-         alert('Its take 1 minute or two to transfer calltype');
+         alert(' Transfering a call settings may take some time');
         
         message = JSON.stringify(data.message );
         setTimeout(function(){ 
             
             alert(message); 
-            alert('Need to Logout and Login to  effect the changes...');
+            alert('Need to Logout and Login for the changes to take effect...');
        
         },100000);
         
