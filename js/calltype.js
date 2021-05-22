@@ -71,6 +71,21 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 
 
 Elements.index_body.insertAdjacentHTML("beforeend",modalform);
+
+const progress = () => {
+    let myProgress = document.getElementById('myProgress');
+    let myBar = document.getElementById('myBar');
+
+    myProgress.style.width = "100%";
+    myProgress.style.backgroundColor = "#ddd";
+
+    myBar.style.width = "1%";
+    myBar.style.height = "30px";
+    myBar.style.backgroundColor = "#04AA6D";
+
+
+}
+
 progress();
 
  
@@ -106,19 +121,7 @@ progress();
 
  });
 
- const progress = () => {
-     let myProgress = document.getElementById('myProgress');
-     let myBar = document.getElementById('myBar');
-
-     myProgress.style.width = "100%";
-     myProgress.style.backgroundColor = "#ddd";
-
-     myBar.style.width = "1%";
-     myBar.style.height = "30px";
-     myBar.style.backgroundColor = "#04AA6D";
-
-
- }
+ 
 
 
 function move() {
