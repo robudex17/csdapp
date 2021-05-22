@@ -111,7 +111,7 @@ progress();
             alert('Need to Logout and Login to  effect the changes...');
        
         },100000);
-        var i =0;
+        
         move();
    
      }).catch(err =>{
@@ -125,6 +125,7 @@ progress();
 
 
 function move() {
+    var i = 0;
   if (i == 0) {
     i = 1;
     var elem = document.getElementById("myBar");
