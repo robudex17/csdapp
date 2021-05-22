@@ -55,13 +55,16 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 												<option value="${Elements.calltype.value}"  selected>${Elements.calltype.value}</option>
 												
 										</select>
-									</div>
+                                    </div>
+                                    <div>
+                                         <div id="myProgress">
+                                        <div id="myBar"></div>
+                                    </div>
 									<div id="$odalfooter" class="modal-footer">
 										<button id="update" class="btn btn-primary" data-action="update">Update</button>
                                         <button id=cancel" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         
-                                        <div id="myProgress">
-                                        <div id="myBar"></div>
+                                       
                                     </div>
 									</div>
                                 </div>
