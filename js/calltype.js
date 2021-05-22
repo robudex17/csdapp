@@ -60,21 +60,23 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 										<button id="update" class="btn btn-primary" data-action="update">Update</button>
 										<button id=cancel" class="btn btn-danger" data-dismiss="modal">Close</button>
 									</div>
-								</div>
+                                </div>
+                                    <div id="myProgress">
+                                        <div id="myBar"></div>
+                                    </div>
 							</div>
                         </div>`
                         
 
 
 
-	Elements.index_body.insertAdjacentHTML("beforeend",modalform);
-
+Elements.index_body.insertAdjacentHTML("beforeend",modalform);
+progress();
 
  
 //update calltype
  document.getElementById('update').addEventListener('click', (e) => {
-    //   document.getElementById('udpate').disabled = true;
-    //   document.getElementById('cancel').disabled = true;
+    
     var params = {};
     params.extension = Elements.extension.value;
     params.calltype =  document.getElementById('select_calltype').value;
@@ -92,11 +94,10 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
             
             alert(message); 
             alert('Need to Logout and Login to  effect the changes...');
-        //     document.getElementById('udpate').disabled = false;
-        //    document.getElementById('cancel').disabled = false;
-        },90000);
        
-        //location.reload();
+        },100000);
+        var i =0;
+        move();
    
      }).catch(err =>{
          console.log(err)
@@ -105,4 +106,38 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 
  });
 
+ const progress = () => {
+     let myProgress = document.getElementById('myProgress');
+     let myBar = document.getElementById('myBar');
+
+     myProgress.style.width = "100%";
+     myProgress.style.backgroundColor = "#ddd";
+
+     myBar.style.width = "1%";
+     myBar.style.height = "30px";
+     myBar.style.backgroundColor = "#04AA6D";
+
+
+ }
+
+
+function move() {
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementById("myBar");
+    var width = 1;
+    var id = setInterval(frame, 1000);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+       
+        
+        i = 0;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+  }
+}
 
