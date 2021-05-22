@@ -901,7 +901,7 @@ class Csd {
       $count = $stmnt->rowCount();
       if($count !=0){
                 //$this->getAllCollectionCallType();
-               echo json_encode(array("message" => "Successfully Updated CallType"));
+               echo json_encode(array("message" => "Successfully Updated The Call Settings!"));
       }else{
            echo json_encode(array("message" => "Update was not Successfull"));
       }
