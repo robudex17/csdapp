@@ -61,7 +61,7 @@ foreach ($servers as $server){
 
   } $rsync = 'rsync -a -e "ssh  collection_extension_list.txt root@'.$server.':/root/SCRIPTS';
 
-   exec($rsync, $output, $retval);
+   exec('$rsync', $output, $retval);
    if ($retval != 0){
       $logdate = date("Y-m-d");
       $serverlog = "rsync is not successfull on server" . $server . "date" . $logdate;
