@@ -44,9 +44,9 @@
 </div>
      
     <main role="main" class="container" id="main" >
-       <div id="calltype_moda"></div>
+       <div id="calltype_modal"></div>
           <!-- The Modal -->
-        <div class="modal" id="myModal">
+        <div class="modal" id="myModalBarging">
           <div class="modal-dialog">
             <div class="modal-content">
             
