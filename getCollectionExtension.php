@@ -41,8 +41,10 @@ $fp = fopen('collection_extension_list.txt', 'w');
 fwrite($fp, $collection_string_pattern);
 fclose($fp);
 
-
-$servers = array("61.194.115.115", "211.0.128.97", "211.0.128.98", "211.0.128.100","211.0.128.101");
+/*
+   Replace This SERVERNAME TO ITS ACTUALL IP ADDRESS TO WORK.
+*/
+$servers = array($japanserver, $datacenter01, $datacenter02, $datacenter03,$datacenter04,$datacenter05);
 
 // exec('rsync -a -e "ssh -p 20022" collection_extension_list.txt root@61.194.115.115:/root/SCRIPTS', $output, $retval);
 //  if($retval != 0){
@@ -54,7 +56,7 @@ foreach ($servers as $server){
    $output=null;
    $retval=null;
    $rsync=null;
-  if($server === "61.194.115.115"){
+  if($server === $japanserver){
      $rsync = 'rsync -a -e "ssh -p 20022" collection_extension_list.txt root@'.$server.':/root/SCRIPTS';
      
   }else{
