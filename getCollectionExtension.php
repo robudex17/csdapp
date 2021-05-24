@@ -58,7 +58,7 @@ foreach ($servers as $server){
      $rsync = 'rsync -a -e "ssh -p 20022" collection_extension_list.txt root@'.$server.':/root/SCRIPTS';
      
   }else{
-   $rsync = 'rsync -a -e   collection_extension_list.txt root@'.$server.':/root/SCRIPTS';
+   $rsync = 'rsync -a collection_extension_list.txt root@'.$server.':/root/SCRIPTS';
   }
   echo $rsync;
    exec($rsync, $output, $retval);
