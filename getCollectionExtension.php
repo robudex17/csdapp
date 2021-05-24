@@ -60,7 +60,7 @@ foreach ($servers as $server){
   }else{
    $rsync = 'rsync -a collection_extension_list.txt root@'.$server.':/root/SCRIPTS';
   }
-  echo $rsync;
+  
    exec($rsync, $output, $retval);
    if ($retval != 0){
       $logdate = date("Y-m-d");
