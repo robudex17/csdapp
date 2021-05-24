@@ -42,7 +42,7 @@ fwrite($fp, $collection_string_pattern);
 fclose($fp);
 
 
-// $servers = array("61.194.115.115", "211.0.1.128.97", "211.0.1.128.98", "211.0.1.128.100","211.0.1.128.101");
+$servers = array("61.194.115.115", "211.0.1.128.97", "211.0.1.128.98", "211.0.1.128.100","211.0.1.128.101");
 
 // exec('rsync -a -e "ssh -p 20022" collection_extension_list.txt root@61.194.115.115:/root/SCRIPTS', $output, $retval);
 //  if($retval != 0){
