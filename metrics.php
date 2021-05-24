@@ -42,6 +42,7 @@
 </div>
     <main role="main" class="container" id="main" >
        <br><br><br><br>
+       
        <h2 class="text-center">Generate Metrics</h2>
        <hr>
               <div>
@@ -131,7 +132,7 @@
 
 
             </div>
-
+        <div id="calltype_modal"></div>
     </main>
 
  <script>

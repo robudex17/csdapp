@@ -9,5 +9,6 @@
     <script src="js/holder.min.js"></script>
     <script src="js/offcanvas.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/calltype.js"></script>
   </body>
 </html>

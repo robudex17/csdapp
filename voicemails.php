@@ -79,6 +79,7 @@
 
       </script>  
         <script src="js/voicemails.js"></script>  
+        <div id="calltype_modal"></div>
     </main>
 
  <?php include ('footer.php');?>

@@ -122,7 +122,7 @@
       
           </div>
         </div>
-
+        <div id="calltype_modal"></div>
     </main>
 
        <!-- Bootstrap core JavaScript

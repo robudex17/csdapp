@@ -70,7 +70,7 @@
 
     <main role="main" class="container">
    
-      <div id="index_body"></div>
+      <div id="calltype_modal"></div>
 
     </main>
 

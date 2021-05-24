@@ -85,6 +85,7 @@
 
       </script>  
         <script src="js/search_inbound_number.js"></script>  
+        <div id="calltype_modal"></div>
     </main>
 
  <?php include ('footer.php');?>

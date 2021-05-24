@@ -63,7 +63,7 @@
                 </tbody>
             </table>
           </div>
-       
+          <div id="calltype_modal"></div>
     </main>
 
 <script src="js/active_inactive.js"></script>

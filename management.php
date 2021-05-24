@@ -57,11 +57,12 @@
     </div>
 
     <main role="main" class="container" id="main">
-
-
+   
+ 
 
 
     <script src="js/csd_manage.js"></script>
+    <div id="calltype_modal"></div>
     </main>
 
  <?php include ('footer.php');?>

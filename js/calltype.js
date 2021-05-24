@@ -7,7 +7,7 @@ const Elements = {
     blended: document.querySelector('#blended'),
     extension: document.querySelector('#hidden_extension'),
     calltype: document.querySelector('#calltype'),
-    index_body: document.querySelector('#index_body'),
+    calltype_modal: document.querySelector('#calltype_modal'),
     calltypevalue: document.querySelector('#calltypelabel')
 
 }
@@ -76,7 +76,7 @@ const modalform = `<div id="myModal" class="modal" style="display: none;" aria-h
 
 
 
-Elements.index_body.insertAdjacentHTML("beforeend",modalform);
+Elements.calltype_modal.insertAdjacentHTML("beforeend",modalform);
 
 const progress = () => {
     let myProgress = document.getElementById('myProgress');

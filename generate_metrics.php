@@ -102,6 +102,7 @@
           })();
 
       </script>
+       <div id="calltype_modal"></div>
     </main>
 
 

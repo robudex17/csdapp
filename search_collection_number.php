@@ -83,6 +83,7 @@
 
       </script>  
         <script src="js/search_collection_number.js"></script>  
+        <div id="calltype_modal"></div>
     </main>
 
  <?php include ('footer.php');?>

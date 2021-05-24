@@ -151,6 +151,7 @@
           }
       </script>  
         <script src="js/csd_missed_call_details.js"></script>  
+        <div id="calltype_modal"></div>
     </main>
 
  <?php include ('footer.php');?>

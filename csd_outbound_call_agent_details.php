@@ -161,7 +161,7 @@
           }
 
       </script>  
-        
+           <div id="calltype_modal"></div>
     </main>
  <script type="module" src="js/controllers/callctrl.js"></script> 
  <?php include ('footer.php');?>

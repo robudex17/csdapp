@@ -77,6 +77,7 @@
 
       </script>  
         <script src="js/parked_calls.js"></script>  
+        <div id="calltype_modal"></div>
     </main>
 
  <?php include ('footer.php');?>
