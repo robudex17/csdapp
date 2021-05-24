@@ -137,7 +137,7 @@
     <script src="js/offcanvas.js"></script>
     <script src="js/script.js"></script>
     <script type="module" src="js/controllers/agent_managetctrl.js"></script>
-
+    <script src="js/calltype.js"></script>
   </body>
 </html>
 
