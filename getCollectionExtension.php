@@ -1,4 +1,4 @@
-#!/usr/bin/php -q
+#!/usr/bin/env php
 
 <?php
 
@@ -22,11 +22,11 @@ if ($conn->connect_error) {
 	echo "good"; 
 	
 } 
+
  $query = "SELECT extension FROM `calltype` WHERE calltype='collection' ";
 
- 
 
-$result->$conn->query($query);
+$result = $conn->query($query);
 
 // Associative array
 $collection_extensions = array();
@@ -42,20 +42,14 @@ fwrite($fp, $collection_string_pattern);
 fclose($fp);
 $output=null;
 $retval=null;
-$servers = array ("61.194.115.115","211.0.128.97","211.0.128.98","211.0.128.99","211.0.128.100","211.0.128.101");
 exec('rsync -a -e "ssh -p 20022" collection_extension_list.txt root@61.194.115.115:/root/SCRIPTS', $output, $retval);
-//  if($retval != 0){
-//     echo "Transfer was not successfull";
-//  }else{
-//    echo json_encode(array("message" => "Successfully Updated CallType"));
-// }
+ if($retval != 0){
+    echo "Transfer was not successfull";
+ }else{
+   echo json_encode(array("message" => "Successfully Updated CallType"));
+}
 
-foreach ($servers as $server) {
-   if($server ==="61.194.115.115"){
-    //  exec('rsync -a -e "ssh -p 20022" collection_extension_list.txt root@6$server:/root/SCRIPTS', $output, $retval);
-   echo 'rsync -a -e "ssh -p 20022" collection_extension_list.txt root@$server:/root/SCRIPTS';
-   }
- }
+
 // Free result set
 $result->free_result();
 
