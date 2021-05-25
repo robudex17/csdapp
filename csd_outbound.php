@@ -12,7 +12,7 @@
                 <input type="hidden" name="hidden_extension" id="hidden_extension">
                  <input type="hidden" name="position" id="position">
                  <input type="hidden" name="type" id="type" value="csdoutbound">
-		<input type="hidden" name="blended" id="blended">
+		              <input type="hidden" name="blended" id="blended">
 
             </li>
             <li class="nav-item">

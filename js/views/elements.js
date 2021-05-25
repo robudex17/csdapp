@@ -9,6 +9,7 @@ export const elements = {
 	agentname: document.querySelector('#agentname'),
 	modaltagcomment: document.querySelector('#modaltagcomment'),
 	modalextension: document.querySelector('#modalextension'),
-	modalname: document.querySelector('#modalname')
+	modalname: document.querySelector('#modalname'),
+	position: document.querySelector('#position')
 	
 }

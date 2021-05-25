@@ -2,6 +2,13 @@
   import * as Views from  "../../js/views/views.js"
   import { elements }  from  "../../js/views/elements.js"
 
+  
+
+//   var i=0;
+//   for(i=0; i<=buttons.length; i++){
+//     buttons[i].textContent = "rogmer"
+//   }
+
   //at page load IIFE function
   {
 	getLoginUser();
@@ -11,7 +18,14 @@
 	const allAgents =  new CSD ();
 	allAgents.getAgents(elements.type.value).then(agents => {
 		 agents.forEach((agent,id) =>{
-		 	Views.agentHtml(agent,id)
+			 Views.agentHtml(agent,id)
+			 if(elements.position.value == "0"  || elements.position.value == 0) {
+				var buttons = document.getElementsByTagName("BUTTON")
+				var i = 0
+				for(i=0;i<=buttons.length; i++){
+					buttons[i].disabled = true;
+				}
+			 }
 		 })
 
 	}) .catch(err => console.log(err));
