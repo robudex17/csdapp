@@ -19,14 +19,16 @@
 	allAgents.getAgents(elements.type.value).then(agents => {
 		 agents.forEach((agent,id) =>{
 			 Views.agentHtml(agent,id)
-			 if(elements.position.value == "0"  || elements.position.value == 0) {
-				var buttons = document.getElementsByTagName("BUTTON")
-				var i = 0
-				for(i=0;i<=buttons.length; i++){
-					buttons[i].disabled = true;
-				}
-			 }
+			 
 		 })
+		 //disable all button if the positon is equal to 0
+		 if(elements.position.value == "0"  || elements.position.value == 0) {
+			var buttons = document.getElementsByTagName("BUTTON")
+			var i = 0
+			for(i=0;i<=buttons.length; i++){
+				buttons[i].disabled = true;
+			}
+		 }
 
 	}) .catch(err => console.log(err));
 
